@@ -5,6 +5,7 @@ let drawWidth = "3";
 let isDrawing = false;
 canvas.width = 500;
 canvas.height = 300;
+console.log("createdRepo");
 
 function start(e) {
   e.preventDefault();
