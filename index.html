@@ -8,16 +8,21 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <img
-      class="header-logo"
-      src="img/Transparent+ASRGS+Logo-1920w (1).webp"
-      alt=""
-    />
-    <canvas id="canvas"></canvas>
-    <div class="tools-bar">
-      <button type="button">Undo</button>
-      <button type="button" onclick="clearCanvas()">Clear</button>
-    </div>
+    <form>
+      <div class="header-container">
+        <img
+          class="header-logo"
+          src="img/Transparent+ASRGS+Logo-1920w (1).webp"
+          alt=""
+        />
+        <input class="input form-field" type="date" />
+      </div>
+      <canvas id="canvas"></canvas>
+      <div class="tools-bar">
+        <button type="button">Undo</button>
+        <button type="button" onclick="clearCanvas()">Clear</button>
+      </div>
+    </form>
 
     <script src="scripts.js"></script>
   </body>
