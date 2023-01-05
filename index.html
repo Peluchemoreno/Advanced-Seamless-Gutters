@@ -8,22 +8,47 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <form>
-      <div class="header-container">
-        <img
-          class="header-logo"
-          src="img/Transparent+ASRGS+Logo-1920w (1).webp"
-          alt=""
-        />
-        <label for="date">Date:</label>
-        <input class="input form-field" type="date" />
-      </div>
-      <canvas id="canvas"></canvas>
-      <div class="tools-bar">
-        <button type="button">Undo</button>
-        <button type="button" onclick="clearCanvas()">Clear</button>
-      </div>
-    </form>
+    <div class="form-wrapper">
+      <form>
+        <div class="header-container">
+          <img
+            class="header-logo"
+            src="img/Transparent+ASRGS+Logo-1920w (1).webp"
+            alt=""
+          />
+          <div class="date-container">
+            <label for="date">Date:</label>
+            <input id="date" class="input form-field" type="date" />
+          </div>
+        </div>
+        <div class="customer-details-container">
+          <div class="customer-details-header">
+            <h2>CUSTOMER DETAILS</h2>
+          </div>
+          <div class="customer-details-body">
+            <label for="name">Name:</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              maxlength="100"
+              minlength="1"
+            />
+            <label for="address">Address:</label>
+            <input type="text" name="address" id="address" />
+            <label for="phone">Phone:</label>
+            <input type="tel" name="phone" id="phone" />
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" />
+          </div>
+        </div>
+        <canvas id="canvas"></canvas>
+        <div class="tools-bar">
+          <button type="button">Undo</button>
+          <button type="button" onclick="clearCanvas()">Clear</button>
+        </div>
+      </form>
+    </div>
 
     <script src="scripts.js"></script>
   </body>
