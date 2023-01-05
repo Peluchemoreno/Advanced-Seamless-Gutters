@@ -10,8 +10,8 @@ console.log("createdRepo");
 function start(e) {
   e.preventDefault();
   console.log(e);
-  let x = e.clientX;
-  let y = e.clientY;
+  let x = e.offsetX;
+  let y = e.offsetY;
   isDrawing = true;
   c.beginPath();
   c.moveTo(x, y);
@@ -21,8 +21,8 @@ function start(e) {
 
 function draw(e) {
   e.preventDefault();
-  let x = e.clientX;
-  let y = e.clientY;
+  let x = e.offsetX;
+  let y = e.offsetY;
   if (isDrawing) {
     c.lineTo(x, y);
     c.strokeStyle = color;
