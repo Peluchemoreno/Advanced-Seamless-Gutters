@@ -11,7 +11,8 @@
 }
 
 .header-logo {
-  width: 300px;
+  width: 320px;
+  height: 190px;
   margin-left: 20px;
 }
 
@@ -21,6 +22,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 200px;
 }
 
 .date-container {
@@ -29,39 +31,44 @@
 }
 
 .customer-details-header {
-  color: rgb(180, 192, 199);
+  color: rgb(255, 255, 255);
   background-color: black;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px;
 }
 
-.customer-details-container {
+.customer-details-body {
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+}
+.customer-details-body2 {
+  display: flex;
+}
+#phone,
+#email {
+  flex-grow: 1;
 }
 
 .form-wrapper {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 900px;
 }
 
 form {
   width: 100%;
 }
 
-label,
-#name,
-#address,
-#phone,
-#email {
-  display: block;
-  margin-block: 5px;
-  width: 100%;
-}
-
 label {
-  background-color: black;
-  color: rgb(180, 192, 199);
-  border-radius: 5px;
-  padding: 5px;
+  background-color: rgb(35, 26, 114);
+  color: rgb(255, 255, 255);
+  /* border-radius: 5px; */
+  padding: 5px 10px;
   font-weight: bold;
   letter-spacing: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+input {
+  padding: 3px;
+  width: auto;
 }
