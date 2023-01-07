@@ -3,7 +3,7 @@ let c = canvas.getContext("2d");
 let color = "black";
 let drawWidth = "1";
 let isDrawing = false;
-canvas.width = 600;
+canvas.width = 500;
 canvas.height = 400;
 console.log("createdRepo");
 
