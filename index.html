@@ -13,7 +13,7 @@
         <div class="header-container">
           <img
             class="header-logo"
-            src="img/Transparent+ASRGS+Logo-1920w (1).webp"
+            src="img/advanced seamless logo png.png"
             alt=""
           />
           <div class="date-container">
@@ -45,10 +45,48 @@
             <input type="email" name="email" id="email" />
           </div>
         </div>
-        <canvas id="canvas"></canvas>
-        <div class="tools-bar">
-          <button type="button">Undo</button>
-          <button type="button" onclick="clearCanvas()">Clear</button>
+        <div class="section2">
+          <div class="canvas-side">
+            <canvas id="canvas"></canvas>
+            <div class="tools-bar">
+              <button type="button">Line</button>
+              <button type="button">Draw</button>
+              <button type="button">Undo</button>
+              <button type="button">Redo</button>
+              <input type="color" name="color" id="color" />
+              <button type="button" onclick="clearCanvas()">Clear</button>
+            </div>
+          </div>
+          <div class="material-side">
+            <div class="material-details">
+              <div class="material-details-header">
+                <h3>MATERIAL</h3>
+              </div>
+              <div class="material-details-body">
+                <label for="coil-color" class="coil-color">Coil Color:</label>
+                <input type="text" name="coil-color" id="coil-color" />
+
+                <label for="size" class="size-label">Size:</label>
+                <input type="text" name="size" id="size" />
+
+                <label for="downspout-color" class="downspout-color"
+                  >DS Color:</label
+                >
+                <input type="text" name="color" id="downspout-color" />
+
+                <label for="downspout-size" class="downspout-size"
+                  >Color:</label
+                >
+                <input type="text" name="color" id="downspout-size" />
+
+                <label for="gutter-color" class="color-label">Color:</label>
+                <input type="text" name="color" id="gutter-color" />
+              </div>
+            </div>
+            <div class="extra-and-pricing-header">
+              <h3>EXTRA</h3>
+            </div>
+          </div>
         </div>
       </form>
     </div>
