@@ -7,8 +7,10 @@
 }
 
 #canvas {
-  border: 2px solid black;
-  margin-right: 5px;
+  border: 1px solid #000000;
+  border-top: none;
+  border-left: none;
+
 }
 
 .header-logo {
@@ -19,7 +21,7 @@
 
 .header-container {
   background-color: rgb(180, 192, 199);
-  border: 1px solid rgba(0, 0, 0, 0.6);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,7 +37,7 @@
   color: rgb(255, 255, 255);
   background-color: black;
   margin: 0;
-  padding: 12px;
+  padding: 10px;
   letter-spacing: 3px;
   border: 2px solid black;
 }
@@ -43,11 +45,11 @@
 .customer-details-body {
   display: grid;
   grid-template-columns: 1fr 7fr;
-  border: 2px solid black;
+
 }
 .customer-details-body2 {
   display: flex;
-  border: 2px solid black;
+
 }
 #phone,
 #email {
@@ -64,6 +66,7 @@
 
 select{
   text-align: right;
+  border: none;
 }
 .form-wrapper {
   margin: 0 auto;
@@ -76,8 +79,17 @@ select{
 .canvas-side,
 .material-side {
   display: inline-block;
-  border: 2px solid black;
-  /* border: 1px solid black; */
+
+}
+
+.material-side{
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.canvas-side{
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
 .material-side {
@@ -92,12 +104,12 @@ select{
   background-color: black;
   color: white;
   letter-spacing: 3px;
-  border: 2px solid black;
+
 }
 
 .job-notes{
   background-color: black;
-  border: 2px solid black;
+
   display: block;
   letter-spacing: 3px;
   margin-top: 10px;
@@ -112,7 +124,7 @@ select{
 .material-details-body,.extra-and-pricing-body {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  /* font-size: 14px; */
+
 }
 
 form {
@@ -123,7 +135,7 @@ form {
 label {
   background-color: rgb(65, 65, 65);
   color: rgb(255, 255, 255);
-  /* border-radius: 5px; */
+
   padding: 5px 10px;
   font-weight: bold;
   letter-spacing: 1px;
