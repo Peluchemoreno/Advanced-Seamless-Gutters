@@ -1,54 +1,38 @@
 const ongoingTouches = [];
+const colorPicker = document.querySelector('#color');
+console.log(colorPicker.value);
+let color = colorPicker.value;
+
+// const background = new Image();
+// background.src = ''
 
 
 function startup() {
   const el = document.getElementById('canvas');
   el.width = 500;
   el.height = 550;
+  const p = 10;
   el.addEventListener('touchstart', handleStart);
   el.addEventListener('touchend', handleEnd);
   el.addEventListener('touchcancel', handleCancel);
   el.addEventListener('touchmove', handleMove);
+
+  let context = el.getContext('2d');
+
+  //going to draw a grid
+  for (i = 0; i <= 500; i += 50) {
+    context.moveTo(10, 0);
+    context.lineTo(10, 550);
+  }
+
+  context.strokeStyle = 'black';
+  context.stroke();
+
 }
 
 document.addEventListener("DOMContentLoaded", startup);
-// let c = canvas.getContext("2d");
-// let color = "black";
-// let drawWidth = "1";
-// let isDrawing = false;
+let c = canvas.getContext("2d");
 
-
-
-// function start(e) {
-//   e.preventDefault();
-//   console.log(e);
-//   let x = e.offsetX;
-//   let y = e.offsetY;
-//   isDrawing = true;
-//   c.beginPath();
-//   c.moveTo(e.offsetX, e.offsetY);
-//   console.log(e.offsetX, e.offsetY);
-//   // c.stroke();
-// }
-
-// function draw(e) {
-//   e.preventDefault();
-//   let x = e.offsetX;
-//   let y = e.offsetY;
-//   if (isDrawing) {
-//     c.lineTo(x, y);
-//     c.strokeStyle = color;
-//     c.lineWidth = drawWidth;
-//     c.lineCap = "round";
-//     c.lineJoin = "round";
-//     c.stroke();
-//   }
-// }
-
-// function end(e) {
-//   e.preventDefault();
-//   isDrawing = false;
-// }
 const clearButton = document.querySelector('#clear-button');
 clearButton.addEventListener('click', function () {
   const el = document.getElementById('canvas');
@@ -57,14 +41,6 @@ clearButton.addEventListener('click', function () {
   c.fillRect(0, 0, el.width, el.height);
   console.log("clearing");
 })
-
-
-
-// el.addEventListener("pointerdown", start, false);
-// el.addEventListener("pointermove", draw, false);
-// el.addEventListener("pointerup", end, false);
-// el.addEventListener("pointercancel", cancel, false);
-
 
 
 //=================================
@@ -84,7 +60,6 @@ function handleStart(evt) {
   for (let i = 0; i < touches.length; i++) {
     // log(`touchstart: ${i}.`);
     ongoingTouches.push(copyTouch(touches[i]));
-    const color = colorForTouch(touches[i]);
     // log(`color of touch with id ${touches[i].identifier} = ${color}`);
     ctx.beginPath();
     ctx.moveTo(touches[i].pageX - 12, touches[i].pageY - 277, 4, 0, 2 * Math.PI);  // a circle at the start
@@ -145,7 +120,7 @@ function handleEnd(evt) {
       ctx.beginPath();
       ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - 277);
       ctx.lineTo(touches[i].pageX - 12, touches[i].pageY - 277);
-      ctx.fillRect(touches[i].pageX - 12 - 4, touches[i].pageY - 4 - 277, 8, 8);  // and a square at the end
+      // ctx.fillRect(touches[i].pageX - 12 - 4, touches[i].pageY - 4 - 277, 8, 8);  // and a square at the end
       ongoingTouches.splice(idx, 1);  // remove it; we're done
     } else {
       log('can\'t figure out which touch to end');
@@ -164,17 +139,13 @@ function handleCancel(evt) {
   }
 }
 
-function colorForTouch(touch) {
-  let r = touch.identifier % 16;
-  let g = Math.floor(touch.identifier / 3) % 16;
-  let b = Math.floor(touch.identifier / 7) % 16;
-  r = r.toString(16); // make it a hex digit
-  g = g.toString(16); // make it a hex digit
-  b = b.toString(16); // make it a hex digit
-  const color = `#${0}${0}${0}`;
+function colorForTouch() {
+  const colorPicker = document.querySelector('#color');
+  let color = colorPicker.value;
   return color;
 }
 
+// console.log(colorPicker.value);
 
 function copyTouch({ identifier, pageX, pageY }) {
   return { identifier, pageX, pageY };
@@ -197,3 +168,17 @@ function log(msg) {
   // const container = document.getElementById('log');
   // container.textContent = `${msg} \n${container.textContent}`;
 }
+
+//-------------------------------------------------------------
+
+function drawGrid() {
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.moveTo(20, 20);
+  ctx.lineTo(400, 400);
+  context.strokeStyle = "black";
+  context.stroke();
+
+}
+
+drawGrid();
