@@ -1,21 +1,33 @@
-const canvas = document.querySelector("#canvas");
+const ongoingTouches = [];
+
+
+function startup() {
+  const el = document.getElementById('canvas');
+  el.width = 500;
+  el.height = 550;
+  el.addEventListener('touchstart', handleStart);
+  el.addEventListener('touchend', handleEnd);
+  el.addEventListener('touchcancel', handleCancel);
+  el.addEventListener('touchmove', handleMove);
+}
+
+document.addEventListener("DOMContentLoaded", startup);
 let c = canvas.getContext("2d");
 let color = "black";
 let drawWidth = "1";
 let isDrawing = false;
-canvas.width = 500;
-canvas.height = 400;
-console.log("createdRepo");
+
+
 
 function start(e) {
   e.preventDefault();
   console.log(e);
-  let x = e.offsetX;
-  let y = e.offsetY;
+  // let x = e.offsetX;
+  // let y = e.offsetY;
   isDrawing = true;
   c.beginPath();
-  c.moveTo(x, y);
-  console.log(x, y);
+  c.moveTo(e.offsetX, e.offsetY);
+  console.log(e.offsetX, e.offsetY);
   // c.stroke();
 }
 
@@ -37,15 +49,150 @@ function end(e) {
   e.preventDefault();
   isDrawing = false;
 }
-
-function clearCanvas() {
+const clearButton = document.querySelector('#clear-button');
+clearButton.addEventListener('click', function () {
+  const el = document.getElementById('canvas');
   c.fillStyle = "white";
-  c.clearRect(0, 0, canvas.width, canvas.height);
-  c.fillRect(0, 0, canvas.width, canvas.height);
+  c.clearRect(0, 0, el.width, el.height);
+  c.fillRect(0, 0, el.width, el.height);
   console.log("clearing");
+})
+
+
+
+el.addEventListener("pointerdown", start, false);
+el.addEventListener("pointermove", draw, false);
+el.addEventListener("pointerup", end, false);
+el.addEventListener("pointercancel", cancel, false);
+
+
+
+//=================================
+
+
+
+
+function handleStart(evt) {
+  evt.preventDefault();
+  let offset = evt.originalTarget.offsetTop;
+  // console.log(evt.changedTouches[0]);
+  console.log(typeof offset);
+  const el = document.getElementById('canvas');
+  const ctx = el.getContext('2d');
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    // log(`touchstart: ${i}.`);
+    // touches[i].target.offsetTop = 0;
+    ongoingTouches.push(copyTouch(touches[i]));
+    const color = colorForTouch(touches[i]);
+    // log(`color of touch with id ${touches[i].identifier} = ${color}`);
+    ctx.beginPath();
+    ctx.moveTo(touches[i].pageX, touches[i].pageY - offset, 4, 0, 2 * Math.PI);  // a circle at the start
+    ctx.moveTo(0, 0);
+    ctx.fillStyle = color;
+    ctx.fill();
+    // console.log(touches[i].pageY);
+  }
 }
 
-canvas.addEventListener("pointerdown", start, false);
-canvas.addEventListener("pointermove", draw, false);
-canvas.addEventListener("pointerup", end, false);
-canvas.addEventListener("pointercancel", cancel, false);
+
+function handleMove(evt) {
+  evt.preventDefault();
+  let offset = evt.originalTarget.offsetTop;
+  const el = document.getElementById('canvas');
+  const ctx = el.getContext('2d');
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    const color = colorForTouch(touches[i]);
+    const idx = ongoingTouchIndexById(touches[i].identifier);
+
+    if (idx >= 0) {
+      ctx.beginPath();
+      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - offset);
+      // ctx.moveTo(0, 0);
+      ctx.lineTo(touches[i].pageX, touches[i].pageY - offset);
+      // ctx.lineTo(500, 550);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+
+      ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+    } else {
+      log('can\'t figure out which touch to continue');
+    }
+  }
+}
+
+
+function handleEnd(evt) {
+  evt.preventDefault();
+  log("touchend");
+  let offset = evt.originalTarget.offsetTop;
+  const el = document.getElementById('canvas');
+  const ctx = el.getContext('2d');
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    const color = colorForTouch(touches[i]);
+    let idx = ongoingTouchIndexById(touches[i].identifier);
+
+    if (idx >= 0) {
+      ctx.lineWidth = 4;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - offset);
+      ctx.lineTo(touches[i].pageX, touches[i].pageY - offset);
+      // ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4 - offset, 8, 8);  // and a square at the end
+      ongoingTouches.splice(idx, 1);  // remove it; we're done
+    } else {
+      log('can\'t figure out which touch to end');
+    }
+  }
+}
+
+function handleCancel(evt) {
+  evt.preventDefault();
+  log('touchcancel.');
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    let idx = ongoingTouchIndexById(touches[i].identifier);
+    ongoingTouches.splice(idx, 1);  // remove it; we're done
+  }
+}
+
+function colorForTouch(touch) {
+  let r = touch.identifier % 16;
+  let g = Math.floor(touch.identifier / 3) % 16;
+  let b = Math.floor(touch.identifier / 7) % 16;
+  r = r.toString(16); // make it a hex digit
+  g = g.toString(16); // make it a hex digit
+  b = b.toString(16); // make it a hex digit
+  const color = `#${0}${0}${0}`;
+  return color;
+}
+
+
+function copyTouch({ identifier, pageX, pageY }) {
+  return { identifier, pageX, pageY };
+}
+
+
+function ongoingTouchIndexById(idToFind) {
+  for (let i = 0; i < ongoingTouches.length; i++) {
+    const id = ongoingTouches[i].identifier;
+
+    if (id === idToFind) {
+      return i;
+    }
+  }
+  return -1;    // not found
+}
+
+
+function log(msg) {
+  // const container = document.getElementById('log');
+  // container.textContent = `${msg} \n${container.textContent}`;
+}

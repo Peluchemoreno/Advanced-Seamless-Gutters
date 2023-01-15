@@ -1,119 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bid Maker</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="form-wrapper">
-      <form>
-        <div class="header-container">
-          <img
-            class="header-logo"
-            src="img/advanced seamless logo png.png"
-            alt=""
-          />
-          <div class="date-container">
-            <label for="date">Date:</label>
-            <input id="date" class="input form-field" type="date" />
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta content="width=device-width" initial-scale="1.0" maximum-scale="1.0" user-scalable="0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Bid Maker</title>
+  <link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body>
+  <div class="form-wrapper">
+    <form>
+      <div class="header-container">
+        <img class="header-logo" src="img/advanced seamless logo png.png" alt="" />
+        <div class="date-container">
+          <label for="date">Date:</label>
+          <input id="date" class="input form-field" type="date" />
         </div>
-        <div class="customer-details-container">
-          <div class="customer-details-header">
-            <h2>CUSTOMER DETAILS</h2>
-          </div>
-          <div class="customer-details-body">
-            <label for="name">Name:</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              maxlength="100"
-              minlength="1"
-            />
-
-            <label for="address">Address:</label>
-            <input type="text" name="address" id="address" /><br />
-          </div>
-          <div class="customer-details-body2">
-            <label for="phone">Phone:</label>
-            <input type="tel" name="phone" id="phone" />
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" />
-          </div>
+      </div>
+      <div class="customer-details-container">
+        <div class="customer-details-header">
+          <h2>CUSTOMER DETAILS</h2>
         </div>
-        <div class="section2">
-          <div class="canvas-side">
-            <canvas id="canvas"></canvas>
-            <div class="tools-bar">
-              <button type="button">Line</button>
-              <button type="button">Draw</button>
-              <button type="button">Undo</button>
-              <button type="button">Redo</button>
-              <input type="color" name="color" id="color" />
-              <button type="button" onclick="clearCanvas()">Clear</button>
-            </div>
-            <label for="job-notes" class="job-notes">
-              JOB DESCRIPTION / NOTES
-            </label>
-            <textarea name="job-description" id="job-notes" rows="10"></textarea>
+        <div class="customer-details-body">
+          <label for="name">Name:</label>
+          <input id="name" name="name" type="text" maxlength="100" minlength="1" />
+
+          <label for="address">Address:</label>
+          <input type="text" name="address" id="address" /><br />
+        </div>
+        <div class="customer-details-body2">
+          <label for="phone">Phone:</label>
+          <input type="tel" name="phone" id="phone" />
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" />
+        </div>
+      </div>
+      <div class="section2">
+        <div class="canvas-side">
+          <canvas id="canvas"></canvas>
+          <div class="tools-bar">
+            <button type="button">Line</button>
+            <button type="button">Draw</button>
+            <button type="button">Undo</button>
+            <button type="button">Redo</button>
+            <input type="color" name="color" id="color" />
+            <button type="button" id="clear-button">Clear</button>
+            <button type="button" id="lock-screen-button">Lock Screen</button>
           </div>
-          <div class="material-side">
-            <div class="material-details">
-              <div class="material-details-header">
-                <h3>MATERIAL</h3>
-              </div>
-              <div class="material-details-body">
-                <label for="coil-color" class="coil-color">Coil Color:</label>
-                <input type="text" name="coil-color" id="coil-color" />
-
-                <label for="coil-footage" class="coil-footage">Coil Footage:</label>
-                <input type="text" min="0" max="99999" name="coil-footage" id="coil-footage" />
-
-                <label for="size" class="size-label">Size:</label>
-                <input type="text" name="size" id="size" />
-
-                <label for="downspout-color" class="downspout-color">DS Color:</label>
-                <input type="text" name="color" id="downspout-color" />
-
-                <label for="ds-footage" class="ds-footage">DS Footage:</label>
-                <input type="text" min="0" max="99999" name="ds-footage" id="ds-footage" />
-
-                <label for="downspout-size" class="downspout-size">DS Size:</label>
-                <input type="text" name="color" id="downspout-size" />
-
-                <label for="ism" class="ism">ISM:</label>
-                <input type="text" min="0" max="99999" name="ism" id="ism" />
-
-                <label for="osm" class="osm">OSM:</label>
-                <input type="text" min="0" max="99999" name="osm" id="osm" />
-
-                <label for="custom-miters" class="custom-miters">Custom Miters:</label>
-                <input type="text" min="0" max="99999" name="custom-miters" id="custom-miters" />
-
-                <label for="end-caps-left">End Caps (L):</label>
-                <input min="0" max="99999" type="text" name="end-caps-left" id="end-caps-left">
-
-                <label for="end-caps-right">End Caps (R):</label>
-                <input min="0" max="99999" type="text" name="end-caps-right" id="end-caps-right">
-
-                <label for="a-elbows">A's:</label>
-                <input min="0" max="99999" type="text" name="a-elbows" id="a-elbows">
-
-                <label for="b-elbows">B's:</label>
-                <input min="0" max="99999" type="text" name="b-elbows" id="b-elbows">
-
-                <label for="offsets">Offsets:</label>
-                <input min="0" max="99999" type="text" name="offsets" id="offsets">
-
-                <label for="splash-blocks">Splash Blocks:</label>
-                <input min="0" max="99999" type="text" name="splash-blocks" id="splash-blocks">
-              </div>
+          <label for="job-notes" class="job-notes">
+            JOB DESCRIPTION / NOTES
+          </label>
+          <textarea name="job-description" id="job-notes" rows="10"></textarea>
+        </div>
+        <div class="material-side">
+          <div class="material-details">
+            <div class="material-details-header">
+              <h3>MATERIAL</h3>
             </div>
-            <div class="pricing-container">
+            <div class="material-details-body">
+              <label for="coil-color" class="coil-color">Coil Color:</label>
+              <input type="text" name="coil-color" id="coil-color" />
+
+              <label for="coil-footage" class="coil-footage">Coil Footage:</label>
+              <input type="text" min="0" max="99999" name="coil-footage" id="coil-footage" />
+
+              <label for="size" class="size-label">Size:</label>
+              <input type="text" name="size" id="size" />
+
+              <label for="downspout-color" class="downspout-color">DS Color:</label>
+              <input type="text" name="color" id="downspout-color" />
+
+              <label for="ds-footage" class="ds-footage">DS Footage:</label>
+              <input type="text" min="0" max="99999" name="ds-footage" id="ds-footage" />
+
+              <label for="downspout-size" class="downspout-size">DS Size:</label>
+              <input type="text" name="color" id="downspout-size" />
+
+              <label for="ism" class="ism">ISM:</label>
+              <input type="text" min="0" max="99999" name="ism" id="ism" />
+
+              <label for="osm" class="osm">OSM:</label>
+              <input type="text" min="0" max="99999" name="osm" id="osm" />
+
+              <label for="custom-miters" class="custom-miters">Custom Miters:</label>
+              <input type="text" min="0" max="99999" name="custom-miters" id="custom-miters" />
+
+              <label for="end-caps-left">End Caps (L):</label>
+              <input min="0" max="99999" type="text" name="end-caps-left" id="end-caps-left">
+
+              <label for="end-caps-right">End Caps (R):</label>
+              <input min="0" max="99999" type="text" name="end-caps-right" id="end-caps-right">
+
+              <label for="a-elbows">A's:</label>
+              <input min="0" max="99999" type="text" name="a-elbows" id="a-elbows">
+
+              <label for="b-elbows">B's:</label>
+              <input min="0" max="99999" type="text" name="b-elbows" id="b-elbows">
+
+              <label for="offsets">Offsets:</label>
+              <input min="0" max="99999" type="text" name="offsets" id="offsets">
+
+              <label for="splash-blocks">Splash Blocks:</label>
+              <input min="0" max="99999" type="text" name="splash-blocks" id="splash-blocks">
+            </div>
+          </div>
+          <div class="pricing-container">
             <div class="extra-and-pricing-header">
               <h3>EXTRA</h3>
             </div>
@@ -141,12 +137,14 @@
               <label for="total">Grand Total:</label>
               <input type="text" name="total" id="total" placeholder="$">
             </div>
-            </div>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
+  </div>
 
-    <script src="scripts.js"></script>
-  </body>
+  <script src="scripts.js"></script>
+  <script></script>
+</body>
+
 </html>

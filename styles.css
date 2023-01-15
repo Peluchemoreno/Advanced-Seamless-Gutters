@@ -5,16 +5,14 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
 }
-
 body {
-  overflow-y: hidden;
+  /* overflow: hidden; */
+  /* overscroll-behavior-y: none; */
 }
-
 #canvas {
   border: 1px solid #000000;
   border-top: none;
   border-left: none;
-
 }
 
 .header-logo {
@@ -49,18 +47,18 @@ body {
 .customer-details-body {
   display: grid;
   grid-template-columns: 1fr 7fr;
-
+  margin-bottom: 0;
 }
 .customer-details-body2 {
   display: flex;
-
+  margin-top: 0;
 }
 #phone,
 #email {
   flex-grow: 1;
 }
 
-#email{
+#email {
   text-align: right;
 }
 
@@ -68,7 +66,7 @@ body {
   width: 40px;
 }
 
-select{
+select {
   text-align: right;
   border: none;
 }
@@ -83,15 +81,14 @@ select{
 .canvas-side,
 .material-side {
   display: inline-block;
-
 }
 
-.material-side{
+.material-side {
   border-bottom: 2px solid black;
   border-right: 2px solid black;
 }
 
-.canvas-side{
+.canvas-side {
   border-left: 2px solid black;
   border-bottom: 2px solid black;
 }
@@ -108,10 +105,9 @@ select{
   background-color: black;
   color: white;
   letter-spacing: 3px;
-
 }
 
-.job-notes{
+.job-notes {
   background-color: black;
 
   display: block;
@@ -119,16 +115,15 @@ select{
   margin-top: 10px;
 }
 
-#job-notes{
+#job-notes {
   width: 100%;
   padding: 10px;
 }
 
-
-.material-details-body,.extra-and-pricing-body {
+.material-details-body,
+.extra-and-pricing-body {
   display: grid;
   grid-template-columns: 1fr 2fr;
-
 }
 
 form {
@@ -146,15 +141,16 @@ label {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
 
-.material-details-body input,.extra-and-pricing-body input {
+.material-details-body input,
+.extra-and-pricing-body input {
   text-align: right;
   width: 100%;
   font-size: 12px;
   padding: 3px;
 }
 
-
-.material-details-body label,.extra-and-pricing-body label {
+.material-details-body label,
+.extra-and-pricing-body label {
   font-size: 10px;
   font-weight: bolder;
 }
