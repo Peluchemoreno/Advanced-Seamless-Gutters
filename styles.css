@@ -5,12 +5,11 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
 }
-body {
-  /* overflow: hidden; */
-  /* overscroll-behavior-y: none; */
-}
+
 #canvas {
-  background-image: ;
+  background-image: url(img/pintrestgrid.jpg);
+  background-size: cover;
+  background-color: aquamarine;
   border: 1px solid #000000;
   border-top: none;
   border-left: none;
@@ -24,7 +23,6 @@ body {
 
 .header-container {
   background-color: rgb(180, 192, 199);
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,7 +50,7 @@ body {
 }
 .customer-details-body2 {
   display: flex;
-  margin-top: 0;
+  margin-top: 0px;
 }
 #phone,
 #email {
@@ -113,7 +111,7 @@ select {
 
   display: block;
   letter-spacing: 3px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 #job-notes {
@@ -161,4 +159,29 @@ input {
   border: none;
   border-bottom: 1px solid black;
   padding: 5px;
+}
+
+.tools-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  padding: 0px 5px;
+}
+
+.tools-bar button,
+.tools-bar input {
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: silver;
+  flex-grow: 1;
+  margin: auto 3px;
+  max-height: 25px;
+}
+
+#clear-button {
+  background-color: rgb(231, 87, 87);
+}
+
+.undo,
+.redo {
 }

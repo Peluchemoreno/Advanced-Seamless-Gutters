@@ -10,8 +10,8 @@ let color = colorPicker.value;
 function startup() {
   const el = document.getElementById('canvas');
   el.width = 500;
-  el.height = 550;
-  const p = 10;
+  el.height = 450;
+
   el.addEventListener('touchstart', handleStart);
   el.addEventListener('touchend', handleEnd);
   el.addEventListener('touchcancel', handleCancel);
@@ -25,8 +25,8 @@ function startup() {
     context.lineTo(10, 550);
   }
 
-  context.strokeStyle = 'black';
-  context.stroke();
+  // context.strokeStyle = 'black';
+  // context.stroke();
 
 }
 
@@ -36,10 +36,10 @@ let c = canvas.getContext("2d");
 const clearButton = document.querySelector('#clear-button');
 clearButton.addEventListener('click', function () {
   const el = document.getElementById('canvas');
-  c.fillStyle = "white";
+  // c.fillStyle = "white";
   c.clearRect(0, 0, el.width, el.height);
-  c.fillRect(0, 0, el.width, el.height);
-  console.log("clearing");
+  el.style.backgroundImage = `url(img/pintrestgrid.jpg)`;
+  console.log('here');
 })
 
 
@@ -170,15 +170,3 @@ function log(msg) {
 }
 
 //-------------------------------------------------------------
-
-function drawGrid() {
-  const canvas = document.querySelector('#canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.moveTo(20, 20);
-  ctx.lineTo(400, 400);
-  context.strokeStyle = "black";
-  context.stroke();
-
-}
-
-drawGrid();

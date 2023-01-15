@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta content="width=device-width" initial-scale="1.0" maximum-scale="1.0" user-scalable="0" name="viewport" />
   <meta name="viewport" content="width=device-width" />
-
+  <link rel="icon" href="img/icons8-inspection-40.png" type="image/x-icon">
   <title>Bid Maker</title>
   <link rel="stylesheet" href="styles.css" />
 
@@ -48,14 +48,14 @@
             <button type="button">Draw</button>
             <button type="button">Undo</button>
             <button type="button">Redo</button>
-            <input type="color" name="color" id="color" />
+            <input type="color" name="color" id="color">
             <button type="button" id="clear-button">Clear</button>
-            <button type="button" id="lock-screen-button">Lock Screen</button>
+
           </div>
           <label for="job-notes" class="job-notes">
             JOB DESCRIPTION / NOTES
           </label>
-          <textarea name="job-description" id="job-notes" rows="10"></textarea>
+          <textarea name="job-description" id="job-notes" rows="8"></textarea>
         </div>
         <div class="material-side">
           <div class="material-details">
@@ -124,6 +124,9 @@
                 <option value="leaf-blaster">Leaf Blaster</option>
                 <option value="mesh">Mesh</option>
               </select>
+
+              <label for="screen-footage">Screen Footage:</label>
+              <input min="0" max="99999" type="text" name="screen-footage" id="screen-footage">
 
               <label for="other">Gutter and Ds:</label>
               <input type="text" name="other" id="other" placeholder="$">
