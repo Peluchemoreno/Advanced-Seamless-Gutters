@@ -6,14 +6,19 @@
   font-size: 12px;
 }
 
-#canvas {
+canvas {
+  border: 1px solid #ccc;
+  /* background-color: red; */
+}
+
+/* #canvas {
   background-image: url(img/pintrestgrid.jpg);
   background-size: cover;
   background-color: aquamarine;
   border: 1px solid #000000;
   border-top: none;
   border-left: none;
-}
+} */
 
 .header-logo {
   width: 300px;
