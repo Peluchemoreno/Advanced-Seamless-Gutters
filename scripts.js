@@ -12,43 +12,43 @@ function startup() {
 }
 
 document.addEventListener("DOMContentLoaded", startup);
-let c = canvas.getContext("2d");
-let color = "black";
-let drawWidth = "1";
-let isDrawing = false;
+// let c = canvas.getContext("2d");
+// let color = "black";
+// let drawWidth = "1";
+// let isDrawing = false;
 
 
 
-function start(e) {
-  e.preventDefault();
-  console.log(e);
-  // let x = e.offsetX;
-  // let y = e.offsetY;
-  isDrawing = true;
-  c.beginPath();
-  c.moveTo(e.offsetX, e.offsetY);
-  console.log(e.offsetX, e.offsetY);
-  // c.stroke();
-}
+// function start(e) {
+//   e.preventDefault();
+//   console.log(e);
+//   let x = e.offsetX;
+//   let y = e.offsetY;
+//   isDrawing = true;
+//   c.beginPath();
+//   c.moveTo(e.offsetX, e.offsetY);
+//   console.log(e.offsetX, e.offsetY);
+//   // c.stroke();
+// }
 
-function draw(e) {
-  e.preventDefault();
-  let x = e.offsetX;
-  let y = e.offsetY;
-  if (isDrawing) {
-    c.lineTo(x, y);
-    c.strokeStyle = color;
-    c.lineWidth = drawWidth;
-    c.lineCap = "round";
-    c.lineJoin = "round";
-    c.stroke();
-  }
-}
+// function draw(e) {
+//   e.preventDefault();
+//   let x = e.offsetX;
+//   let y = e.offsetY;
+//   if (isDrawing) {
+//     c.lineTo(x, y);
+//     c.strokeStyle = color;
+//     c.lineWidth = drawWidth;
+//     c.lineCap = "round";
+//     c.lineJoin = "round";
+//     c.stroke();
+//   }
+// }
 
-function end(e) {
-  e.preventDefault();
-  isDrawing = false;
-}
+// function end(e) {
+//   e.preventDefault();
+//   isDrawing = false;
+// }
 const clearButton = document.querySelector('#clear-button');
 clearButton.addEventListener('click', function () {
   const el = document.getElementById('canvas');
@@ -60,10 +60,10 @@ clearButton.addEventListener('click', function () {
 
 
 
-el.addEventListener("pointerdown", start, false);
-el.addEventListener("pointermove", draw, false);
-el.addEventListener("pointerup", end, false);
-el.addEventListener("pointercancel", cancel, false);
+// el.addEventListener("pointerdown", start, false);
+// el.addEventListener("pointermove", draw, false);
+// el.addEventListener("pointerup", end, false);
+// el.addEventListener("pointercancel", cancel, false);
 
 
 
@@ -74,22 +74,21 @@ el.addEventListener("pointercancel", cancel, false);
 
 function handleStart(evt) {
   evt.preventDefault();
-  let offset = evt.originalTarget.offsetTop;
-  // console.log(evt.changedTouches[0]);
-  console.log(typeof offset);
+  console.log(evt.target.offsetLeft, evt.target.offsetTop);
   const el = document.getElementById('canvas');
   const ctx = el.getContext('2d');
   const touches = evt.changedTouches;
+  // const offsetTop = evt.originalTarget.offsetTop;
+  // const offsetLeft = evt.originalTarget.offsetLeft;
 
   for (let i = 0; i < touches.length; i++) {
     // log(`touchstart: ${i}.`);
-    // touches[i].target.offsetTop = 0;
     ongoingTouches.push(copyTouch(touches[i]));
     const color = colorForTouch(touches[i]);
     // log(`color of touch with id ${touches[i].identifier} = ${color}`);
     ctx.beginPath();
-    ctx.moveTo(touches[i].pageX, touches[i].pageY - offset, 4, 0, 2 * Math.PI);  // a circle at the start
-    ctx.moveTo(0, 0);
+    ctx.moveTo(touches[i].pageX - 12, touches[i].pageY - 277, 4, 0, 2 * Math.PI);  // a circle at the start
+    // ctx.moveTo(0, 0);
     ctx.fillStyle = color;
     ctx.fill();
     // console.log(touches[i].pageY);
@@ -99,7 +98,8 @@ function handleStart(evt) {
 
 function handleMove(evt) {
   evt.preventDefault();
-  let offset = evt.originalTarget.offsetTop;
+  // let offsetTop = evt.originalTarget.offsetTop;
+  // let offsetLeft = evt.originalTarget.offsetLeft;
   const el = document.getElementById('canvas');
   const ctx = el.getContext('2d');
   const touches = evt.changedTouches;
@@ -110,9 +110,9 @@ function handleMove(evt) {
 
     if (idx >= 0) {
       ctx.beginPath();
-      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - offset);
+      ctx.moveTo(ongoingTouches[idx].pageX - 12, ongoingTouches[idx].pageY - 277);
       // ctx.moveTo(0, 0);
-      ctx.lineTo(touches[i].pageX, touches[i].pageY - offset);
+      ctx.lineTo(touches[i].pageX - 12, touches[i].pageY - 277);
       // ctx.lineTo(500, 550);
       ctx.lineWidth = 2;
       ctx.strokeStyle = color;
@@ -129,7 +129,8 @@ function handleMove(evt) {
 function handleEnd(evt) {
   evt.preventDefault();
   log("touchend");
-  let offset = evt.originalTarget.offsetTop;
+  // let offsetTop = evt.originalTarget.offsetTop;
+  // let offsetLeft = evt.originalTarget.offsetLeft;
   const el = document.getElementById('canvas');
   const ctx = el.getContext('2d');
   const touches = evt.changedTouches;
@@ -142,9 +143,9 @@ function handleEnd(evt) {
       ctx.lineWidth = 4;
       ctx.fillStyle = color;
       ctx.beginPath();
-      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - offset);
-      ctx.lineTo(touches[i].pageX, touches[i].pageY - offset);
-      // ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4 - offset, 8, 8);  // and a square at the end
+      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - 277);
+      ctx.lineTo(touches[i].pageX - 12, touches[i].pageY - 277);
+      ctx.fillRect(touches[i].pageX - 12 - 4, touches[i].pageY - 4 - 277, 8, 8);  // and a square at the end
       ongoingTouches.splice(idx, 1);  // remove it; we're done
     } else {
       log('can\'t figure out which touch to end');
