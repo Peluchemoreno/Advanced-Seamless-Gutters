@@ -7,9 +7,9 @@
 }
 
 #canvas {
-  background-image: url(img/pintrestgrid.jpg);
+  /* background-image: url(img/pintrestgrid.jpg); */
   background-size: cover;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   border: 1px solid #000000;
   border-top: none;
   border-left: none;
