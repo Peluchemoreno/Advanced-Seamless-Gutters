@@ -5,9 +5,10 @@ let startX, startY;
 let currentX, currentY;
 const el = document.getElementById('canvas');
 let ctx = el.getContext('2d');
-ctx.strokeStyle = color;
-ctx.fillStyle = color;
 let isDrawing = false;
+paths = [];
+points = [];
+let index = -1;
 
 const testing = document.querySelector('#job-notes');
 
@@ -16,7 +17,7 @@ function startup() {
   let context = el.getContext('2d');
   el.width = 500;
   el.height = 450;
-  gridSize = 40;
+  gridSize = 20;
   //===============draw grid=====================
   for (x = 0; x < el.width; x += gridSize) {
     context.moveTo(x, 0);
@@ -50,23 +51,25 @@ document.body.addEventListener("touchmove", function (e) {
   }
 }, { passive: false });
 
-ctx.strokeStyle = color;
+
+function updateColor(context) {
+  let color = document.querySelector('#color').value;
+  context.strokeStyle = color;
+  context.fillStyle = color;
+}
 
 el.addEventListener('pointerdown', function (event) {
+  event.preventDefault();
   startX = (event.pageX - el.offsetLeft);
   startY = (event.pageY - el.offsetTop);
   isDrawing = true;
-  console.log(startX, startY);
   let newX = Math.round(startX / gridSize) * gridSize;
   let newY = Math.round(startY / gridSize) * gridSize;
-  // console.log(newX, newY);
+  // points.push({ x: newX, y: newY });
+  // console.log(points);
   ctx.beginPath();
+  updateColor(ctx);
   ctx.moveTo(newX, newY);
-  ctx.strokeStyle = color;
-  // ctx.fillRect(newX, newY, 5, 5);
-  // ctx.stroke();
-  // console.log(ctx);
-
 });
 
 
@@ -74,198 +77,49 @@ el.addEventListener('pointerup', function (event) {
   event.preventDefault();
   isDrawing = false;
   const ctx = el.getContext('2d');
-  // let currentX, currentY, startX, startY;
-
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1;
-
-  let snapX = Math.round(currentX / gridSize) * gridSize;
-  let snapY = Math.round(currentY / gridSize) * gridSize;
-  // ctx.beginPath();
+  paths.push(ctx.getImageData(0, 0, el.width, el.height));
+  index += 1;
+  console.log(paths);
+  // console.log(points);
   ctx.moveTo(currentX, currentY);
   ctx.lineTo(currentX, currentY);
-  // ctx.fillRect(snapX, snapY, 5, 5);
-  // console.log(currentX, currentY);
   ctx.stroke();
-  // console.log("not drawing");
-
+  ctx.closePath();
 });
 
 
 el.addEventListener('touchcancel', handleCancel);
-// el.addEventListener('pointermove', function (event) {
-//   if (isDrawing) {
-//     // console.log(event);
-//     currentX = event.clientX - el.offsetLeft;
-//     currentY = event.clientY - el.offsetTop;
-//     console.log(currentX, currentY);
-//     // console.log('hi');
-//   }
-// });
 
 el.addEventListener('pointermove', function (event) {
   context = el.getContext('2d');
   if (isDrawing) {
-    // console.log(event);
+    // console.log(currentX, currentY);
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
-    // console.log(currentX, currentY);
-    // context.moveTo(currentX, currentY);
     let newX = Math.round(currentX / gridSize) * gridSize;
     let newY = Math.round(currentY / gridSize) * gridSize;
-
-    context.strokeStyle = color;
     context.lineTo(newX, newY);
-    context.lineWidth = 2;
+    context.lineWidth = 4;
     context.stroke();
-    // console.log('moving');
-
-    // const touches = event.changedTouches;
-
-    // for (let i = 0; i < touches.length; i++) {
-    //   const color = colorForTouch(touches[i]);
-    //   const idx = ongoingTouchIndexById(touches[i].identifier);
-
-    //   if (idx >= 0) {
-    //     ctx.beginPath();
-    //     ctx.moveTo(ongoingTouches[idx].pageX - el.offsetLeft, ongoingTouches[idx].pageY - el.offsetTop);
-    //     ctx.lineTo(touches[i].pageX - el.offsetLeft, touches[i].pageY - el.offsetTop);
-    //     ctx.lineWidth = 2;
-    //     ctx.strokeStyle = color;
-    //     ctx.stroke();
-
-    //     ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
-    //   } else {
-    //     log('can\'t figure out which touch to continue');
-    //   }
-    // }
-    // console.log('hi');
   }
+
 });
 
 
 
 
-// let c = canvas.getContext("2d");
+function clear() {
+  const el = document.getElementById('canvas');
+  ctx.clearRect(0, 0, el.width, el.height);
+  paths = [];
+  index = -1;
+  startup();
+
+}
+
 
 const clearButton = document.querySelector('#clear-button');
-clearButton.addEventListener('click', function () {
-  const el = document.getElementById('canvas');
-  // c.fillStyle = "white";
-  ctx.clearRect(0, 0, el.width, el.height);
-  // el.style.backgroundImage = `url(img/pintrestgrid.jpg)`;
-  startup();
-})
-
-
-//=================================
-
-
-
-
-// function handleStart(evt) {
-//   evt.preventDefault();
-//   const el = document.getElementById('canvas');
-//   const ctx = el.getContext('2d');
-
-//   let startX, startY;
-//   el.addEventListener('pointerdown', function (event) {
-//     startX = event.clientX - el.offsetLeft;
-//     startY = event.clientY - el.offsetTop;
-//   });
-
-
-
-
-
-
-//   // const touches = evt.changedTouches;
-
-//   // for (let i = 0; i < touches.length; i++) {
-//   //   ongoingTouches.push(copyTouch(touches[i]));
-//   //   ctx.beginPath();
-//   //   ctx.moveTo(touches[i].pageX - 12, touches[i].pageY - 277, 4, 0, 2 * Math.PI);  // a circle at the start
-//   //   ctx.fillStyle = color;
-//   //   ctx.fill();
-//   // }
-// }
-
-
-// function handleMove(evt) {
-//   evt.preventDefault();
-//   let currentX, currentY;
-//   const el = document.getElementById('canvas');
-//   const ctx = el.getContext('2d');
-
-
-//   el.addEventListener('pointermove', function (event) {
-//     currentX = event.clientX - el.offsetLeft;
-//     currentY = event.clientY - el.offsetTop;
-//   });
-
-
-
-
-//   // const touches = evt.changedTouches;
-
-//   // for (let i = 0; i < touches.length; i++) {
-//   //   const color = colorForTouch(touches[i]);
-//   //   const idx = ongoingTouchIndexById(touches[i].identifier);
-
-//   //   if (idx >= 0) {
-//   //     ctx.beginPath();
-//   //     ctx.moveTo(ongoingTouches[idx].pageX - 12, ongoingTouches[idx].pageY - 277);
-//   //     ctx.lineTo(touches[i].pageX - 12, touches[i].pageY - 277);
-//   //     ctx.lineWidth = 2;
-//   //     ctx.strokeStyle = color;
-//   //     ctx.stroke();
-
-//   //     ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
-//   //   } else {
-//   //     log('can\'t figure out which touch to continue');
-//   //   }
-//   // }
-// }
-
-
-// function handleEnd(evt) {
-//   evt.preventDefault();
-//   const el = document.getElementById('canvas');
-//   const ctx = el.getContext('2d');
-//   // let currentX, currentY, startX, startY;
-
-//   ctx.strokeStyle = 'black';
-//   ctx.lineWidth = 1;
-
-//   const snapX = Math.round(currentX / gridSize) * gridSize;
-//   const snapY = Math.round(currentY / gridSize) * gridSize;
-
-//   ctx.beginPath();
-//   ctx.moveTo(startX, startY);
-//   ctx.lineTo(snapX, snapY);
-//   ctx.stroke();
-
-
-
-//   // const touches = evt.changedTouches;
-
-//   // for (let i = 0; i < touches.length; i++) {
-//   //   const color = colorForTouch(touches[i]);
-//   //   let idx = ongoingTouchIndexById(touches[i].identifier);
-
-//   //   if (idx >= 0) {
-//   //     ctx.lineWidth = 4;
-//   //     ctx.fillStyle = color;
-//   //     ctx.beginPath();
-//   //     ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - 277);
-//   //     ctx.lineTo(touches[i].pageX - 12, touches[i].pageY - 277);
-//   //     // ctx.fillRect(touches[i].pageX - 12 - 4, touches[i].pageY - 4 - 277, 8, 8);  // and a square at the end
-//   //     ongoingTouches.splice(idx, 1);  // remove it; we're done
-//   //   } else {
-//   //     log('can\'t figure out which touch to end');
-//   //   }
-//   // }
-// }
+clearButton.addEventListener('click', clear);
 
 function handleCancel(evt) {
   evt.preventDefault();
@@ -284,8 +138,6 @@ function colorForTouch() {
   return color;
 }
 
-// console.log(colorPicker.value);
-
 function copyTouch({ identifier, pageX, pageY }) {
   return { identifier, pageX, pageY };
 }
@@ -302,25 +154,13 @@ function ongoingTouchIndexById(idToFind) {
   return -1;    // not found
 }
 
+function undo() {
 
-function log(msg) {
-  // const container = document.getElementById('log');
-  // container.textContent = `${msg} \n${container.textContent}`;
+  if (index <= 0) {
+    clear();
+  } else {
+    index -= 1;
+    paths.pop();
+    ctx.putImageData(paths[index], 0, 0);
+  }
 }
-
-//-------------------------------------------------------------
-
-// function drawGrid(cvs, gridSize) {
-//   const canvas = document.querySelector('#canvas');
-//   const ctx = cvs.getContext('2d');
-//   ctx.strokeStyle = 'lightgray';
-//   ctx.lineWidth = .5;
-//   for (let x = 0; x < cvs.width; x += gridSize) {
-//     ctx.beginPath();
-//     ctx.moveTo(x, 0);
-//     ctx.lineTo(x, cvs.height);
-//     ctx.stroke();
-//   }
-// }
-
-// drawGrid(canvas, 500);

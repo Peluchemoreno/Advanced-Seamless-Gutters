@@ -44,11 +44,8 @@
         <div class="canvas-side">
           <canvas id="canvas"></canvas>
           <div class="tools-bar">
-            <button type="button">Line</button>
-            <button type="button">Draw</button>
-            <button type="button">Undo</button>
-            <button type="button">Redo</button>
             <input type="color" name="color" id="color">
+            <button type="button" onclick="undo()">Undo</button>
             <button type="button" id="clear-button">Clear</button>
 
           </div>
@@ -69,8 +66,13 @@
               <label for="coil-footage" class="coil-footage">Coil Footage:</label>
               <input type="text" min="0" max="99999" name="coil-footage" id="coil-footage" />
 
-              <label for="size" class="size-label">Size:</label>
-              <input type="text" name="size" id="size" />
+              <label for="size" class="size-label">Coil Size:</label>
+              <select name="coil-size" id="size">
+                <option value="5inch">5"</option>
+                <option value="6inch">6"</option>
+                <option value="7inch">7"</option>
+                <option value="8inch">8"</option>
+              </select>
 
               <label for="downspout-color" class="downspout-color">DS Color:</label>
               <input type="text" name="color" id="downspout-color" />
@@ -79,7 +81,13 @@
               <input type="text" min="0" max="99999" name="ds-footage" id="ds-footage" />
 
               <label for="downspout-size" class="downspout-size">DS Size:</label>
-              <input type="text" name="color" id="downspout-size" />
+              <select name="downspout-size" id="downspout-size">
+                <option value="">2x3</option>
+                <option value="">3x4</option>
+                <option value="">4x5</option>
+                <option value="">3" Round</option>
+                <option value="">4" Round</option>
+              </select>
 
               <label for="ism" class="ism">ISM:</label>
               <input type="text" min="0" max="99999" name="ism" id="ism" />
