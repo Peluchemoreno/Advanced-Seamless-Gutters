@@ -44,10 +44,18 @@
         <div class="canvas-side">
           <canvas id="canvas"></canvas>
           <div class="tools-bar">
+            <select id="tool-select">
+              <option value="gutter">Gutter</option>
+              <option value="gutter-w-screen">Gutter w/ Screen</option>
+              <option value="flashing">Flashing</option>
+              <option value="downspout">Downspout</option>
+              <option value="drop">Drop to lower</option>
+              <option value="fascia-repair">Fascia Repair/Replace</option>
+              <option value="existing-gutter">Existing Gutter</option>
+            </select>
             <input type="color" name="color" id="color">
             <button type="button" onclick="undo()">Undo</button>
             <button type="button" id="clear-button">Clear</button>
-
           </div>
           <label for="job-notes" class="job-notes">
             JOB DESCRIPTION / NOTES

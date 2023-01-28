@@ -181,3 +181,11 @@ input {
 #clear-button {
   background-color: rgb(231, 87, 87);
 }
+
+#tool-select {
+  text-align: center;
+  background-color: silver;
+  border: none;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
