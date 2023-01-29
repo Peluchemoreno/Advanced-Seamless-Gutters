@@ -47,15 +47,16 @@
             <select id="tool-select">
               <option value="gutter">Gutter</option>
               <option value="gutter-w-screen">Gutter w/ Screen</option>
-              <option value="flashing">Flashing</option>
+              <option value="existing-gutter">Existing Gutter</option>
               <option value="downspout">Downspout</option>
               <option value="drop">Drop to lower</option>
+              <option value="free-text">Elbow Seq/Piece Length</option>
+              <option value="flashing">Flashing</option>
               <option value="fascia-repair">Fascia Repair/Replace</option>
-              <option value="existing-gutter">Existing Gutter</option>
             </select>
             <input type="number" min="10" max="50" id="grid-size" value="20">
             <input type="color" name="color" id="color">
-            <button type="button" onclick="undo()">Undo</button>
+            <button type="button" class="undo-button" onclick="undo()">Undo</button>
             <button type="button" id="clear-button">Clear</button>
           </div>
           <label for="job-notes" class="job-notes">
@@ -163,6 +164,7 @@
     </form>
   </div>
 
+  <script src="canvasInput.min.js"></script>
   <script src="scripts.js"></script>
   <script></script>
 </body>

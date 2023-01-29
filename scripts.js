@@ -1,3 +1,4 @@
+let undoBtn = document.querySelector('.undo-button');
 const clearButton = document.querySelector('#clear-button');
 const ongoingTouches = [];
 const colorPicker = document.querySelector('#color');
@@ -12,9 +13,13 @@ points = [];
 let index = -1;
 const tool = document.querySelector('#tool-select');
 const gridNumber = document.querySelector('#grid-size');
+let elbowSequence;
+let pieceLength;
 
 
 const testing = document.querySelector('#job-notes');
+
+
 
 function updateGridSize(number) {
   let gridNumber = document.querySelector('#grid-size');
@@ -42,6 +47,8 @@ function startup() {
     context.lineTo(el.width, y);
     context.stroke();
   }
+
+  updateGridButton(undoBtn);
 }
 
 document.addEventListener("DOMContentLoaded", startup);
@@ -49,6 +56,7 @@ document.addEventListener("DOMContentLoaded", startup);
 document.body.addEventListener("pointerdown", function (e) {
   if (e.target == canvas) {
     e.preventDefault();
+    updateGridButton(undoBtn);
   }
 }, { passive: false });
 document.body.addEventListener("touchend", function (e) {
@@ -69,77 +77,60 @@ function updateColor(context) {
   context.fillStyle = color;
 }
 
+function handleDraw() {
+  startX = (event.pageX - el.offsetLeft);
+  startY = (event.pageY - el.offsetTop);
+  isDrawing = true;
+  let newX = Math.round(startX / gridSize) * gridSize;
+  let newY = Math.round(startY / gridSize) * gridSize;
+  ctx.beginPath();
+  updateColor(ctx);
+  ctx.moveTo(newX, newY);
+}
+
 el.addEventListener('pointerdown', function (event) {
   event.preventDefault();
 
   if (tool.value === 'gutter') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    updateColor(ctx);
-    ctx.moveTo(newX, newY);
+    handleDraw();
   } else if (tool.value === 'existing-gutter') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
-    ctx.beginPath();
-    ctx.setLineDash([5, 5]);
-    updateColor(ctx);
-    ctx.moveTo(newX, newY);
+    handleDraw();
   } else if (tool.value === 'gutter-w-screen') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    updateColor(ctx);
-    ctx.moveTo(newX, newY);
+    handleDraw();
   } else if (tool.value === 'drop') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
     isDrawing = true;
     let newX = Math.round(startX / gridSize) * gridSize;
     let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
     ctx.beginPath();
     ctx.setLineDash([]);
     updateColor(ctx);
-    ctx.moveTo(newX, newY);
+    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
+    context.lineWidth = 1;
+    context.stroke();
   } else if (tool.value === 'downspout') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
     isDrawing = true;
     let newX = Math.round(startX / gridSize) * gridSize;
     let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
     ctx.beginPath();
     ctx.setLineDash([]);
     updateColor(ctx);
     ctx.moveTo(newX, newY);
+    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
+    context.fillStyle = updateColor(ctx);
+    context.lineWidth = 1;
+    context.fill();
+    // elbowSequence = prompt('Type in the elbow sequence. (eg. AABA)');
+    console.log(elbowSequence);
   } else if (tool.value === 'flashing') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
     isDrawing = true;
     let newX = Math.round(startX / gridSize) * gridSize;
     let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
     ctx.beginPath();
     ctx.setLineDash([]);
     updateColor(ctx);
@@ -150,13 +141,23 @@ el.addEventListener('pointerdown', function (event) {
     isDrawing = true;
     let newX = Math.round(startX / gridSize) * gridSize;
     let newY = Math.round(startY / gridSize) * gridSize;
-    // points.push({ x: newX, y: newY });
-    // console.log(points);
     ctx.beginPath();
     ctx.setLineDash([]);
     ctx.fillStyle = 'red';
     ctx.strokeStyle = 'red';
     ctx.moveTo(newX, newY);
+  } else if (tool.value === 'free-text') {
+    startX = (event.pageX - el.offsetLeft);
+    startY = (event.pageY - el.offsetTop);
+    let userInput = prompt('Type in the elbow sequence or the length of the piece. (ex: AABA, 57")');
+    ctx.font = '10px Arial';
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'center';
+    if (!userInput) {
+      return
+    } else {
+      ctx.fillText(`${userInput}`, startX, startY);
+    }
   }
 
 });
@@ -195,28 +196,6 @@ el.addEventListener('pointermove', function (event) {
     context.lineWidth = 2;
     context.stroke();
 
-  } else if (isDrawing && tool.value === 'drop') {
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * (gridSize);
-    let newY = Math.round(currentY / gridSize) * (gridSize);
-    context.setLineDash([]);
-    context.beginPath();
-    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
-    // context.lineTo(newX, newY);
-    context.lineWidth = 1;
-    context.stroke();
-  } else if (isDrawing && tool.value === 'downspout') {
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * (gridSize);
-    let newY = Math.round(currentY / gridSize) * (gridSize);
-    context.setLineDash([]);
-    context.beginPath();
-    context.arc(newX, newY, gridSize / 2, 0, 2 * Math.PI);
-    context.fillStyle = updateColor(ctx);
-    context.lineWidth = 1;
-    context.fill();
   } else if (isDrawing && tool.value === 'flashing') {
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
@@ -253,6 +232,7 @@ el.addEventListener('pointerup', function (event) {
   ctx.lineTo(currentX, currentY);
   ctx.stroke();
   ctx.closePath();
+  updateGridButton(undoBtn);
 });
 
 
@@ -264,6 +244,7 @@ function clear() {
   ctx.clearRect(0, 0, el.width, el.height);
   paths = [];
   index = -1;
+  updateGridButton(undoBtn);
   startup();
 
 }
@@ -280,12 +261,6 @@ function handleCancel(evt) {
     let idx = ongoingTouchIndexById(touches[i].identifier);
     ongoingTouches.splice(idx, 1);  // remove it; we're done
   }
-}
-
-function colorForTouch() {
-  const colorPicker = document.querySelector('#color');
-  let color = colorPicker.value;
-  return color;
 }
 
 function copyTouch({ identifier, pageX, pageY }) {
@@ -315,8 +290,15 @@ function undo() {
   }
 }
 
+function updateGridButton(element) {
+  if (paths.length > 0) {
+    element.innerText = 'Undo';
+    element.style.backgroundColor = 'silver';
+  } else {
+    element.style.backgroundColor = '#66e6aa';
+    element.innerText = 'Update Grid';
+  }
+}
 
-//====================================================
 
-
-// console.log(typeof parseInt(gridNumber.value));
+// let number = prompt('enter a number');

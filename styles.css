@@ -7,7 +7,7 @@
 }
 
 #canvas {
-  /* background-image: url(img/pintrestgrid.jpg); */
+  /* background-color: transparent; */
   background-size: cover;
   /* background-color: aquamarine; */
   border: 1px solid #000000;
@@ -183,7 +183,7 @@ input {
 }
 
 #clear-button {
-  background-color: rgb(231, 87, 87);
+  background-color: rgb(241, 112, 112);
 }
 
 #tool-select {
