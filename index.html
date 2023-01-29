@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="whole">
 
 <head>
   <meta charset="UTF-8" />
@@ -58,11 +58,13 @@
             <input type="color" name="color" id="color">
             <button type="button" class="undo-button" onclick="undo()">Undo</button>
             <button type="button" id="clear-button">Clear</button>
+            <button type="button" id="show-legend" onclick="showLegend()">LGND</button>
+            <button type="button" id="finish-button" onclick="finish()">Done</button>
           </div>
           <label for="job-notes" class="job-notes">
             JOB DESCRIPTION / NOTES
           </label>
-          <textarea name="job-description" id="job-notes" rows="8"></textarea>
+          <textarea name="job-description" id="job-notes"></textarea>
         </div>
         <div class="material-side">
           <div class="material-details">
@@ -159,12 +161,17 @@
               <input type="text" name="total" id="total" placeholder="$">
             </div>
           </div>
+          <div class="legend">
+            <img class="legend-pic" src="img/legend.png">
+          </div>
         </div>
       </div>
     </form>
   </div>
 
-  <script src="canvasInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="scripts.js"></script>
   <script></script>
 </body>

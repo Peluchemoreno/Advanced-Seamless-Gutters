@@ -133,7 +133,8 @@ el.addEventListener('pointerdown', function (event) {
     let newY = Math.round(startY / gridSize) * gridSize;
     ctx.beginPath();
     ctx.setLineDash([]);
-    updateColor(ctx);
+    ctx.fillStyle = 'blue';
+    ctx.strokeStyle = 'blue';
     ctx.moveTo(newX, newY);
   } else if (tool.value === 'fascia-repair') {
     startX = (event.pageX - el.offsetLeft);
@@ -202,7 +203,7 @@ el.addEventListener('pointermove', function (event) {
     let newX = Math.round(currentX / gridSize) * gridSize;
     let newY = Math.round(currentY / gridSize) * gridSize;
     context.setLineDash([]);
-    context.lineTo(newX + 4, newY - 4);
+    context.lineTo(newX, newY);
     context.moveTo(newX + 4, newY - 4);
 
     context.lineWidth = 2;
@@ -295,10 +296,36 @@ function updateGridButton(element) {
     element.innerText = 'Undo';
     element.style.backgroundColor = 'silver';
   } else {
-    element.style.backgroundColor = '#66e6aa';
+    element.style.backgroundColor = '#d9f170';
     element.innerText = 'Update Grid';
   }
+};
+
+function showLegend() {
+  legendPic = document.querySelector('.legend-pic');
+  legendPic.classList.toggle('hidden');
+};
+
+
+function finish() {
+
+  window.onbeforeprint = (event) => {
+    toolsBar = document.querySelector('.tools-bar');
+    toolsBar.style.display = 'none';
+    legendPic = document.querySelector('.legend-pic');
+    legendPic.classList.remove('hidden');
+
+
+  };
+
+  window.print();
+
 }
 
 
-// let number = prompt('enter a number');
+window.onafterprint = (event) => {
+  toolsBar = document.querySelector('.tools-bar');
+  toolsBar.style.display = 'flex';
+  showLegend();
+
+}

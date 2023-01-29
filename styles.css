@@ -168,7 +168,6 @@ input {
   margin-bottom: 0;
   padding: 0px 5px;
   max-width: 500px;
-  /* display: none; */
 }
 
 .tools-bar button,
@@ -180,6 +179,12 @@ input {
   flex-grow: 1;
   margin: auto 3px;
   max-height: 30px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tools-bar select {
+  font-weight: 400;
 }
 
 #clear-button {
@@ -187,11 +192,15 @@ input {
 }
 
 #tool-select {
-  text-align: center;
+  text-align: left;
   background-color: silver;
   border: none;
   border-radius: 5px;
-  flex-shrink: 0;
+  width: 70px;
+}
+
+#finish-button {
+  background: rgb(94, 235, 94);
 }
 
 #grid-size {
@@ -203,4 +212,18 @@ input {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
+}
+
+.legend {
+  text-align: center;
+  padding: 10px;
+  transition: height 1s ease-in-out;
+}
+
+.legend-pic {
+  height: 160px;
+}
+
+.legend-pic.hidden {
+  height: 0px;
 }
