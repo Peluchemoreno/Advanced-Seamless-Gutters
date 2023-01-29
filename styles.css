@@ -197,3 +197,7 @@ input {
 #grid-size {
   max-width: 70px;
 }
+
+@media print {
+body {-webkit-print-color-adjust: exact;}
+}
