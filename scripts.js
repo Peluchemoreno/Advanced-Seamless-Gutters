@@ -11,16 +11,24 @@ paths = [];
 points = [];
 let index = -1;
 const tool = document.querySelector('#tool-select');
+const gridNumber = document.querySelector('#grid-size');
 
 
 const testing = document.querySelector('#job-notes');
 
+function updateGridSize(number) {
+  let gridNumber = document.querySelector('#grid-size');
+  gridNumber.value = number;
+  return number;
+}
 
 function startup() {
   let context = el.getContext('2d');
+  let gridNumber = document.querySelector('#grid-size');
   el.width = 500;
   el.height = 450;
-  gridSize = 15;
+  gridSize = updateGridSize(parseInt(gridNumber.value));
+
   //===============draw grid=====================
   for (x = 0; x < el.width; x += gridSize) {
     context.moveTo(x, 0);
@@ -100,6 +108,30 @@ el.addEventListener('pointerdown', function (event) {
     ctx.setLineDash([]);
     updateColor(ctx);
     ctx.moveTo(newX, newY);
+  } else if (tool.value === 'drop') {
+    startX = (event.pageX - el.offsetLeft);
+    startY = (event.pageY - el.offsetTop);
+    isDrawing = true;
+    let newX = Math.round(startX / gridSize) * gridSize;
+    let newY = Math.round(startY / gridSize) * gridSize;
+    // points.push({ x: newX, y: newY });
+    // console.log(points);
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    updateColor(ctx);
+    ctx.moveTo(newX, newY);
+  } else if (tool.value === 'downspout') {
+    startX = (event.pageX - el.offsetLeft);
+    startY = (event.pageY - el.offsetTop);
+    isDrawing = true;
+    let newX = Math.round(startX / gridSize) * gridSize;
+    let newY = Math.round(startY / gridSize) * gridSize;
+    // points.push({ x: newX, y: newY });
+    // console.log(points);
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    updateColor(ctx);
+    ctx.moveTo(newX, newY);
   } else if (tool.value === 'flashing') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
@@ -111,6 +143,19 @@ el.addEventListener('pointerdown', function (event) {
     ctx.beginPath();
     ctx.setLineDash([]);
     updateColor(ctx);
+    ctx.moveTo(newX, newY);
+  } else if (tool.value === 'fascia-repair') {
+    startX = (event.pageX - el.offsetLeft);
+    startY = (event.pageY - el.offsetTop);
+    isDrawing = true;
+    let newX = Math.round(startX / gridSize) * gridSize;
+    let newY = Math.round(startY / gridSize) * gridSize;
+    // points.push({ x: newX, y: newY });
+    // console.log(points);
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'red';
     ctx.moveTo(newX, newY);
   }
 
@@ -145,23 +190,54 @@ el.addEventListener('pointermove', function (event) {
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;
     let newY = Math.round(currentY / gridSize) * gridSize;
-    context.setLineDash([1, 2]);
+    context.setLineDash([2, 2]);
     context.lineTo(newX, newY);
-    context.lineWidth = 1;
+    context.lineWidth = 2;
     context.stroke();
 
-  } else if (isDrawing && tool.value === 'flashing') {
+  } else if (isDrawing && tool.value === 'drop') {
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * (gridSize);
     let newY = Math.round(currentY / gridSize) * (gridSize);
     context.setLineDash([]);
-    context.lineTo(newX, newY);
-    // context.stroke();
-    // context.moveTo(newX + (gridSize / 2), newY + (gridSize + 2));
-    // context.lineTo(newX + (gridSize / 2), newY + (gridSize + 2));
-    // context.lineTo(newX + 3, newY + 3);
+    context.beginPath();
+    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
+    // context.lineTo(newX, newY);
     context.lineWidth = 1;
+    context.stroke();
+  } else if (isDrawing && tool.value === 'downspout') {
+    currentX = (event.pageX - el.offsetLeft);
+    currentY = (event.pageY - el.offsetTop);
+    let newX = Math.round(currentX / gridSize) * (gridSize);
+    let newY = Math.round(currentY / gridSize) * (gridSize);
+    context.setLineDash([]);
+    context.beginPath();
+    context.arc(newX, newY, gridSize / 2, 0, 2 * Math.PI);
+    context.fillStyle = updateColor(ctx);
+    context.lineWidth = 1;
+    context.fill();
+  } else if (isDrawing && tool.value === 'flashing') {
+    currentX = (event.pageX - el.offsetLeft);
+    currentY = (event.pageY - el.offsetTop);
+    let newX = Math.round(currentX / gridSize) * gridSize;
+    let newY = Math.round(currentY / gridSize) * gridSize;
+    context.setLineDash([]);
+    context.lineTo(newX + 4, newY - 4);
+    context.moveTo(newX + 4, newY - 4);
+
+    context.lineWidth = 2;
+    context.stroke();
+  } else if (isDrawing && tool.value === 'fascia-repair') {
+    currentX = (event.pageX - el.offsetLeft);
+    currentY = (event.pageY - el.offsetTop);
+    let newX = Math.round(currentX / gridSize) * gridSize;
+    let newY = Math.round(currentY / gridSize) * gridSize;
+    context.setLineDash([]);
+    context.lineTo(newX, newY);
+    context.moveTo(newX - 5, newY + 5);
+
+    context.lineWidth = 2;
     context.stroke();
   }
 
@@ -241,3 +317,6 @@ function undo() {
 
 
 //====================================================
+
+
+// console.log(typeof parseInt(gridNumber.value));
