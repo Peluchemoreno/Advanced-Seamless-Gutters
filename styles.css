@@ -22,7 +22,7 @@
 }
 
 .header-container {
-  background-color: rgb(180, 192, 199) !important;
+  background-color: rgb(180, 192, 199);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +36,7 @@
 
 .customer-details-header {
   color: rgb(255, 255, 255);
-  background-color: black !important;
+  background-color: black;
   margin: 0;
   padding: 10px;
   letter-spacing: 3px;
@@ -101,13 +101,13 @@ select {
 .job-notes-header {
   text-align: center;
   padding: 5px;
-  background-color: black !important;
-  color: white !important;
+  background-color: black;
+  color: white;
   letter-spacing: 3px;
 }
 
 .job-notes {
-  background-color: black !important;
+  background-color: black;
 
   display: block;
   letter-spacing: 3px;
@@ -131,8 +131,8 @@ form {
 }
 
 label {
-  background-color: rgb(65, 65, 65) !important;
-  color: rgb(255, 255, 255) !important;
+  background-color: rgb(65, 65, 65);
+  color: rgb(255, 255, 255);
 
   padding: 5px 10px;
   font-weight: bold;
@@ -176,7 +176,7 @@ input {
 .tools-bar select {
   border-radius: 5px;
   padding: 5px 10px;
-  background-color: silver !important;
+  background-color: silver;
   flex-grow: 1;
   margin: auto 3px;
   max-height: 30px;
@@ -188,7 +188,7 @@ input {
 
 #tool-select {
   text-align: center;
-  background-color: silver !important;
+  background-color: silver;
   border: none;
   border-radius: 5px;
   flex-shrink: 0;
