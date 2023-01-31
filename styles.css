@@ -22,7 +22,6 @@
 }
 
 .header-container {
-  background-color: rgb(180, 192, 199);
   display: flex;
   justify-content: space-between;
   align-items: center;
