@@ -173,7 +173,7 @@ el.addEventListener('pointerdown', function (event) {
     let userInput = prompt('Type in the elbow sequence or the length of the piece. (ex: AABA, 57")');
     ctx.font = '8px Arial';
     ctx.fillStyle = 'black';
-    ctx.textAlign = 'left';
+    ctx.textAlign = 'center';
     if (!userInput) {
       return
     } else {
