@@ -119,12 +119,32 @@ el.addEventListener('pointerdown', function (event) {
     ctx.setLineDash([]);
     updateColor(ctx);
     ctx.moveTo(newX, newY);
-    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
-    context.fillStyle = updateColor(ctx);
+    ctx.lineTo(newX + gridSize / 3, newY + gridSize / 3);
+    ctx.moveTo(newX, newY);
+    ctx.lineTo(newX - gridSize / 3, newY + gridSize / 3);
+    ctx.moveTo(newX, newY);
+    ctx.lineTo(newX - gridSize / 3, newY - gridSize / 3);
+    ctx.moveTo(newX, newY);
+    ctx.lineTo(newX + gridSize / 3, newY - gridSize / 3);
+
+    updateColor(ctx);
     context.lineWidth = 1;
-    context.fill();
+    context.stroke();
     // elbowSequence = prompt('Type in the elbow sequence. (eg. AABA)');
     console.log(elbowSequence);
+  } else if (tool.value === 'valley-shield') {
+    startX = (event.pageX - el.offsetLeft);
+    startY = (event.pageY - el.offsetTop);
+    isDrawing = true;
+    let newX = Math.round(startX / gridSize) * gridSize;
+    let newY = Math.round(startY / gridSize) * gridSize;
+    ctx.beginPath();
+    // ctx.setLineDash([]);
+    updateColor(ctx);
+    ctx.moveTo(newX, newY);
+    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
+    context.fill();
+
   } else if (tool.value === 'flashing') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
@@ -151,9 +171,9 @@ el.addEventListener('pointerdown', function (event) {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
     let userInput = prompt('Type in the elbow sequence or the length of the piece. (ex: AABA, 57")');
-    ctx.font = '10px Arial';
+    ctx.font = '8px Arial';
     ctx.fillStyle = 'black';
-    ctx.textAlign = 'center';
+    ctx.textAlign = 'left';
     if (!userInput) {
       return
     } else {
@@ -169,6 +189,7 @@ el.addEventListener('pointerdown', function (event) {
 el.addEventListener('pointermove', function (event) {
   context = el.getContext('2d');
   if (isDrawing && tool.value === 'gutter') {
+    context.globalCompositeOperation = 'source-over';
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;
@@ -182,12 +203,21 @@ el.addEventListener('pointermove', function (event) {
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;
     let newY = Math.round(currentY / gridSize) * gridSize;
-    context.setLineDash([40, 5, 5, 5, 5, 5, 5, 5]);
+    // context.setLineDash([40, 5, 5, 5, 5, 5, 5, 5]);
     context.lineTo(newX, newY);
-    context.lineWidth = 2;
+    context.lineWidth = gridSize / 2.5;
+    // context.moveTo(newX, newY);
+    // context.lineTo(newX, newY);
+    context.stroke();
+    context.lineWidth = 1;
+    // context.strokeStyle = 'red';
+    // context.fillStyle = 'red';
+    context.globalCompositeOperation = 'xor';
+
     context.stroke();
 
   } else if (isDrawing && tool.value === 'existing-gutter') {
+    context.globalCompositeOperation = 'source-over';
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;
@@ -198,6 +228,7 @@ el.addEventListener('pointermove', function (event) {
     context.stroke();
 
   } else if (isDrawing && tool.value === 'flashing') {
+    context.globalCompositeOperation = 'source-over';
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;
@@ -209,6 +240,7 @@ el.addEventListener('pointermove', function (event) {
     context.lineWidth = 2;
     context.stroke();
   } else if (isDrawing && tool.value === 'fascia-repair') {
+    context.globalCompositeOperation = 'source-over';
     currentX = (event.pageX - el.offsetLeft);
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;

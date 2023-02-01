@@ -214,7 +214,7 @@ input {
 }
 
 .legend {
-  text-align: center;
+  /* text-align: center; */
   padding: 10px;
   transition: height 1s ease-in-out;
 }

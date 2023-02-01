@@ -40,6 +40,7 @@
           <input type="email" name="email" id="email" />
         </div>
       </div>
+
       <div class="section2">
         <div class="canvas-side">
           <canvas id="canvas"></canvas>
@@ -50,11 +51,12 @@
               <option value="existing-gutter">Existing Gutter</option>
               <option value="downspout">Downspout</option>
               <option value="drop">Drop to lower</option>
+              <option value="valley-shield">Valley Shield</option>
               <option value="free-text">Elbow Seq/Piece Length</option>
-              <option value="flashing">Flashing</option>
-              <option value="fascia-repair">Fascia Repair/Replace</option>
+              <!-- <option value="flashing">Flashing</option>
+              <option value="fascia-repair">Fascia Repair/Replace</option> -->
             </select>
-            <input type="number" min="10" max="50" id="grid-size" value="20">
+            <input type="number" min="10" max="50" id="grid-size" value="14">
             <input type="color" name="color" id="color">
             <button type="button" class="undo-button" onclick="undo()">Undo</button>
             <button type="button" id="clear-button">Clear</button>
@@ -79,12 +81,7 @@
               <input type="text" min="0" max="99999" name="coil-footage" id="coil-footage" />
 
               <label for="size" class="size-label">Coil Size:</label>
-              <select name="coil-size" id="size">
-                <option value="5inch">5"</option>
-                <option value="6inch">6"</option>
-                <option value="7inch">7"</option>
-                <option value="8inch">8"</option>
-              </select>
+              <input type="text" maxlength="100" id="size">
 
               <label for="downspout-color" class="downspout-color">DS Color:</label>
               <input type="text" name="color" id="downspout-color" />
@@ -93,13 +90,7 @@
               <input type="text" min="0" max="99999" name="ds-footage" id="ds-footage" />
 
               <label for="downspout-size" class="downspout-size">DS Size:</label>
-              <select name="downspout-size" id="downspout-size">
-                <option value="">2x3</option>
-                <option value="">3x4</option>
-                <option value="">4x5</option>
-                <option value="">3" Round</option>
-                <option value="">4" Round</option>
-              </select>
+              <input type="text" maxlength="100" id="downspout=size">
 
               <label for="ism" class="ism">ISM:</label>
               <input type="text" min="0" max="99999" name="ism" id="ism" />
@@ -110,11 +101,8 @@
               <label for="custom-miters" class="custom-miters">Custom Miters:</label>
               <input type="text" min="0" max="99999" name="custom-miters" id="custom-miters" />
 
-              <label for="end-caps-left">End Caps (L):</label>
-              <input min="0" max="99999" type="text" name="end-caps-left" id="end-caps-left">
-
-              <label for="end-caps-right">End Caps (R):</label>
-              <input min="0" max="99999" type="text" name="end-caps-right" id="end-caps-right">
+              <label for="end-caps">End Caps:</label>
+              <input min="0" max="99999" type="text" name="end-caps" id="end-caps">
 
               <label for="a-elbows">A's:</label>
               <input min="0" max="99999" type="text" name="a-elbows" id="a-elbows">
@@ -138,15 +126,10 @@
               <input min="0" max="99999" type="text" name="drip-edge" id="drip-edge">
 
               <label for="screen">Screen:</label>
-              <select name="screen" id="screen">
-                <option value="none">No Screen</option>
-                <option value="smart-flo">Smart Flo</option>
-                <option value="leaf-blaster">Leaf Blaster</option>
-                <option value="mesh">Mesh</option>
-              </select>
+              <input type="text" min="0" max="100" name="screen" id="screen">
 
-              <label for="screen-footage">Screen Footage:</label>
-              <input min="0" max="99999" type="text" name="screen-footage" id="screen-footage">
+              <!-- <label for="screen-footage">Screen Footage:</label>
+              <input min="0" max="99999" type="text" name="screen-footage" id="screen-footage"> -->
 
               <label for="other">Gutter and Ds:</label>
               <input type="text" name="other" id="other" placeholder="$">
@@ -161,9 +144,7 @@
               <input type="text" name="total" id="total" placeholder="$">
             </div>
           </div>
-          <div class="legend">
-            <img class="legend-pic" src="img/legend.png">
-          </div>
+
         </div>
       </div>
     </form>
