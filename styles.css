@@ -115,8 +115,9 @@ select {
 
 #job-notes {
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   font-size: 11px;
+  resize: none;
 }
 
 .material-details-body,

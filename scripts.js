@@ -31,7 +31,7 @@ function startup() {
   let context = el.getContext('2d');
   let gridNumber = document.querySelector('#grid-size');
   el.width = 500;
-  el.height = 550;
+  el.height = 500;
   gridSize = updateGridSize(parseInt(gridNumber.value));
 
   if (window.chrome) {
