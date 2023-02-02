@@ -66,7 +66,7 @@
           <label for="job-notes" class="job-notes">
             JOB DESCRIPTION / NOTES
           </label>
-          <textarea name="job-description" id="job-notes"></textarea>
+          <textarea name="job-description" id="job-notes" rows="10"></textarea>
         </div>
         <div class="material-side">
           <div class="material-details">
@@ -125,8 +125,9 @@
               <label for="drip-edge">Drip Edge:</label>
               <input min="0" max="99999" type="text" name="drip-edge" id="drip-edge">
 
-              <label for="screen">Screen:</label>
-              <input type="text" min="0" max="100" name="screen" id="screen">
+              <label for="screen" id="screen-label">Screen:</label>
+              <!-- <input type="text" min="0" max="100" name="screen" id="screen"> -->
+              <textarea id="screen" rows="6"></textarea>
 
               <!-- <label for="screen-footage">Screen Footage:</label>
               <input min="0" max="99999" type="text" name="screen-footage" id="screen-footage"> -->
@@ -134,11 +135,13 @@
               <label for="other">Gutter and Ds:</label>
               <input type="text" name="other" id="other" placeholder="$">
 
-              <label for="additions">Additions:</label>
-              <input type="text" name="additions" id="additons" placeholder="$">
+              <label for="additions" id="additions2-label">Additions:</label>
+              <!-- <input type="text" name="additions" id="additons" placeholder="$"> -->
+              <textarea rows="3" id="additions" placeholder="$"></textarea>
 
-              <label for="additions">Additions:</label>
-              <input type="text" name="additions" id="additons2" placeholder="$">
+              <label for="additions2" id="additions-label">Additions:</label>
+              <!-- <input type="text" name="additions" id="additons2" placeholder="$"> -->
+              <textarea rows="3" id="additions2" placeholder="$"></textarea>
 
               <label for="total">Grand Total:</label>
               <input type="text" name="total" id="total" placeholder="$">

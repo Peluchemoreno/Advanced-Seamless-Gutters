@@ -57,7 +57,7 @@
 }
 
 #email {
-  text-align: right;
+  text-align: left;
 }
 
 #color {
@@ -116,6 +116,7 @@ select {
 #job-notes {
   width: 100%;
   padding: 10px;
+  font-size: 11px;
 }
 
 .material-details-body,
@@ -137,6 +138,7 @@ label {
   font-weight: bold;
   letter-spacing: 1px;
   border: 1px solid rgba(0, 0, 0, 0.6);
+  min-height: 15px;
 }
 
 .material-details-body input,
@@ -158,6 +160,7 @@ input {
   border: none;
   border-bottom: 1px solid black;
   padding: 5px;
+  /* min-height: 10px; */
 }
 
 .tools-bar {
@@ -225,4 +228,22 @@ input {
 
 .legend-pic.hidden {
   height: 0px;
+}
+
+#additions,
+#additions2,
+#screen {
+  resize: none;
+  padding: 1px;
+  text-align: right;
+  overflow: hidden;
+  font-size: 11px;
+  scroll-behavior: none;
+}
+
+#additions-label,
+#additions2-label,
+#screen-label {
+  display: flex;
+  align-items: center;
 }

@@ -31,8 +31,14 @@ function startup() {
   let context = el.getContext('2d');
   let gridNumber = document.querySelector('#grid-size');
   el.width = 500;
-  el.height = 450;
+  el.height = 550;
   gridSize = updateGridSize(parseInt(gridNumber.value));
+
+  if (window.chrome) {
+    console.log('this is chrome');
+    let phoneEmailRow = document.querySelector('.customer-details-body2');
+    phoneEmailRow.style.marginTop = '-16px';
+  }
 
   //===============draw grid=====================
   for (x = 0; x < el.width; x += gridSize) {
