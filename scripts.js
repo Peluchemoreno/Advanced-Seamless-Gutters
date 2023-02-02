@@ -38,6 +38,11 @@ function startup() {
     console.log('this is chrome');
     let phoneEmailRow = document.querySelector('.customer-details-body2');
     phoneEmailRow.style.marginTop = '-16px';
+    let materialSide = document.querySelector('.material-side');
+    let canvasSide = document.querySelector('.canvas-side');
+
+    // materialSide.style.height = '800px';
+    // canvasSide.style.height = '800px';
   }
 
   //===============draw grid=====================

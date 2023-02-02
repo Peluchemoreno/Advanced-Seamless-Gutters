@@ -95,6 +95,11 @@ select {
   flex-grow: 1;
 }
 
+/* .canvas-side,
+.material-side {
+  height: 800px;
+} */
+
 .material-details-header,
 .extra-and-pricing-header,
 .job-notes-header {
@@ -118,6 +123,9 @@ select {
   padding: 5px;
   font-size: 11px;
   resize: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: 1px solid black;
 }
 
 .material-details-body,
