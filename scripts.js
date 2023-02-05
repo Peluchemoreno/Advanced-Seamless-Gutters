@@ -2,15 +2,20 @@ let undoBtn = document.querySelector('.undo-button');
 const clearButton = document.querySelector('#clear-button');
 const ongoingTouches = [];
 const colorPicker = document.querySelector('#color');
-let color = colorPicker.value;
+let color = colorPicker.style.backgroundColor;
+
+
+
 let startX, startY;
 let currentX, currentY;
 const el = document.getElementById('canvas');
 let ctx = el.getContext('2d');
 let isDrawing = false;
-paths = [];
+let paths = [];
+let newPath = [];
 points = [];
 let index = -1;
+let indexCopy = -1;
 const tool = document.querySelector('#tool-select');
 const gridNumber = document.querySelector('#grid-size');
 let elbowSequence;
@@ -18,7 +23,6 @@ let pieceLength;
 
 
 const testing = document.querySelector('#job-notes');
-
 
 
 function updateGridSize(number) {
@@ -35,7 +39,6 @@ function startup() {
   gridSize = updateGridSize(parseInt(gridNumber.value));
 
   if (window.chrome) {
-    console.log('this is chrome');
     let phoneEmailRow = document.querySelector('.customer-details-body2');
     phoneEmailRow.style.marginTop = '-16px';
     let materialSide = document.querySelector('.material-side');
@@ -84,8 +87,14 @@ document.body.addEventListener("touchmove", function (e) {
 
 function updateColor(context) {
   let color = document.querySelector('#color').value;
-  context.strokeStyle = color;
-  context.fillStyle = color;
+  if (color === 'green') {
+    context.strokeStyle = "#2efc05";
+    context.fillStyle = "#2efc05";
+  } else {
+    context.strokeStyle = color;
+    context.fillStyle = color;
+  }
+
 }
 
 function handleDraw() {
@@ -94,8 +103,9 @@ function handleDraw() {
   isDrawing = true;
   let newX = Math.round(startX / gridSize) * gridSize;
   let newY = Math.round(startY / gridSize) * gridSize;
-  ctx.beginPath();
   updateColor(ctx);
+  ctx.beginPath();
+  ctx.strokeStyle = color;
   ctx.moveTo(newX, newY);
 }
 
@@ -128,21 +138,21 @@ el.addEventListener('pointerdown', function (event) {
     let newY = Math.round(startY / gridSize) * gridSize;
     ctx.beginPath();
     ctx.setLineDash([]);
-    updateColor(ctx);
+    // ctx.strokeStyle = color;
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX + gridSize / 3, newY + gridSize / 3);
+    ctx.lineTo(newX + gridSize / 1.5, newY + gridSize / 1.5);
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX - gridSize / 3, newY + gridSize / 3);
+    ctx.lineTo(newX - gridSize / 1.5, newY + gridSize / 1.5);
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX - gridSize / 3, newY - gridSize / 3);
+    ctx.lineTo(newX - gridSize / 1.5, newY - gridSize / 1.5);
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX + gridSize / 3, newY - gridSize / 3);
+    ctx.lineTo(newX + gridSize / 1.5, newY - gridSize / 1.5);
 
     updateColor(ctx);
-    context.lineWidth = 1;
+    context.lineWidth = 2;
     context.stroke();
     // elbowSequence = prompt('Type in the elbow sequence. (eg. AABA)');
-    console.log(elbowSequence);
+
   } else if (tool.value === 'valley-shield') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
@@ -150,7 +160,7 @@ el.addEventListener('pointerdown', function (event) {
     let newX = Math.round(startX / gridSize) * gridSize;
     let newY = Math.round(startY / gridSize) * gridSize;
     ctx.beginPath();
-    // ctx.setLineDash([]);
+    ctx.setLineDash([]);
     updateColor(ctx);
     ctx.moveTo(newX, newY);
     context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
@@ -182,13 +192,16 @@ el.addEventListener('pointerdown', function (event) {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
     let userInput = prompt('Type in the elbow sequence or the length of the piece. (ex: AABA, 57")');
-    ctx.font = '8px Arial';
+    ctx.font = '1000 12px Arial';
     ctx.fillStyle = 'black';
     ctx.textAlign = 'center';
     if (!userInput) {
       return
     } else {
       ctx.fillText(`${userInput}`, startX, startY);
+      newPath.push(ctx.getImageData(0, 0, el.width, el.height));
+      indexCopy += 1;
+      console.log(paths.length, newPath.length);
     }
   }
 
@@ -271,12 +284,15 @@ el.addEventListener('pointerup', function (event) {
   isDrawing = false;
   const ctx = el.getContext('2d');
   paths.push(ctx.getImageData(0, 0, el.width, el.height));
+  // elbowPaths.push(ctx.getImageData(0, 0, el.width, el.height));
   index += 1;
+  // indexCopy += 1;
   ctx.moveTo(currentX, currentY);
   ctx.lineTo(currentX, currentY);
   ctx.stroke();
   ctx.closePath();
   updateGridButton(undoBtn);
+  console.log(paths.length, newPath.length);
 });
 
 
@@ -287,6 +303,8 @@ function clear() {
   const el = document.getElementById('canvas');
   ctx.clearRect(0, 0, el.width, el.height);
   paths = [];
+  // elbowPaths = [];
+  // indexCopy = -1;
   index = -1;
   updateGridButton(undoBtn);
   startup();
@@ -329,8 +347,12 @@ function undo() {
     clear();
   } else {
     index -= 1;
+    indexCopy -= 1;
+
+    newPath.pop();
     paths.pop();
     ctx.putImageData(paths[index], 0, 0);
+    // ctx.putImageData(newPath[indexCopy], 0, 0);
   }
 }
 
@@ -344,19 +366,18 @@ function updateGridButton(element) {
   }
 };
 
-function showLegend() {
-  legendPic = document.querySelector('.legend-pic');
-  legendPic.classList.toggle('hidden');
-};
+// function showLegend() {
+//   legendPic = document.querySelector('.legend-pic');
+//   legendPic.classList.toggle('hidden');
+// };
 
 
 function finish() {
-
   window.onbeforeprint = (event) => {
     toolsBar = document.querySelector('.tools-bar');
     toolsBar.style.display = 'none';
     legendPic = document.querySelector('.legend-pic');
-    legendPic.classList.remove('hidden');
+
 
 
   };
@@ -369,6 +390,6 @@ function finish() {
 window.onafterprint = (event) => {
   toolsBar = document.querySelector('.tools-bar');
   toolsBar.style.display = 'flex';
-  showLegend();
+  // showLegend();
 
 }

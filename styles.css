@@ -256,3 +256,9 @@ input {
   display: flex;
   align-items: center;
 }
+
+#color {
+  text-align: left;
+  padding: 0;
+  height: 25px;
+}
