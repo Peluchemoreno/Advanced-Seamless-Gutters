@@ -13,6 +13,28 @@
 </head>
 
 <body>
+  <div class="module">
+    <div class="module-container">
+      <div class="module-header">
+        <p style="font-size: 16px;">Selected Color</p>
+        <div class="color-preview">
+        </div>
+      </div>
+      <div class="module-body">
+        <button class="selector-button red">Red</button>
+        <button class="selector-button cyan">Cyan</button>
+        <button class="selector-button blue">Blue</button>
+        <button class="selector-button green">Green</button>
+        <button class="selector-button pink">Pink</button>
+        <button class="selector-button yellow">Yellow</button>
+        <button class="selector-button black">Black</button>
+      </div>
+      <div class="module-footer">
+        <button class="cancel-button">Cancel</button>
+        <button class="set-button">Set</button>
+      </div>
+    </div>
+  </div>
   <div class="form-wrapper">
     <form>
       <div class="header-container">
@@ -57,7 +79,8 @@
               <option value="fascia-repair">Fascia Repair/Replace</option> -->
             </select>
             <input type="number" min="10" max="50" id="grid-size" value="14">
-            <select id="color">
+            <button id="color">Color</button>
+            <!-- <select id="color">
               <option value="black" style="background-color: black; color: white;">Black</option>
               <option value="red" style="background-color: red; color:white;">Red</option>
               <option value="cyan" style="background-color: cyan; color: black;">Cyan</option>
@@ -65,7 +88,7 @@
               <option value="green" style="background-color: #2efc05; color: black;">Green</option>
               <option value="magenta" style="background-color: magenta; color: black;">Magenta</option>
               <option value="yellow" style="background-color: yellow;">Yellow</option>
-            </select>
+            </select> -->
             <button type="button" class="undo-button" onclick="undo()">Undo</button>
             <button type="button" id="clear-button">Clear</button>
             <button type="button" id="show-legend" onclick="showLegend()">LGND</button>

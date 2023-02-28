@@ -3,6 +3,36 @@ const clearButton = document.querySelector('#clear-button');
 const ongoingTouches = [];
 const colorPicker = document.querySelector('#color');
 let color = colorPicker.style.backgroundColor;
+const module = document.querySelector('.module');
+const cancelBtn = document.querySelector('.cancel-button');
+const body = document.querySelector('body');
+
+
+
+//=====================================================================================
+// need to make module disappear when clicking on set
+// need to make color preview update with chosen color
+// need to make the context of the line change color when a button within the module is clicked
+
+module.addEventListener('click', (e) => {
+  if (e.target.parentElement == body) {
+    module.classList.remove('visible');
+  } else {
+    return
+  }
+
+})
+
+colorPicker.addEventListener('click', (e) => {
+  e.preventDefault();
+  module.classList.toggle('visible');
+});
+
+cancelBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  module.classList.toggle('visible');
+})
+
 
 
 
@@ -23,6 +53,7 @@ let pieceLength;
 
 
 const testing = document.querySelector('#job-notes');
+
 
 
 function updateGridSize(number) {
@@ -86,15 +117,17 @@ document.body.addEventListener("touchmove", function (e) {
 
 
 function updateColor(context) {
-  let color = document.querySelector('#color').value;
-  if (color === 'green') {
-    context.strokeStyle = "#2efc05";
-    context.fillStyle = "#2efc05";
-  } else {
-    context.strokeStyle = color;
-    context.fillStyle = color;
-  }
+  // let color = document.querySelector('#color').value;
+  // if (color === 'green') {
+  //   context.strokeStyle = "#2efc05";
+  //   context.fillStyle = "#2efc05";
+  // } else {
+  //   context.strokeStyle = color;
+  //   context.fillStyle = color;
+  // }
 
+  ctx.strokeStyle = '#000';
+  ctx.fillStyle = '#000'
 }
 
 function handleDraw() {
