@@ -39,6 +39,7 @@ redBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = 'red';
   ctx.strokeStyle = 'red';
   ctx.fillStyle = 'red';
+  colorPicker.style.backgroundColor = 'red';
   console.log('red');
 })
 
@@ -46,6 +47,7 @@ cyanBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = 'cyan';
   ctx.strokeStyle = 'cyan';
   ctx.fillStyle = 'cyan';
+  colorPicker.style.backgroundColor = 'cyan';
   console.log('cyan');
 })
 
@@ -53,6 +55,8 @@ blueBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = 'blue';
   ctx.strokeStyle = 'blue';
   ctx.fillStyle = 'blue';
+  colorPicker.style.backgroundColor = 'blue';
+  colorPicker.style.color = 'white';
   console.log('blue');
 })
 
@@ -60,6 +64,7 @@ greenBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = '#2efc05';
   ctx.strokeStyle = '#2efc05';
   ctx.fillStyle = '#2efc05';
+  colorPicker.style.backgroundColor = '#2efc05';
   console.log('green');
 })
 
@@ -67,6 +72,7 @@ pinkBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = 'magenta';
   ctx.strokeStyle = 'magenta';
   ctx.fillStyle = 'magenta';
+  colorPicker.style.backgroundColor = 'magenta';
   console.log('magenta');
 })
 
@@ -74,6 +80,8 @@ yellowBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = 'yellow';
   ctx.strokeStyle = 'yellow';
   ctx.fillStyle = 'yellow';
+  colorPicker.style.backgroundColor = 'yellow';
+  colorPicker.style.color = 'black';
   console.log('yellow');
 })
 
@@ -81,6 +89,8 @@ blackBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = '#000';
   ctx.strokeStyle = 'black'
   ctx.fillStyle = 'black'
+  colorPicker.style.backgroundColor = 'black';
+  colorPicker.style.color = 'white';
   console.log('black');
 })
 
@@ -154,6 +164,8 @@ function startup() {
 
   context.strokeStyle = 'black';
   context.fillStyle = 'black';
+  colorPicker.style.backgroundColor = 'black';
+  colorPicker.style.color = 'white';
 
   updateGridButton(undoBtn);
 }
