@@ -5,36 +5,16 @@ const colorPicker = document.querySelector('#color');
 let color = colorPicker.style.backgroundColor;
 const module = document.querySelector('.module');
 const cancelBtn = document.querySelector('.cancel-button');
+const setBtn = document.querySelector('.set-button')
 const body = document.querySelector('body');
-
-
-
-//=====================================================================================
-// need to make module disappear when clicking on set
-// need to make color preview update with chosen color
-// need to make the context of the line change color when a button within the module is clicked
-
-module.addEventListener('click', (e) => {
-  if (e.target.parentElement == body) {
-    module.classList.remove('visible');
-  } else {
-    return
-  }
-
-})
-
-colorPicker.addEventListener('click', (e) => {
-  e.preventDefault();
-  module.classList.toggle('visible');
-});
-
-cancelBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  module.classList.toggle('visible');
-})
-
-
-
+const colorPreview = document.querySelector('.color-preview');
+const redBtn = document.querySelector('.red');
+const cyanBtn = document.querySelector('.cyan');
+const blueBtn = document.querySelector('.blue');
+const greenBtn = document.querySelector('.green');
+const pinkBtn = document.querySelector('.pink');
+const yellowBtn = document.querySelector('.yellow');
+const blackBtn = document.querySelector('.black');
 
 let startX, startY;
 let currentX, currentY;
@@ -55,6 +35,83 @@ let pieceLength;
 const testing = document.querySelector('#job-notes');
 
 
+redBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = 'red';
+  ctx.strokeStyle = 'red';
+  ctx.fillStyle = 'red';
+  console.log('red');
+})
+
+cyanBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = 'cyan';
+  ctx.strokeStyle = 'cyan';
+  ctx.fillStyle = 'cyan';
+  console.log('cyan');
+})
+
+blueBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = 'blue';
+  ctx.strokeStyle = 'blue';
+  ctx.fillStyle = 'blue';
+  console.log('blue');
+})
+
+greenBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = '#2efc05';
+  ctx.strokeStyle = '#2efc05';
+  ctx.fillStyle = '#2efc05';
+  console.log('green');
+})
+
+pinkBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = 'magenta';
+  ctx.strokeStyle = 'magenta';
+  ctx.fillStyle = 'magenta';
+  console.log('magenta');
+})
+
+yellowBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = 'yellow';
+  ctx.strokeStyle = 'yellow';
+  ctx.fillStyle = 'yellow';
+  console.log('yellow');
+})
+
+blackBtn.addEventListener('click', () => {
+  colorPreview.style.backgroundColor = '#000';
+  ctx.strokeStyle = 'black'
+  ctx.fillStyle = 'black'
+  console.log('black');
+})
+
+
+module.addEventListener('click', (e) => {
+  if (e.target.parentElement == body) {
+    module.classList.remove('visible');
+  } else {
+    return
+  }
+
+})
+
+colorPicker.addEventListener('click', (e) => {
+  e.preventDefault();
+  module.classList.toggle('visible');
+});
+
+cancelBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  module.classList.toggle('visible');
+})
+
+setBtn.addEventListener('click', () => {
+  module.classList.toggle('visible');
+})
+
+
+
+
+
 
 function updateGridSize(number) {
   let gridNumber = document.querySelector('#grid-size');
@@ -68,6 +125,8 @@ function startup() {
   el.width = 500;
   el.height = 500;
   gridSize = updateGridSize(parseInt(gridNumber.value));
+
+
 
   if (window.chrome) {
     let phoneEmailRow = document.querySelector('.customer-details-body2');
@@ -93,6 +152,9 @@ function startup() {
     context.stroke();
   }
 
+  context.strokeStyle = 'black';
+  context.fillStyle = 'black';
+
   updateGridButton(undoBtn);
 }
 
@@ -116,19 +178,19 @@ document.body.addEventListener("touchmove", function (e) {
 }, { passive: false });
 
 
-function updateColor(context) {
-  // let color = document.querySelector('#color').value;
-  // if (color === 'green') {
-  //   context.strokeStyle = "#2efc05";
-  //   context.fillStyle = "#2efc05";
-  // } else {
-  //   context.strokeStyle = color;
-  //   context.fillStyle = color;
-  // }
+// function updateColor(context) {
+//   // let color = document.querySelector('#color').value;
+//   // if (color === 'green') {
+//   //   context.strokeStyle = "#2efc05";
+//   //   context.fillStyle = "#2efc05";
+//   // } else {
+//   //   context.strokeStyle = color;
+//   //   context.fillStyle = color;
+//   // }
 
-  ctx.strokeStyle = '#000';
-  ctx.fillStyle = '#000'
-}
+//   ctx.strokeStyle = '#000';
+//   ctx.fillStyle = '#000'
+// }
 
 function handleDraw() {
   startX = (event.pageX - el.offsetLeft);
@@ -136,9 +198,9 @@ function handleDraw() {
   isDrawing = true;
   let newX = Math.round(startX / gridSize) * gridSize;
   let newY = Math.round(startY / gridSize) * gridSize;
-  updateColor(ctx);
+  // updateColor(ctx);
   ctx.beginPath();
-  ctx.strokeStyle = color;
+  // ctx.strokeStyle = color;
   ctx.moveTo(newX, newY);
 }
 

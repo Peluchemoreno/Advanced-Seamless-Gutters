@@ -21,6 +21,9 @@ body {
 .module-header {
   display: flex;
   justify-content: space-between;
+  background-color: #7a7a7a;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .module-body {
