@@ -33,6 +33,8 @@ let pieceLength;
 
 
 const testing = document.querySelector('#job-notes');
+colorPreview.style.border = '2px solid white';
+
 
 
 redBtn.addEventListener('click', () => {
@@ -40,6 +42,7 @@ redBtn.addEventListener('click', () => {
   ctx.strokeStyle = 'red';
   ctx.fillStyle = 'red';
   colorPicker.style.backgroundColor = 'red';
+  colorPreview.style.border = '2px solid black';
   console.log('red');
 })
 
@@ -48,6 +51,7 @@ cyanBtn.addEventListener('click', () => {
   ctx.strokeStyle = 'cyan';
   ctx.fillStyle = 'cyan';
   colorPicker.style.backgroundColor = 'cyan';
+  colorPreview.style.border = '2px solid black';
   console.log('cyan');
 })
 
@@ -57,6 +61,7 @@ blueBtn.addEventListener('click', () => {
   ctx.fillStyle = 'blue';
   colorPicker.style.backgroundColor = 'blue';
   colorPicker.style.color = 'white';
+  colorPreview.style.border = '2px solid black';
   console.log('blue');
 })
 
@@ -65,6 +70,7 @@ greenBtn.addEventListener('click', () => {
   ctx.strokeStyle = '#2efc05';
   ctx.fillStyle = '#2efc05';
   colorPicker.style.backgroundColor = '#2efc05';
+  colorPreview.style.border = '2px solid black';
   console.log('green');
 })
 
@@ -72,6 +78,7 @@ pinkBtn.addEventListener('click', () => {
   colorPreview.style.backgroundColor = 'magenta';
   ctx.strokeStyle = 'magenta';
   ctx.fillStyle = 'magenta';
+  colorPreview.style.border = '2px solid black';
   colorPicker.style.backgroundColor = 'magenta';
   console.log('magenta');
 })
@@ -82,6 +89,7 @@ yellowBtn.addEventListener('click', () => {
   ctx.fillStyle = 'yellow';
   colorPicker.style.backgroundColor = 'yellow';
   colorPicker.style.color = 'black';
+  colorPreview.style.border = '2px solid black';
   console.log('yellow');
 })
 
@@ -91,6 +99,7 @@ blackBtn.addEventListener('click', () => {
   ctx.fillStyle = 'black'
   colorPicker.style.backgroundColor = 'black';
   colorPicker.style.color = 'white';
+  colorPreview.style.border = '2px solid white';
   console.log('black');
 })
 
@@ -107,6 +116,8 @@ module.addEventListener('click', (e) => {
 colorPicker.addEventListener('click', (e) => {
   e.preventDefault();
   module.classList.toggle('visible');
+  let container = document.querySelector('.module-container');
+  container.style.transform = 'translateY(0px)';
 });
 
 cancelBtn.addEventListener('click', (e) => {
