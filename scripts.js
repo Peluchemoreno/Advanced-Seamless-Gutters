@@ -1,8 +1,8 @@
 let undoBtn = document.querySelector('.undo-button');
 const clearButton = document.querySelector('#clear-button');
 const ongoingTouches = [];
-const colorPicker = document.querySelector('#color');
-let color = colorPicker.style.backgroundColor;
+let colorPicker = document.querySelector('#color');
+let color = colorPicker.value;
 const module = document.querySelector('.module');
 const cancelBtn = document.querySelector('.cancel-button');
 const setBtn = document.querySelector('.set-button')
@@ -15,6 +15,8 @@ const greenBtn = document.querySelector('.green');
 const pinkBtn = document.querySelector('.pink');
 const yellowBtn = document.querySelector('.yellow');
 const blackBtn = document.querySelector('.black');
+
+
 
 let startX, startY;
 let currentX, currentY;
@@ -32,102 +34,99 @@ let elbowSequence;
 let pieceLength;
 
 
-const testing = document.querySelector('#job-notes');
-colorPreview.style.border = '2px solid white';
 
 
+// redBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = 'red';
+//   ctx.strokeStyle = 'red';
+//   ctx.fillStyle = 'red';
+//   colorPicker.style.backgroundColor = 'red';
+//   colorPreview.style.border = '2px solid black';
+//   // console.log('red');
+// })
 
-redBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = 'red';
-  ctx.strokeStyle = 'red';
-  ctx.fillStyle = 'red';
-  colorPicker.style.backgroundColor = 'red';
-  colorPreview.style.border = '2px solid black';
-  console.log('red');
-})
+// cyanBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = 'cyan';
+//   ctx.strokeStyle = 'cyan';
+//   ctx.fillStyle = 'cyan';
+//   // colorPicker.style.backgroundColor = 'cyan';
+//   colorPreview.style.border = '2px solid black';
+//   // console.log('cyan');
+// })
 
-cyanBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = 'cyan';
-  ctx.strokeStyle = 'cyan';
-  ctx.fillStyle = 'cyan';
-  colorPicker.style.backgroundColor = 'cyan';
-  colorPreview.style.border = '2px solid black';
-  console.log('cyan');
-})
+// blueBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = 'blue';
+//   ctx.strokeStyle = 'blue';
+//   ctx.fillStyle = 'blue';
+//   // colorPicker.style.backgroundColor = 'blue';
+//   colorPicker.style.color = 'white';
+//   colorPreview.style.border = '2px solid black';
+//   // console.log('blue');
+// })
 
-blueBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = 'blue';
-  ctx.strokeStyle = 'blue';
-  ctx.fillStyle = 'blue';
-  colorPicker.style.backgroundColor = 'blue';
-  colorPicker.style.color = 'white';
-  colorPreview.style.border = '2px solid black';
-  console.log('blue');
-})
+// greenBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = '#2efc05';
+//   ctx.strokeStyle = '#2efc05';
+//   ctx.fillStyle = '#2efc05';
+//   // colorPicker.style.backgroundColor = '#2efc05';
+//   colorPreview.style.border = '2px solid black';
+//   // console.log('green');
+// })
 
-greenBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = '#2efc05';
-  ctx.strokeStyle = '#2efc05';
-  ctx.fillStyle = '#2efc05';
-  colorPicker.style.backgroundColor = '#2efc05';
-  colorPreview.style.border = '2px solid black';
-  console.log('green');
-})
+// pinkBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = 'magenta';
+//   ctx.strokeStyle = 'magenta';
+//   ctx.fillStyle = 'magenta';
+//   colorPreview.style.border = '2px solid black';
+//   // colorPicker.style.backgroundColor = 'magenta';
+//   // console.log('magenta');
+// })
 
-pinkBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = 'magenta';
-  ctx.strokeStyle = 'magenta';
-  ctx.fillStyle = 'magenta';
-  colorPreview.style.border = '2px solid black';
-  colorPicker.style.backgroundColor = 'magenta';
-  console.log('magenta');
-})
+// yellowBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = 'yellow';
+//   ctx.strokeStyle = 'yellow';
+//   ctx.fillStyle = 'yellow';
+//   colorPicker.style.backgroundColor = 'yellow';
+//   // colorPicker.style.color = 'black';
+//   colorPreview.style.border = '2px solid black';
+//   // console.log('yellow');
+// })
 
-yellowBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = 'yellow';
-  ctx.strokeStyle = 'yellow';
-  ctx.fillStyle = 'yellow';
-  colorPicker.style.backgroundColor = 'yellow';
-  colorPicker.style.color = 'black';
-  colorPreview.style.border = '2px solid black';
-  console.log('yellow');
-})
-
-blackBtn.addEventListener('click', () => {
-  colorPreview.style.backgroundColor = '#000';
-  ctx.strokeStyle = 'black'
-  ctx.fillStyle = 'black'
-  colorPicker.style.backgroundColor = 'black';
-  colorPicker.style.color = 'white';
-  colorPreview.style.border = '2px solid white';
-  console.log('black');
-})
+// blackBtn.addEventListener('click', () => {
+//   colorPreview.style.backgroundColor = '#000';
+//   ctx.strokeStyle = 'black'
+//   ctx.fillStyle = 'black'
+//   colorPicker.style.backgroundColor = 'black';
+//   colorPicker.style.color = 'white';
+//   colorPreview.style.border = '2px solid white';
+//   // console.log('black');
+// })
 
 
-module.addEventListener('click', (e) => {
-  if (e.target.parentElement == body) {
-    module.classList.remove('visible');
-  } else {
-    return
-  }
+// module.addEventListener('click', (e) => {
+//   if (e.target.parentElement == body) {
+//     module.classList.remove('visible');
+//   } else {
+//     return
+//   }
 
-})
+// })
 
-colorPicker.addEventListener('click', (e) => {
-  e.preventDefault();
-  module.classList.toggle('visible');
-  let container = document.querySelector('.module-container');
-  container.style.transform = 'translateY(0px)';
-});
+// colorPicker.addEventListener('click', (e) => {
+//   e.preventDefault();
+//   module.classList.toggle('visible');
+//   let container = document.querySelector('.module-container');
+//   container.style.transform = 'translateY(0px)';
+// });
 
-cancelBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  module.classList.toggle('visible');
-})
+// cancelBtn.addEventListener('click', (e) => {
+//   e.preventDefault();
+//   module.classList.toggle('visible');
+// })
 
-setBtn.addEventListener('click', () => {
-  module.classList.toggle('visible');
-})
+// setBtn.addEventListener('click', () => {
+//   module.classList.toggle('visible');
+// })
 
 
 
@@ -173,11 +172,6 @@ function startup() {
     context.stroke();
   }
 
-  context.strokeStyle = 'black';
-  context.fillStyle = 'black';
-  colorPicker.style.backgroundColor = 'black';
-  colorPicker.style.color = 'white';
-
   updateGridButton(undoBtn);
 }
 
@@ -186,7 +180,6 @@ document.addEventListener("DOMContentLoaded", startup);
 document.body.addEventListener("pointerdown", function (e) {
   if (e.target == canvas) {
     e.preventDefault();
-    updateGridButton(undoBtn);
   }
 }, { passive: false });
 document.body.addEventListener("touchend", function (e) {
@@ -201,34 +194,71 @@ document.body.addEventListener("touchmove", function (e) {
 }, { passive: false });
 
 
-// function updateColor(context) {
-//   // let color = document.querySelector('#color').value;
-//   // if (color === 'green') {
-//   //   context.strokeStyle = "#2efc05";
-//   //   context.fillStyle = "#2efc05";
-//   // } else {
-//   //   context.strokeStyle = color;
-//   //   context.fillStyle = color;
-//   // }
+function updateColor(context) {
+  let color = document.querySelector('#color').value;
+  let colorPreview = document.querySelector('#color');
+  if (color === 'green') {
+    context.strokeStyle = "#2efc05";
+    context.fillStyle = "#2efc05";
+    colorPreview.style.backgroundColor = "#2efc05";
+  }
+  else if (color === 'black') {
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    colorPreview.style.backgroundColor = color;
+    colorPreview.style.color = 'white';
+  }
+  else if (color === 'cyan') {
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    colorPreview.style.backgroundColor = color;
+    colorPreview.style.color = 'black';
+  }
+  else if (color === '#2efc05') {
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    colorPreview.style.backgroundColor = color;
+    colorPreview.style.color = 'black';
+  }
+  else {
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    colorPreview.style.backgroundColor = color;
+  }
 
-//   ctx.strokeStyle = '#000';
-//   ctx.fillStyle = '#000'
-// }
+
+}
 
 function handleDraw() {
+  let el = document.querySelector('#canvas');
+  let ctx = el.getContext('2d');
   startX = (event.pageX - el.offsetLeft);
   startY = (event.pageY - el.offsetTop);
+  let color = document.querySelector('#color').value;
   isDrawing = true;
   let newX = Math.round(startX / gridSize) * gridSize;
   let newY = Math.round(startY / gridSize) * gridSize;
-  // updateColor(ctx);
+  console.log(color);
+  updateColor(ctx);
   ctx.beginPath();
-  // ctx.strokeStyle = color;
   ctx.moveTo(newX, newY);
+  console.log(colorPicker);
+
+  // if (color.value === 'black' || color.value === 'red') {
+  //   colorPicker.style.backgroundColor = color;
+  //   colorPicker.style.color = 'white';
+  // } else {
+  //   colorPicker.style.backgroundColor = color;
+  //   colorPicker.style.color = 'white';
+  // }
+  // console.log(ctx.fillStyle, ctx.strokeStyle);
 }
+
+
 
 el.addEventListener('pointerdown', function (event) {
   event.preventDefault();
+
 
   if (tool.value === 'gutter') {
     handleDraw();
@@ -292,8 +322,6 @@ el.addEventListener('pointerdown', function (event) {
     let newY = Math.round(startY / gridSize) * gridSize;
     ctx.beginPath();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'blue';
-    ctx.strokeStyle = 'blue';
     ctx.moveTo(newX, newY);
   } else if (tool.value === 'fascia-repair') {
     startX = (event.pageX - el.offsetLeft);
@@ -303,8 +331,6 @@ el.addEventListener('pointerdown', function (event) {
     let newY = Math.round(startY / gridSize) * gridSize;
     ctx.beginPath();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'red';
-    ctx.strokeStyle = 'red';
     ctx.moveTo(newX, newY);
   } else if (tool.value === 'free-text') {
     startX = (event.pageX - el.offsetLeft);
@@ -319,7 +345,7 @@ el.addEventListener('pointerdown', function (event) {
       ctx.fillText(`${userInput}`, startX, startY);
       newPath.push(ctx.getImageData(0, 0, el.width, el.height));
       indexCopy += 1;
-      console.log(paths.length, newPath.length);
+      // console.log(paths.length, newPath.length);
     }
   }
 
@@ -410,7 +436,7 @@ el.addEventListener('pointerup', function (event) {
   ctx.stroke();
   ctx.closePath();
   updateGridButton(undoBtn);
-  console.log(paths.length, newPath.length);
+  // console.log(paths.length, newPath.length);
 });
 
 
