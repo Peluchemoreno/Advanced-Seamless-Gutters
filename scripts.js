@@ -16,8 +16,6 @@ const pinkBtn = document.querySelector('.pink');
 const yellowBtn = document.querySelector('.yellow');
 const blackBtn = document.querySelector('.black');
 
-
-
 let startX, startY;
 let currentX, currentY;
 const el = document.getElementById('canvas');
@@ -33,106 +31,6 @@ const gridNumber = document.querySelector('#grid-size');
 let elbowSequence;
 let pieceLength;
 
-
-
-
-// redBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'red';
-//   ctx.strokeStyle = 'red';
-//   ctx.fillStyle = 'red';
-//   colorPicker.style.backgroundColor = 'red';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('red');
-// })
-
-// cyanBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'cyan';
-//   ctx.strokeStyle = 'cyan';
-//   ctx.fillStyle = 'cyan';
-//   // colorPicker.style.backgroundColor = 'cyan';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('cyan');
-// })
-
-// blueBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'blue';
-//   ctx.strokeStyle = 'blue';
-//   ctx.fillStyle = 'blue';
-//   // colorPicker.style.backgroundColor = 'blue';
-//   colorPicker.style.color = 'white';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('blue');
-// })
-
-// greenBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = '#2efc05';
-//   ctx.strokeStyle = '#2efc05';
-//   ctx.fillStyle = '#2efc05';
-//   // colorPicker.style.backgroundColor = '#2efc05';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('green');
-// })
-
-// pinkBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'magenta';
-//   ctx.strokeStyle = 'magenta';
-//   ctx.fillStyle = 'magenta';
-//   colorPreview.style.border = '2px solid black';
-//   // colorPicker.style.backgroundColor = 'magenta';
-//   // console.log('magenta');
-// })
-
-// yellowBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'yellow';
-//   ctx.strokeStyle = 'yellow';
-//   ctx.fillStyle = 'yellow';
-//   colorPicker.style.backgroundColor = 'yellow';
-//   // colorPicker.style.color = 'black';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('yellow');
-// })
-
-// blackBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = '#000';
-//   ctx.strokeStyle = 'black'
-//   ctx.fillStyle = 'black'
-//   colorPicker.style.backgroundColor = 'black';
-//   colorPicker.style.color = 'white';
-//   colorPreview.style.border = '2px solid white';
-//   // console.log('black');
-// })
-
-
-// module.addEventListener('click', (e) => {
-//   if (e.target.parentElement == body) {
-//     module.classList.remove('visible');
-//   } else {
-//     return
-//   }
-
-// })
-
-// colorPicker.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   module.classList.toggle('visible');
-//   let container = document.querySelector('.module-container');
-//   container.style.transform = 'translateY(0px)';
-// });
-
-// cancelBtn.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   module.classList.toggle('visible');
-// })
-
-// setBtn.addEventListener('click', () => {
-//   module.classList.toggle('visible');
-// })
-
-
-
-
-
-
 function updateGridSize(number) {
   let gridNumber = document.querySelector('#grid-size');
   gridNumber.value = number;
@@ -146,16 +44,11 @@ function startup() {
   el.height = 500;
   gridSize = updateGridSize(parseInt(gridNumber.value));
 
-
-
   if (window.chrome) {
     let phoneEmailRow = document.querySelector('.customer-details-body2');
     phoneEmailRow.style.marginTop = '-16px';
     let materialSide = document.querySelector('.material-side');
     let canvasSide = document.querySelector('.canvas-side');
-
-    // materialSide.style.height = '800px';
-    // canvasSide.style.height = '800px';
   }
 
   //===============draw grid=====================
@@ -165,13 +58,11 @@ function startup() {
     context.strokeStyle = 'lightgray';
     context.stroke();
   }
-
   for (y = 0; y < el.height; y += gridSize) {
     context.moveTo(0, y);
     context.lineTo(el.width, y);
     context.stroke();
   }
-
   updateGridButton(undoBtn);
 }
 
@@ -192,7 +83,6 @@ document.body.addEventListener("touchmove", function (e) {
     e.preventDefault();
   }
 }, { passive: false });
-
 
 function updateColor(context) {
   let color = document.querySelector('#color').value;
@@ -225,8 +115,6 @@ function updateColor(context) {
     context.fillStyle = color;
     colorPreview.style.backgroundColor = color;
   }
-
-
 }
 
 function handleDraw() {
@@ -242,24 +130,10 @@ function handleDraw() {
   updateColor(ctx);
   ctx.beginPath();
   ctx.moveTo(newX, newY);
-  console.log(colorPicker);
-
-  // if (color.value === 'black' || color.value === 'red') {
-  //   colorPicker.style.backgroundColor = color;
-  //   colorPicker.style.color = 'white';
-  // } else {
-  //   colorPicker.style.backgroundColor = color;
-  //   colorPicker.style.color = 'white';
-  // }
-  // console.log(ctx.fillStyle, ctx.strokeStyle);
 }
-
-
 
 el.addEventListener('pointerdown', function (event) {
   event.preventDefault();
-
-
   if (tool.value === 'gutter') {
     handleDraw();
   } else if (tool.value === 'existing-gutter') {
@@ -286,7 +160,6 @@ el.addEventListener('pointerdown', function (event) {
     let newY = Math.round(startY / gridSize) * gridSize;
     ctx.beginPath();
     ctx.setLineDash([]);
-    // ctx.strokeStyle = color;
     ctx.moveTo(newX, newY);
     ctx.lineTo(newX + gridSize / 1.5, newY + gridSize / 1.5);
     ctx.moveTo(newX, newY);
@@ -295,12 +168,9 @@ el.addEventListener('pointerdown', function (event) {
     ctx.lineTo(newX - gridSize / 1.5, newY - gridSize / 1.5);
     ctx.moveTo(newX, newY);
     ctx.lineTo(newX + gridSize / 1.5, newY - gridSize / 1.5);
-
     updateColor(ctx);
     context.lineWidth = 2;
     context.stroke();
-    // elbowSequence = prompt('Type in the elbow sequence. (eg. AABA)');
-
   } else if (tool.value === 'valley-shield') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
@@ -313,7 +183,6 @@ el.addEventListener('pointerdown', function (event) {
     ctx.moveTo(newX, newY);
     context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
     context.fill();
-
   } else if (tool.value === 'flashing') {
     startX = (event.pageX - el.offsetLeft);
     startY = (event.pageY - el.offsetTop);
@@ -345,14 +214,9 @@ el.addEventListener('pointerdown', function (event) {
       ctx.fillText(`${userInput}`, startX, startY);
       newPath.push(ctx.getImageData(0, 0, el.width, el.height));
       indexCopy += 1;
-      // console.log(paths.length, newPath.length);
     }
   }
-
 });
-
-
-
 
 el.addEventListener('pointermove', function (event) {
   context = el.getContext('2d');
@@ -371,19 +235,12 @@ el.addEventListener('pointermove', function (event) {
     currentY = (event.pageY - el.offsetTop);
     let newX = Math.round(currentX / gridSize) * gridSize;
     let newY = Math.round(currentY / gridSize) * gridSize;
-    // context.setLineDash([40, 5, 5, 5, 5, 5, 5, 5]);
     context.lineTo(newX, newY);
     context.lineWidth = gridSize / 2.5;
-    // context.moveTo(newX, newY);
-    // context.lineTo(newX, newY);
     context.stroke();
     context.lineWidth = 1;
-    // context.strokeStyle = 'red';
-    // context.fillStyle = 'red';
     context.globalCompositeOperation = 'xor';
-
     context.stroke();
-
   } else if (isDrawing && tool.value === 'existing-gutter') {
     context.globalCompositeOperation = 'source-over';
     currentX = (event.pageX - el.offsetLeft);
@@ -394,7 +251,6 @@ el.addEventListener('pointermove', function (event) {
     context.lineTo(newX, newY);
     context.lineWidth = 2;
     context.stroke();
-
   } else if (isDrawing && tool.value === 'flashing') {
     context.globalCompositeOperation = 'source-over';
     currentX = (event.pageX - el.offsetLeft);
@@ -404,7 +260,6 @@ el.addEventListener('pointermove', function (event) {
     context.setLineDash([]);
     context.lineTo(newX, newY);
     context.moveTo(newX + 4, newY - 4);
-
     context.lineWidth = 2;
     context.stroke();
   } else if (isDrawing && tool.value === 'fascia-repair') {
@@ -416,11 +271,9 @@ el.addEventListener('pointermove', function (event) {
     context.setLineDash([]);
     context.lineTo(newX, newY);
     context.moveTo(newX - 5, newY + 5);
-
     context.lineWidth = 2;
     context.stroke();
   }
-
 });
 
 el.addEventListener('pointerup', function (event) {
@@ -428,33 +281,25 @@ el.addEventListener('pointerup', function (event) {
   isDrawing = false;
   const ctx = el.getContext('2d');
   paths.push(ctx.getImageData(0, 0, el.width, el.height));
-  // elbowPaths.push(ctx.getImageData(0, 0, el.width, el.height));
   index += 1;
-  // indexCopy += 1;
   ctx.moveTo(currentX, currentY);
   ctx.lineTo(currentX, currentY);
   ctx.stroke();
   ctx.closePath();
   updateGridButton(undoBtn);
-  // console.log(paths.length, newPath.length);
 });
 
-
 el.addEventListener('touchcancel', handleCancel);
-
 
 function clear() {
   const el = document.getElementById('canvas');
   ctx.clearRect(0, 0, el.width, el.height);
   paths = [];
-  // elbowPaths = [];
-  // indexCopy = -1;
   index = -1;
   updateGridButton(undoBtn);
   startup();
 
 }
-
 
 clearButton.addEventListener('click', clear);
 
@@ -473,7 +318,6 @@ function copyTouch({ identifier, pageX, pageY }) {
   return { identifier, pageX, pageY };
 }
 
-
 function ongoingTouchIndexById(idToFind) {
   for (let i = 0; i < ongoingTouches.length; i++) {
     const id = ongoingTouches[i].identifier;
@@ -486,7 +330,6 @@ function ongoingTouchIndexById(idToFind) {
 }
 
 function undo() {
-
   if (index <= 0) {
     clear();
   } else {
@@ -496,7 +339,6 @@ function undo() {
     newPath.pop();
     paths.pop();
     ctx.putImageData(paths[index], 0, 0);
-    // ctx.putImageData(newPath[indexCopy], 0, 0);
   }
 }
 
@@ -510,30 +352,16 @@ function updateGridButton(element) {
   }
 };
 
-// function showLegend() {
-//   legendPic = document.querySelector('.legend-pic');
-//   legendPic.classList.toggle('hidden');
-// };
-
-
 function finish() {
   window.onbeforeprint = (event) => {
     toolsBar = document.querySelector('.tools-bar');
     toolsBar.style.display = 'none';
     legendPic = document.querySelector('.legend-pic');
-
-
-
   };
-
   window.print();
-
 }
-
 
 window.onafterprint = (event) => {
   toolsBar = document.querySelector('.tools-bar');
   toolsBar.style.display = 'flex';
-  // showLegend();
-
 }
