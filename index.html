@@ -895,13 +895,13 @@ el.addEventListener('pointerdown', function (event) {
     ctx.setLineDash([]);
     // ctx.strokeStyle = color;
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX + gridSize / 1.5, newY + gridSize / 1.5);
+    ctx.lineTo(newX + gridSize / 2.75, newY + gridSize / 2.75);
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX - gridSize / 1.5, newY + gridSize / 1.5);
+    ctx.lineTo(newX - gridSize / 2.75, newY + gridSize / 2.75);
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX - gridSize / 1.5, newY - gridSize / 1.5);
+    ctx.lineTo(newX - gridSize / 2.75, newY - gridSize / 2.75);
     ctx.moveTo(newX, newY);
-    ctx.lineTo(newX + gridSize / 1.5, newY - gridSize / 1.5);
+    ctx.lineTo(newX + gridSize / 2.75, newY - gridSize / 2.75);
 
     updateColor(ctx);
     context.lineWidth = 2;
