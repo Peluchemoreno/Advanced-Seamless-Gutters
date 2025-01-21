@@ -178,26 +178,26 @@ body {
 
 .customer-details-body {
   display: grid;
-  grid-template-columns: 1fr 7fr;
+  grid-template-columns: 1fr 7fr 1fr 7fr;
   margin-bottom: 0;
+  /* border: 1px solid green; */
 }
 
 .customer-details-body2 {
-  display: flex;
-  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  /* border: 1px solid red; */
+  margin-top: 0px !important;
 }
 
-#phone,
+
 #email {
   flex-grow: 1;
-}
-
-#email {
   text-align: left;
 }
 
-#color {
-  /* width: 40px; */
+.label {
+  width: 100px;
 }
 
 select {
@@ -234,10 +234,6 @@ select {
   flex-grow: 1;
 }
 
-/* .canvas-side,
-.material-side {
-  height: 800px;
-} */
 
 .material-details-header,
 .extra-and-pricing-header,
