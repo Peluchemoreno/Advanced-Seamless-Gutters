@@ -1,1151 +1,979 @@
 <!DOCTYPE html>
 <html lang="en" id="whole">
-
-<head>
-  <!-- do not change or delete this file, it is for making the password page -->
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta content="width=device-width" initial-scale="1.0" maximum-scale="1.0" user-scalable="0" name="viewport" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="icon" href="img/icons8-inspection-40.png" type="image/x-icon">
-  <title>Bid Maker</title>
-  <!-- <link rel="stylesheet" href="styles.css" /> -->
-  <style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-body {
-  position: relative;
-}
-
-.module-container {
-  background-color: rgb(221, 221, 221);
-  padding: 10px;
-  min-width: 250px;
-  max-width: 500px;
-  border-radius: 5px;
-  animation: slideIn 0.3s ease-in-out;
-}
-
-.module-header {
-  display: flex;
-  font-weight: bold;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(to right, #7a7a7a, #383838);
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.module-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 10px;
-  padding: 10px;
-  margin-top: 25px;
-}
-
-.module-footer {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 25px;
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateY(-600px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.cancel-button,
-.set-button {
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
-  background-color: transparent;
-  font-weight: bold;
-}
-
-.cancel-button:hover,
-.set-button:hover {
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.selector-button {
-  padding: 10px;
-  border: none;
-  border-bottom: 2px solid black;
-  border-radius: 5px;
-}
-
-.selector-button:last-of-type {
-  border-bottom: 2px solid rgb(126, 126, 126);
-}
-
-.selector-button:hover {
-  cursor: pointer;
-}
-
-.color-preview {
-  height: 25px;
-  width: 25px;
-  background-color: black;
-  border-radius: 50%;
-  border: 2px solid black;
-  transition: background-color 0.5s;
-  transition: border 0.5s;
-}
-
-.red {
-  background-color: red;
-}
-
-.cyan {
-  background-color: cyan;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: #2efc05;
-}
-
-.pink {
-  background-color: magenta;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
-.black {
-  background-color: #000;
-  color: #fff;
-}
-
-.module {
-  position: absolute;
-  display: none;
-  place-items: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  background-color: rgba(1, 1, 1, 0.8);
-  z-index: 9999;
-}
-
-.visible {
-  display: grid;
-}
-
-#canvas {
-  /* background-color: transparent; */
-  background-size: cover;
-  /* background-color: aquamarine; */
-  border: 1px solid #000000;
-  border-top: none;
-  border-left: none;
-}
-
-.header-logo {
-  width: 300px;
-  height: 150px;
-  margin-left: 20px;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 140px;
-}
-
-.date-container {
-  align-self: flex-end;
-  padding: 20px;
-}
-
-.customer-details-header {
-  color: rgb(255, 255, 255);
-  background-color: black;
-  margin: 0;
-  padding: 10px;
-  letter-spacing: 3px;
-  border: 2px solid black;
-}
-
-.customer-details-body {
-  display: grid;
-  grid-template-columns: 1fr 7fr;
-  margin-bottom: 0;
-}
-
-.customer-details-body2 {
-  display: flex;
-  margin-top: auto;
-}
-
-#phone,
-#email {
-  flex-grow: 1;
-}
-
-#email {
-  text-align: left;
-}
-
-#color {
-  /* width: 40px; */
-}
-
-select {
-  text-align: right;
-  border: none;
-}
-
-.form-wrapper {
-  margin: 0 auto;
-  max-width: 820px;
-}
-
-.section2 {
-  display: flex;
-  max-width: 820px;
-}
-
-.canvas-side,
-.material-side {
-  display: inline-block;
-}
-
-.material-side {
-  border-bottom: 2px solid black;
-  border-right: 2px solid black;
-}
-
-.canvas-side {
-  border-left: 2px solid black;
-  border-bottom: 2px solid black;
-}
-
-.material-side {
-  flex-grow: 1;
-}
-
-/* .canvas-side,
-.material-side {
-  height: 800px;
-} */
-
-.material-details-header,
-.extra-and-pricing-header,
-.job-notes-header {
-  text-align: center;
-  padding: 5px;
-  background-color: black;
-  color: white;
-  letter-spacing: 3px;
-}
-
-.job-notes {
-  background-color: black;
-
-  display: block;
-  letter-spacing: 3px;
-  margin-top: 5px;
-}
-
-#job-notes {
-  width: 100%;
-  padding: 5px;
-  font-size: 11px;
-  resize: none;
-  border-right: none;
-  border-bottom: none;
-  border-left: 1px solid black;
-}
-
-.material-details-body,
-.extra-and-pricing-body {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-}
-
-form {
-  padding: 10px;
-  width: 100%;
-}
-
-label {
-  background-color: rgb(65, 65, 65);
-  color: rgb(255, 255, 255);
-
-  padding: 5px 10px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  min-height: 15px;
-}
-
-.material-details-body input,
-.extra-and-pricing-body input {
-  text-align: right;
-  width: 100%;
-  font-size: 10px;
-  padding: 3px;
-}
-
-.material-details-body label,
-.extra-and-pricing-body label {
-  font-size: 10px;
-  font-weight: bolder;
-}
-
-label,
-input {
-  border: none;
-  border-bottom: 1px solid black;
-  padding: 5px;
-  /* min-height: 10px; */
-}
-
-.tools-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0;
-  padding: 0px 5px;
-  max-width: 500px;
-}
-
-.tools-bar button,
-.tools-bar input,
-.tools-bar select {
-  border-radius: 5px;
-  padding: 5px 10px;
-  background-color: silver;
-  flex-grow: 1;
-  margin: auto 3px;
-  max-height: 30px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.tools-bar select {
-  font-weight: 400;
-}
-
-#clear-button {
-  background-color: rgb(241, 112, 112);
-}
-
-#tool-select {
-  text-align: left;
-  background-color: silver;
-  border: none;
-  border-radius: 5px;
-  width: 70px;
-}
-
-#finish-button {
-  background: rgb(94, 235, 94);
-}
-
-#grid-size {
-  max-width: 70px;
-}
-
-@media print {
-  body {
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
-}
-
-.legend {
-  /* text-align: center; */
-  padding: 10px;
-  transition: height 1s ease-in-out;
-}
-
-.legend-pic {
-  height: 160px;
-}
-
-.legend-pic.hidden {
-  height: 0px;
-}
-
-#additions,
-#additions2,
-#additions3,
-#screen {
-  resize: none;
-  padding: 1px;
-  text-align: right;
-  overflow: hidden;
-  font-size: 10px;
-  scroll-behavior: none;
-}
-
-#additions-label,
-#additions2-label,
-#screen-label {
-  display: flex;
-  align-items: center;
-}
-
-#color {
-  text-align: center;
-  padding: 0;
-  height: 25px;
-}
-
-  </style>
-
-</head>
-
-<body>
-  <div class="module">
-    <div class="module-container">
-      <div class="module-header">
-        <p style="font-size: 16px;">Selected Color:</p>
-        <div class="color-preview">
+  <head>
+    <!-- do not change or delete this file, it is for making the password page -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      content="width=device-width"
+      initial-scale="1.0"
+      maximum-scale="1.0"
+      user-scalable="0"
+      name="viewport"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="img/icons8-inspection-40.png" type="image/x-icon" />
+    <title>Bid Maker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+      }
+
+      body {
+        position: relative;
+      }
+
+      .module-container {
+        background-color: rgb(221, 221, 221);
+        padding: 10px;
+        min-width: 250px;
+        max-width: 500px;
+        border-radius: 5px;
+        animation: slideIn 0.3s ease-in-out;
+      }
+
+      .module-header {
+        display: flex;
+        font-weight: bold;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(to right, #7a7a7a, #383838);
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .module-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 10px;
+        padding: 10px;
+        margin-top: 25px;
+      }
+
+      .module-footer {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 25px;
+      }
+
+      @keyframes slideIn {
+        0% {
+          transform: translateY(-600px);
+        }
+
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .cancel-button,
+      .set-button {
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        background-color: transparent;
+        font-weight: bold;
+      }
+
+      .cancel-button:hover,
+      .set-button:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .selector-button {
+        padding: 10px;
+        border: none;
+        border-bottom: 2px solid black;
+        border-radius: 5px;
+      }
+
+      .selector-button:last-of-type {
+        border-bottom: 2px solid rgb(126, 126, 126);
+      }
+
+      .selector-button:hover {
+        cursor: pointer;
+      }
+
+      .color-preview {
+        height: 25px;
+        width: 25px;
+        background-color: black;
+        border-radius: 50%;
+        border: 2px solid black;
+        transition: background-color 0.5s;
+        transition: border 0.5s;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .cyan {
+        background-color: cyan;
+      }
+
+      .blue {
+        background-color: blue;
+      }
+
+      .green {
+        background-color: #2efc05;
+      }
+
+      .pink {
+        background-color: magenta;
+      }
+
+      .yellow {
+        background-color: yellow;
+      }
+
+      .black {
+        background-color: #000;
+        color: #fff;
+      }
+
+      .module {
+        position: absolute;
+        display: none;
+        place-items: center;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        background-color: rgba(1, 1, 1, 0.8);
+        z-index: 9999;
+      }
+
+      .visible {
+        display: grid;
+      }
+
+      #canvas {
+        /* background-color: transparent; */
+        background-size: cover;
+        /* background-color: aquamarine; */
+        border: 1px solid #000000;
+        border-top: none;
+        border-left: none;
+      }
+
+      .header-logo {
+        width: 300px;
+        height: 150px;
+        margin-left: 20px;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 140px;
+      }
+
+      .date-container {
+        align-self: flex-end;
+        padding: 20px;
+      }
+
+      .customer-details-header {
+        color: rgb(255, 255, 255);
+        background-color: black;
+        margin: 0;
+        padding: 10px;
+        letter-spacing: 3px;
+        border: 2px solid black;
+      }
+
+      .customer-details-body {
+        display: grid;
+        grid-template-columns: 1fr 7fr 1fr 7fr;
+        margin-bottom: 0;
+        /* border: 1px solid green; */
+      }
+
+      .customer-details-body2 {
+        display: grid;
+        grid-template-columns: 1fr 7fr;
+        /* border: 1px solid red; */
+        margin-top: 0px !important;
+      }
+
+      #email {
+        flex-grow: 1;
+        text-align: left;
+      }
+
+      .label {
+        width: 100px;
+      }
+
+      select {
+        text-align: right;
+        border: none;
+      }
+
+      .form-wrapper {
+        margin: 0 auto;
+        max-width: 820px;
+      }
+
+      .section2 {
+        display: flex;
+        max-width: 820px;
+      }
+
+      .canvas-side,
+      .material-side {
+        display: inline-block;
+      }
+
+      .material-side {
+        border-bottom: 2px solid black;
+        border-right: 2px solid black;
+      }
+
+      .canvas-side {
+        border-left: 2px solid black;
+        border-bottom: 2px solid black;
+      }
+
+      .material-side {
+        flex-grow: 1;
+      }
+
+      .material-details-header,
+      .extra-and-pricing-header,
+      .job-notes-header {
+        text-align: center;
+        padding: 5px;
+        background-color: black;
+        color: white;
+        letter-spacing: 3px;
+      }
+
+      .job-notes {
+        background-color: black;
+
+        display: block;
+        letter-spacing: 3px;
+        margin-top: 5px;
+      }
+
+      #job-notes {
+        width: 100%;
+        padding: 5px;
+        font-size: 11px;
+        resize: none;
+        border-right: none;
+        border-bottom: none;
+        border-left: 1px solid black;
+      }
+
+      .material-details-body,
+      .extra-and-pricing-body {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+      }
+
+      form {
+        padding: 10px;
+        width: 100%;
+      }
+
+      label {
+        background-color: rgb(65, 65, 65);
+        color: rgb(255, 255, 255);
+
+        padding: 5px 10px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        border: 1px solid rgba(0, 0, 0, 0.6);
+        min-height: 15px;
+      }
+
+      .material-details-body input,
+      .extra-and-pricing-body input {
+        text-align: right;
+        width: 100%;
+        font-size: 10px;
+        padding: 3px;
+      }
+
+      .material-details-body label,
+      .extra-and-pricing-body label {
+        font-size: 10px;
+        font-weight: bolder;
+      }
+
+      label,
+      input {
+        border: none;
+        border-bottom: 1px solid black;
+        padding: 5px;
+        /* min-height: 10px; */
+      }
+
+      .tools-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+        padding: 0px 5px;
+        max-width: 500px;
+      }
+
+      .tools-bar button,
+      .tools-bar input,
+      .tools-bar select {
+        border-radius: 5px;
+        padding: 5px 10px;
+        background-color: silver;
+        flex-grow: 1;
+        margin: auto 3px;
+        max-height: 30px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .tools-bar select {
+        font-weight: 400;
+      }
+
+      #clear-button {
+        background-color: rgb(241, 112, 112);
+      }
+
+      #tool-select {
+        text-align: left;
+        background-color: silver;
+        border: none;
+        border-radius: 5px;
+        width: 70px;
+      }
+
+      #finish-button {
+        background: rgb(94, 235, 94);
+      }
+
+      #grid-size {
+        max-width: 70px;
+      }
+
+      @media print {
+        body {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+      }
+
+      .legend {
+        /* text-align: center; */
+        padding: 10px;
+        transition: height 1s ease-in-out;
+      }
+
+      .legend-pic {
+        height: 160px;
+      }
+
+      .legend-pic.hidden {
+        height: 0px;
+      }
+
+      #additions,
+      #additions2,
+      #additions3,
+      #screen {
+        resize: none;
+        padding: 1px;
+        text-align: right;
+        overflow: hidden;
+        font-size: 10px;
+        scroll-behavior: none;
+      }
+
+      #additions-label,
+      #additions2-label,
+      #screen-label {
+        display: flex;
+        align-items: center;
+      }
+
+      #color {
+        text-align: center;
+        padding: 0;
+        height: 25px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="module">
+      <div class="module-container">
+        <div class="module-header">
+          <p style="font-size: 16px">Selected Color:</p>
+          <div class="color-preview"></div>
         </div>
-      </div>
-      <div class="module-body">
-        <button class="selector-button red">Red</button>
-        <button class="selector-button cyan">Cyan</button>
-        <button class="selector-button blue">Blue</button>
-        <button class="selector-button green">Green</button>
-        <button class="selector-button pink">Pink</button>
-        <button class="selector-button yellow">Yellow</button>
-        <button class="selector-button black">Black</button>
-      </div>
-      <div class="module-footer">
-        <button class="cancel-button">Cancel</button>
-        <button class="set-button">Set</button>
+        <div class="module-body">
+          <button class="selector-button red">Red</button>
+          <button class="selector-button cyan">Cyan</button>
+          <button class="selector-button blue">Blue</button>
+          <button class="selector-button green">Green</button>
+          <button class="selector-button pink">Pink</button>
+          <button class="selector-button yellow">Yellow</button>
+          <button class="selector-button black">Black</button>
+        </div>
+        <div class="module-footer">
+          <button class="cancel-button">Cancel</button>
+          <button class="set-button">Set</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-wrapper">
-    <form>
-      <div class="header-container">
-        <img class="header-logo" src="img/advanced seamless logo png.png" alt="" />
-        <div class="date-container">
-          <label for="date">Date:</label>
-          <input id="date" class="input form-field" type="date" />
-        </div>
-      </div>
-      <div class="customer-details-container">
-        <div class="customer-details-header">
-          <h2>CUSTOMER DETAILS</h2>
-        </div>
-        <div class="customer-details-body">
-          <label for="name">Name:</label>
-          <input id="name" name="name" type="text" maxlength="100" minlength="1" />
-
-          <label for="address">Address:</label>
-          <input type="text" name="address" id="address" /><br />
-        </div>
-        <div class="customer-details-body2">
-          <label for="phone">Phone:</label>
-          <input type="tel" name="phone" id="phone" />
-          <label for="email">Email:</label>
-          <input type="email" name="email" id="email" />
-        </div>
-      </div>
-
-      <div class="section2">
-        <div class="canvas-side">
-          <canvas id="canvas"></canvas>
-          <div class="tools-bar">
-            <select id="tool-select">
-              <option value="gutter">Gutter</option>
-              <option value="gutter-w-screen">Gutter w/ Screen</option>
-              <option value="existing-gutter">Existing Gutter</option>
-              <option value="downspout">Downspout</option>
-              <option value="drop">Drop to lower</option>
-              <option value="valley-shield">Valley Shield</option>
-              <option value="free-text">Elbow Seq/Piece Length</option>
-              <!-- <option value="flashing">Flashing</option>
-              <option value="fascia-repair">Fascia Repair/Replace</option> -->
-            </select>
-            <input type="number" min="10" max="50" id="grid-size" value="14">
-            <!-- <button id="color">Color</button> -->
-            <select id="color">
-              <option value="black" style="background-color: black; color: white;">Black</option>
-              <option value="red" style="background-color: red; color:white;">Red</option>
-              <option value="cyan" style="background-color: cyan; color: black;">Cyan</option>
-              <option value="blue" style="background-color: blue; color: white;">Blue</option>
-              <option value="green" style="background-color: #2efc05; color: black;">Green</option>
-              <option value="magenta" style="background-color: magenta; color: black;">Magenta</option>
-              <option value="yellow" style="background-color: yellow;">Yellow</option>
-            </select>
-            <button type="button" class="undo-button" onclick="undo()">Undo</button>
-            <button type="button" id="clear-button">Clear</button>
-            <!-- <button type="button" id="show-legend" onclick="showLegend()">LGND</button> -->
-            <button type="button" id="finish-button" onclick="finish()">Done</button>
+    <div class="form-wrapper">
+      <form>
+        <div class="header-container">
+          <img
+            class="header-logo"
+            src="./img/advanced seamless logo png.png"
+            alt="logo"
+          />
+          <div class="date-container">
+            <label for="date">Date:</label>
+            <input id="date" class="input form-field" type="date" />
           </div>
-          <label for="job-notes" class="job-notes">
-            JOB DESCRIPTION / NOTES
-          </label>
-          <textarea name="job-description" id="job-notes" rows="10"></textarea>
         </div>
-        <div class="material-side">
-          <div class="material-details">
-            <div class="material-details-header">
-              <h3>MATERIAL</h3>
+        <div class="customer-details-container">
+          <div class="customer-details-header">
+            <h2>CUSTOMER DETAILS</h2>
+          </div>
+          <div class="customer-details-body">
+            <label class="label" for="name">Name:</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              maxlength="100"
+              minlength="1"
+            />
+
+            <label class="label" for="phone">Phone:</label>
+            <input type="text" name="phone" id="phone" />
+          </div>
+          <div class="customer-details-body2">
+            <label class="label" for="address">Address:</label>
+            <input type="text" name="address" id="address" />
+
+            <label class="label" for="email">Email:</label>
+            <input type="email" name="email" id="email" />
+          </div>
+        </div>
+
+        <div class="section2">
+          <div class="canvas-side">
+            <canvas id="canvas"></canvas>
+            <div class="tools-bar">
+              <select id="tool-select">
+                <option value="gutter">Gutter</option>
+                <!-- <option value="gutter-w-screen">Gutter w/ Screen</option> -->
+                <option value="existing-gutter">Existing Gutter</option>
+                <option value="downspout">Downspout</option>
+                <option value="drop">Drop to lower</option>
+                <option value="valley-shield">Valley Shield</option>
+                <option value="free-text">Elbow Seq/Piece Length</option>
+                <!-- <option value="flashing">Flashing</option>
+              <option value="fascia-repair">Fascia Repair/Replace</option> -->
+              </select>
+              <input
+                type="number"
+                min="10"
+                max="50"
+                id="grid-size"
+                value="14"
+              />
+              <!-- <button id="color">Color</button> -->
+              <select id="color">
+                <option
+                  value="black"
+                  style="background-color: black; color: white"
+                >
+                  Black
+                </option>
+                <option value="red" style="background-color: red; color: white">
+                  Red
+                </option>
+                <option
+                  value="cyan"
+                  style="background-color: cyan; color: black"
+                >
+                  Cyan
+                </option>
+                <option
+                  value="blue"
+                  style="background-color: blue; color: white"
+                >
+                  Blue
+                </option>
+                <option
+                  value="green"
+                  style="background-color: #2efc05; color: black"
+                >
+                  Green
+                </option>
+                <option
+                  value="magenta"
+                  style="background-color: magenta; color: black"
+                >
+                  Magenta
+                </option>
+                <option value="yellow" style="background-color: yellow">
+                  Yellow
+                </option>
+              </select>
+              <button type="button" class="undo-button">Undo</button>
+              <button type="button" id="clear-button">Clear</button>
+              <!-- <button type="button" id="show-legend" onclick="showLegend()">LGND</button> -->
+              <button type="button" id="finish-button" onclick="finish()">
+                Done
+              </button>
             </div>
-            <div class="material-details-body">
-              <label for="coil-color" class="coil-color">Coil Color/Size:</label>
-              <input type="text" name="coil-color" id="coil-color" />
+            <label for="job-notes" class="job-notes">
+              JOB DESCRIPTION / NOTES
+            </label>
+            <textarea
+              name="job-description"
+              id="job-notes"
+              rows="10"
+            ></textarea>
+          </div>
+          <div class="material-side">
+            <div class="material-details">
+              <div class="material-details-header">
+                <h3>MATERIAL</h3>
+              </div>
+              <div class="material-details-body">
+                <label for="coil-color" class="coil-color"
+                  >Coil Color/Size:</label
+                >
+                <input type="text" name="coil-color" id="coil-color" />
 
-              <label for="coil-footage" class="coil-footage">Coil Footage:</label>
-              <input type="text" min="0" max="99999" name="coil-footage" id="coil-footage" />
+                <label for="coil-footage" class="coil-footage"
+                  >Coil Footage:</label
+                >
+                <input
+                  type="text"
+                  min="0"
+                  max="99999"
+                  name="coil-footage"
+                  id="coil-footage"
+                />
 
-              <!-- <label for="size" class="size-label">Coil Size:</label>
+                <!-- <label for="size" class="size-label">Coil Size:</label>
               <input type="text" maxlength="100" id="size"> -->
 
-              <label for="downspout-color" class="downspout-color">DS Color/Size:</label>
-              <input type="text" name="color" id="downspout-color" />
+                <label for="downspout-color" class="downspout-color"
+                  >DS Color/Size:</label
+                >
+                <input type="text" name="color" id="downspout-color" />
 
-              <label for="ds-footage" class="ds-footage">DS Footage:</label>
-              <input type="text" min="0" max="99999" name="ds-footage" id="ds-footage" />
+                <label for="ds-footage" class="ds-footage">DS Footage:</label>
+                <input
+                  type="text"
+                  min="0"
+                  max="99999"
+                  name="ds-footage"
+                  id="ds-footage"
+                />
 
-              <label for="splash-guards" class="splashBlocks">Splash Guards:</label>
-              <input type="text" name="splash-guards" id="splash-guards">
-              <!-- <label for="downspout-size" class="downspout-size">DS Size:</label>
+                <label for="splash-guards" class="splashBlocks"
+                  >Splash Guards:</label
+                >
+                <input type="text" name="splash-guards" id="splash-guards" />
+                <!-- <label for="downspout-size" class="downspout-size">DS Size:</label>
               <input type="text" maxlength="100" id="downspout=size"> -->
-              <!-- hatest -->
-              <label for="ism" class="ism">ISM:</label>
-              <input type="text" min="0" max="99999" name="ism" id="ism" />
+                <!-- hatest -->
+                <label for="ism" class="ism">ISM:</label>
+                <input type="text" min="0" max="99999" name="ism" id="ism" />
 
-              <label for="osm" class="osm">OSM:</label>
-              <input type="text" min="0" max="99999" name="osm" id="osm" />
+                <label for="osm" class="osm">OSM:</label>
+                <input type="text" min="0" max="99999" name="osm" id="osm" />
 
-              <label for="custom-miters" class="custom-miters">Custom Miters:</label>
-              <input type="text" min="0" max="99999" name="custom-miters" id="custom-miters" />
+                <label for="custom-miters" class="custom-miters"
+                  >Custom Miters:</label
+                >
+                <input
+                  type="text"
+                  min="0"
+                  max="99999"
+                  name="custom-miters"
+                  id="custom-miters"
+                />
 
-              <label for="end-caps">End Caps:</label>
-              <input min="0" max="99999" type="text" name="end-caps" id="end-caps">
+                <label for="end-caps">End Caps:</label>
+                <input
+                  min="0"
+                  max="99999"
+                  type="text"
+                  name="end-caps"
+                  id="end-caps"
+                />
 
-              <label for="a-elbows">A's:</label>
-              <input min="0" max="99999" type="text" name="a-elbows" id="a-elbows">
+                <label for="a-elbows">A's:</label>
+                <input
+                  min="0"
+                  max="99999"
+                  type="text"
+                  name="a-elbows"
+                  id="a-elbows"
+                />
 
-              <label for="b-elbows">B's:</label>
-              <input min="0" max="99999" type="text" name="b-elbows" id="b-elbows">
+                <label for="b-elbows">B's:</label>
+                <input
+                  min="0"
+                  max="99999"
+                  type="text"
+                  name="b-elbows"
+                  id="b-elbows"
+                />
 
-              <label for="offsets">Offsets:</label>
-              <input min="0" max="99999" type="text" name="offsets" id="offsets">
+                <label for="offsets">Offsets:</label>
+                <input
+                  min="0"
+                  max="99999"
+                  type="text"
+                  name="offsets"
+                  id="offsets"
+                />
 
-              <label for="splash-blocks">Splash Blocks:</label>
-              <input min="0" max="99999" type="text" name="splash-blocks" id="splash-blocks">
+                <label for="splash-blocks">Splash Blocks:</label>
+                <input
+                  min="0"
+                  max="99999"
+                  type="text"
+                  name="splash-blocks"
+                  id="splash-blocks"
+                />
+              </div>
             </div>
-          </div>
-          <div class="pricing-container">
-            <div class="extra-and-pricing-header">
-              <h3>EXTRA</h3>
-            </div>
-            <div class="extra-and-pricing-body">
-              <label for="drip-edge">Drip Edge:</label>
-              <input min="0" max="99999" type="text" name="drip-edge" id="drip-edge">
+            <div class="pricing-container">
+              <div class="extra-and-pricing-header">
+                <h3>EXTRA</h3>
+              </div>
+              <div class="extra-and-pricing-body">
+                <label for="drip-edge">Drip Edge:</label>
+                <input
+                  min="0"
+                  max="99999"
+                  type="text"
+                  name="drip-edge"
+                  id="drip-edge"
+                />
 
-              <label for="screen" id="screen-label">Screen:</label>
-              <!-- <input type="text" min="0" max="100" name="screen" id="screen"> -->
-              <textarea id="screen" rows="6"></textarea>
+                <label for="screen" id="screen-label">Screen:</label>
+                <!-- <input type="text" min="0" max="100" name="screen" id="screen"> -->
+                <textarea id="screen" rows="6"></textarea>
 
-              <!-- <label for="screen-footage">Screen Footage:</label>
+                <!-- <label for="screen-footage">Screen Footage:</label>
               <input min="0" max="99999" type="text" name="screen-footage" id="screen-footage"> -->
 
-              <label for="other">Gutter and Ds:</label>
-              <input type="text" name="other" id="other" placeholder="$">
+                <label for="other">Gutter and Ds:</label>
+                <input type="text" name="other" id="other" placeholder="$" />
 
+                <label for="additions3" id="additions3-label">Additions:</label>
+                <!-- <input type="text" name="additions" id="additons" placeholder="$"> -->
+                <textarea rows="3" id="additions3" placeholder="$"></textarea>
 
-              <label for="additions3" id="additions3-label">Additions:</label>
-              <!-- <input type="text" name="additions" id="additons" placeholder="$"> -->
-              <textarea rows="3" id="additions3" placeholder="$"></textarea>
+                <label for="additions" id="additions2-label">Additions:</label>
+                <!-- <input type="text" name="additions" id="additons" placeholder="$"> -->
+                <textarea rows="3" id="additions" placeholder="$"></textarea>
 
-              <label for="additions" id="additions2-label">Additions:</label>
-              <!-- <input type="text" name="additions" id="additons" placeholder="$"> -->
-              <textarea rows="3" id="additions" placeholder="$"></textarea>
+                <label for="additions2" id="additions-label">Additions:</label>
+                <!-- <input type="text" name="additions" id="additons2" placeholder="$"> -->
+                <textarea rows="3" id="additions2" placeholder="$"></textarea>
 
-
-              <label for="additions2" id="additions-label">Additions:</label>
-              <!-- <input type="text" name="additions" id="additons2" placeholder="$"> -->
-              <textarea rows="3" id="additions2" placeholder="$"></textarea>
-
-              <label for="total">Grand Total:</label>
-              <input type="text" name="total" id="total" placeholder="$">
+                <label for="total">Grand Total:</label>
+                <input type="text" name="total" id="total" placeholder="$" />
+              </div>
             </div>
           </div>
-
         </div>
-      </div>
-    </form>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- <script src="scripts.js"></script> -->
-  <script>
-    let undoBtn = document.querySelector('.undo-button');
-const clearButton = document.querySelector('#clear-button');
-const ongoingTouches = [];
-let colorPicker = document.querySelector('#color');
-let color = colorPicker.value;
-const module = document.querySelector('.module');
-const cancelBtn = document.querySelector('.cancel-button');
-const setBtn = document.querySelector('.set-button')
-const body = document.querySelector('body');
-const colorPreview = document.querySelector('.color-preview');
-const redBtn = document.querySelector('.red');
-const cyanBtn = document.querySelector('.cyan');
-const blueBtn = document.querySelector('.blue');
-const greenBtn = document.querySelector('.green');
-const pinkBtn = document.querySelector('.pink');
-const yellowBtn = document.querySelector('.yellow');
-const blackBtn = document.querySelector('.black');
-
-
-
-let startX, startY;
-let currentX, currentY;
-const el = document.getElementById('canvas');
-let ctx = el.getContext('2d');
-let isDrawing = false;
-let paths = [];
-let newPath = [];
-points = [];
-let index = -1;
-let indexCopy = -1;
-const tool = document.querySelector('#tool-select');
-const gridNumber = document.querySelector('#grid-size');
-let elbowSequence;
-let pieceLength;
-
-
-
-
-// redBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'red';
-//   ctx.strokeStyle = 'red';
-//   ctx.fillStyle = 'red';
-//   colorPicker.style.backgroundColor = 'red';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('red');
-// })
-
-// cyanBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'cyan';
-//   ctx.strokeStyle = 'cyan';
-//   ctx.fillStyle = 'cyan';
-//   // colorPicker.style.backgroundColor = 'cyan';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('cyan');
-// })
-
-// blueBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'blue';
-//   ctx.strokeStyle = 'blue';
-//   ctx.fillStyle = 'blue';
-//   // colorPicker.style.backgroundColor = 'blue';
-//   colorPicker.style.color = 'white';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('blue');
-// })
-
-// greenBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = '#2efc05';
-//   ctx.strokeStyle = '#2efc05';
-//   ctx.fillStyle = '#2efc05';
-//   // colorPicker.style.backgroundColor = '#2efc05';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('green');
-// })
-
-// pinkBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'magenta';
-//   ctx.strokeStyle = 'magenta';
-//   ctx.fillStyle = 'magenta';
-//   colorPreview.style.border = '2px solid black';
-//   // colorPicker.style.backgroundColor = 'magenta';
-//   // console.log('magenta');
-// })
-
-// yellowBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = 'yellow';
-//   ctx.strokeStyle = 'yellow';
-//   ctx.fillStyle = 'yellow';
-//   colorPicker.style.backgroundColor = 'yellow';
-//   // colorPicker.style.color = 'black';
-//   colorPreview.style.border = '2px solid black';
-//   // console.log('yellow');
-// })
-
-// blackBtn.addEventListener('click', () => {
-//   colorPreview.style.backgroundColor = '#000';
-//   ctx.strokeStyle = 'black'
-//   ctx.fillStyle = 'black'
-//   colorPicker.style.backgroundColor = 'black';
-//   colorPicker.style.color = 'white';
-//   colorPreview.style.border = '2px solid white';
-//   // console.log('black');
-// })
-
-
-// module.addEventListener('click', (e) => {
-//   if (e.target.parentElement == body) {
-//     module.classList.remove('visible');
-//   } else {
-//     return
-//   }
-
-// })
-
-// colorPicker.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   module.classList.toggle('visible');
-//   let container = document.querySelector('.module-container');
-//   container.style.transform = 'translateY(0px)';
-// });
-
-// cancelBtn.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   module.classList.toggle('visible');
-// })
-
-// setBtn.addEventListener('click', () => {
-//   module.classList.toggle('visible');
-// })
-
-
-
-
-
-
-function updateGridSize(number) {
-  let gridNumber = document.querySelector('#grid-size');
-  gridNumber.value = number;
-  return number;
-}
-
-function startup() {
-  let context = el.getContext('2d');
-  let gridNumber = document.querySelector('#grid-size');
-  el.width = 500;
-  el.height = 500;
-  gridSize = updateGridSize(parseInt(gridNumber.value));
-
-
-
-  if (window.chrome) {
-    let phoneEmailRow = document.querySelector('.customer-details-body2');
-    phoneEmailRow.style.marginTop = '-16px';
-    let materialSide = document.querySelector('.material-side');
-    let canvasSide = document.querySelector('.canvas-side');
-
-    // materialSide.style.height = '800px';
-    // canvasSide.style.height = '800px';
-  }
-
-  //===============draw grid=====================
-  for (x = 0; x < el.width; x += gridSize) {
-    context.moveTo(x, 0);
-    context.lineTo(x, el.height);
-    context.strokeStyle = 'lightgray';
-    context.stroke();
-  }
-
-  for (y = 0; y < el.height; y += gridSize) {
-    context.moveTo(0, y);
-    context.lineTo(el.width, y);
-    context.stroke();
-  }
-
-  updateGridButton(undoBtn);
-}
-
-document.addEventListener("DOMContentLoaded", startup);
-
-document.body.addEventListener("pointerdown", function (e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-  }
-}, { passive: false });
-document.body.addEventListener("touchend", function (e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-  }
-}, { passive: false });
-document.body.addEventListener("touchmove", function (e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-  }
-}, { passive: false });
-
-
-function updateColor(context) {
-  let color = document.querySelector('#color').value;
-  let colorPreview = document.querySelector('#color');
-  if (color === 'green') {
-    context.strokeStyle = "#2efc05";
-    context.fillStyle = "#2efc05";
-    colorPreview.style.backgroundColor = "#2efc05";
-  }
-  else if (color === 'black') {
-    context.strokeStyle = color;
-    context.fillStyle = color;
-    colorPreview.style.backgroundColor = color;
-    colorPreview.style.color = 'white';
-  }
-  else if (color === 'cyan') {
-    context.strokeStyle = color;
-    context.fillStyle = color;
-    colorPreview.style.backgroundColor = color;
-    colorPreview.style.color = 'black';
-  }
-  else if (color === '#2efc05') {
-    context.strokeStyle = color;
-    context.fillStyle = color;
-    colorPreview.style.backgroundColor = color;
-    colorPreview.style.color = 'black';
-  }
-  else {
-    context.strokeStyle = color;
-    context.fillStyle = color;
-    colorPreview.style.backgroundColor = color;
-  }
-
-
-}
-
-function handleDraw() {
-  let el = document.querySelector('#canvas');
-  let ctx = el.getContext('2d');
-  startX = (event.pageX - el.offsetLeft);
-  startY = (event.pageY - el.offsetTop);
-  let color = document.querySelector('#color').value;
-  isDrawing = true;
-  let newX = Math.round(startX / gridSize) * gridSize;
-  let newY = Math.round(startY / gridSize) * gridSize;
-  console.log(color);
-  updateColor(ctx);
-  ctx.beginPath();
-  ctx.moveTo(newX, newY);
-  console.log(colorPicker);
-
-  // if (color.value === 'black' || color.value === 'red') {
-  //   colorPicker.style.backgroundColor = color;
-  //   colorPicker.style.color = 'white';
-  // } else {
-  //   colorPicker.style.backgroundColor = color;
-  //   colorPicker.style.color = 'white';
-  // }
-  // console.log(ctx.fillStyle, ctx.strokeStyle);
-}
-
-
-
-el.addEventListener('pointerdown', function (event) {
-  event.preventDefault();
-
-
-  if (tool.value === 'gutter') {
-    handleDraw();
-  } else if (tool.value === 'existing-gutter') {
-    handleDraw();
-  } else if (tool.value === 'gutter-w-screen') {
-    handleDraw();
-  } else if (tool.value === 'drop') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    updateColor(ctx);
-    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
-    context.lineWidth = 1;
-    context.stroke();
-  } else if (tool.value === 'downspout') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    // ctx.strokeStyle = color;
-    ctx.moveTo(newX, newY);
-    ctx.lineTo(newX + gridSize / 2.75, newY + gridSize / 2.75);
-    ctx.moveTo(newX, newY);
-    ctx.lineTo(newX - gridSize / 2.75, newY + gridSize / 2.75);
-    ctx.moveTo(newX, newY);
-    ctx.lineTo(newX - gridSize / 2.75, newY - gridSize / 2.75);
-    ctx.moveTo(newX, newY);
-    ctx.lineTo(newX + gridSize / 2.75, newY - gridSize / 2.75);
-
-    updateColor(ctx);
-    context.lineWidth = 2;
-    context.stroke();
-    // elbowSequence = prompt('Type in the elbow sequence. (eg. AABA)');
-
-  } else if (tool.value === 'valley-shield') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    updateColor(ctx);
-    ctx.moveTo(newX, newY);
-    context.arc(newX, newY, gridSize / 4, 0, 2 * Math.PI);
-    context.fill();
-
-  } else if (tool.value === 'flashing') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    ctx.moveTo(newX, newY);
-  } else if (tool.value === 'fascia-repair') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    isDrawing = true;
-    let newX = Math.round(startX / gridSize) * gridSize;
-    let newY = Math.round(startY / gridSize) * gridSize;
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    ctx.moveTo(newX, newY);
-  } else if (tool.value === 'free-text') {
-    startX = (event.pageX - el.offsetLeft);
-    startY = (event.pageY - el.offsetTop);
-    let userInput = prompt('Type in the elbow sequence or the length of the piece. (ex: AABA, 57")');
-    ctx.font = '1000 12px Arial';
-    ctx.fillStyle = 'black';
-    ctx.textAlign = 'center';
-    if (!userInput) {
-      return
-    } else {
-      ctx.fillText(`${userInput}`, startX, startY);
-      newPath.push(ctx.getImageData(0, 0, el.width, el.height));
-      indexCopy += 1;
-      // console.log(paths.length, newPath.length);
-    }
-  }
-
-});
-
-
-
-
-el.addEventListener('pointermove', function (event) {
-  context = el.getContext('2d');
-  if (isDrawing && tool.value === 'gutter') {
-    context.globalCompositeOperation = 'source-over';
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * gridSize;
-    let newY = Math.round(currentY / gridSize) * gridSize;
-    context.setLineDash([]);
-    context.lineTo(newX, newY);
-    context.lineWidth = 2;
-    context.stroke();
-  } else if (isDrawing && tool.value === 'gutter-w-screen') {
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * gridSize;
-    let newY = Math.round(currentY / gridSize) * gridSize;
-    // context.setLineDash([40, 5, 5, 5, 5, 5, 5, 5]);
-    context.lineTo(newX, newY);
-    context.lineWidth = gridSize / 2.5;
-    // context.moveTo(newX, newY);
-    // context.lineTo(newX, newY);
-    context.stroke();
-    context.lineWidth = 1;
-    // context.strokeStyle = 'red';
-    // context.fillStyle = 'red';
-    context.globalCompositeOperation = 'xor';
-
-    context.stroke();
-
-  } else if (isDrawing && tool.value === 'existing-gutter') {
-    context.globalCompositeOperation = 'source-over';
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * gridSize;
-    let newY = Math.round(currentY / gridSize) * gridSize;
-    context.setLineDash([2, 2]);
-    context.lineTo(newX, newY);
-    context.lineWidth = 2;
-    context.stroke();
-
-  } else if (isDrawing && tool.value === 'flashing') {
-    context.globalCompositeOperation = 'source-over';
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * gridSize;
-    let newY = Math.round(currentY / gridSize) * gridSize;
-    context.setLineDash([]);
-    context.lineTo(newX, newY);
-    context.moveTo(newX + 4, newY - 4);
-
-    context.lineWidth = 2;
-    context.stroke();
-  } else if (isDrawing && tool.value === 'fascia-repair') {
-    context.globalCompositeOperation = 'source-over';
-    currentX = (event.pageX - el.offsetLeft);
-    currentY = (event.pageY - el.offsetTop);
-    let newX = Math.round(currentX / gridSize) * gridSize;
-    let newY = Math.round(currentY / gridSize) * gridSize;
-    context.setLineDash([]);
-    context.lineTo(newX, newY);
-    context.moveTo(newX - 5, newY + 5);
-
-    context.lineWidth = 2;
-    context.stroke();
-  }
-
-});
-
-el.addEventListener('pointerup', function (event) {
-  event.preventDefault();
-  isDrawing = false;
-  const ctx = el.getContext('2d');
-  paths.push(ctx.getImageData(0, 0, el.width, el.height));
-  // elbowPaths.push(ctx.getImageData(0, 0, el.width, el.height));
-  index += 1;
-  // indexCopy += 1;
-  ctx.moveTo(currentX, currentY);
-  ctx.lineTo(currentX, currentY);
-  ctx.stroke();
-  ctx.closePath();
-  updateGridButton(undoBtn);
-  // console.log(paths.length, newPath.length);
-});
-
-
-el.addEventListener('touchcancel', handleCancel);
-
-
-function clear() {
-  const el = document.getElementById('canvas');
-  ctx.clearRect(0, 0, el.width, el.height);
-  paths = [];
-  // elbowPaths = [];
-  // indexCopy = -1;
-  index = -1;
-  updateGridButton(undoBtn);
-  startup();
-
-}
-
-
-clearButton.addEventListener('click', clear);
-
-function handleCancel(evt) {
-  evt.preventDefault();
-  log('touchcancel.');
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    let idx = ongoingTouchIndexById(touches[i].identifier);
-    ongoingTouches.splice(idx, 1);  // remove it; we're done
-  }
-}
-
-function copyTouch({ identifier, pageX, pageY }) {
-  return { identifier, pageX, pageY };
-}
-
-
-function ongoingTouchIndexById(idToFind) {
-  for (let i = 0; i < ongoingTouches.length; i++) {
-    const id = ongoingTouches[i].identifier;
-
-    if (id === idToFind) {
-      return i;
-    }
-  }
-  return -1;    // not found
-}
-
-function undo() {
-
-  if (index <= 0) {
-    clear();
-  } else {
-    index -= 1;
-    indexCopy -= 1;
-
-    newPath.pop();
-    paths.pop();
-    ctx.putImageData(paths[index], 0, 0);
-    // ctx.putImageData(newPath[indexCopy], 0, 0);
-  }
-}
-
-function updateGridButton(element) {
-  if (paths.length > 0) {
-    element.innerText = 'Undo';
-    element.style.backgroundColor = 'silver';
-  } else {
-    element.style.backgroundColor = '#d9f170';
-    element.innerText = 'Update Grid';
-  }
-};
-
-// function showLegend() {
-//   legendPic = document.querySelector('.legend-pic');
-//   legendPic.classList.toggle('hidden');
-// };
-
-
-function finish() {
-  window.onbeforeprint = (event) => {
-    toolsBar = document.querySelector('.tools-bar');
-    toolsBar.style.display = 'none';
-    legendPic = document.querySelector('.legend-pic');
-
-
-
-  };
-
-  window.print();
-
-}
-
-
-window.onafterprint = (event) => {
-  toolsBar = document.querySelector('.tools-bar');
-  toolsBar.style.display = 'flex';
-  // showLegend();
-
-}
-
-  </script>
-</body>
-
+      </form>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const undoBtn = document.querySelector(".undo-button");
+      const clearButton = document.querySelector("#clear-button");
+      const colorPicker = document.querySelector("#color");
+      const gridSizeInput = document.querySelector("#grid-size");
+      const tool = document.querySelector("#tool-select");
+
+      let isDrawing = false;
+      let startX, startY, currentX, currentY;
+      let paths = [];
+      let index = -1;
+      let rubberLinePath = null;
+
+      // Initialize Canvas
+      function startup() {
+        canvas.width = 500;
+        canvas.height = 500;
+        drawGrid();
+        updateUndoButton();
+      }
+
+      // Draw the grid on the canvas
+      function drawGrid() {
+        const gridSize = parseInt(gridSizeInput.value);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "lightgray";
+        for (let x = 0; x < canvas.width; x += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+        }
+      }
+
+      // Snap coordinates to the nearest grid point
+      function snapToGrid(value) {
+        const gridSize = parseInt(gridSizeInput.value);
+        return Math.round(value / gridSize) * gridSize;
+      }
+
+      // Get coordinates from event (supports both mouse and touch)
+      function getCoordinates(event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.touches ? event.touches[0].clientX : event.clientX;
+        const y = event.touches ? event.touches[0].clientY : event.clientY;
+        return {
+          x: snapToGrid(x - rect.left),
+          y: snapToGrid(y - rect.top),
+        };
+      }
+
+      // Update the color based on user selection
+      function updateColor() {
+        ctx.strokeStyle = colorPicker.value;
+        ctx.fillStyle = colorPicker.value;
+      }
+
+      function addToUndoStack() {
+        paths.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+        index++;
+        updateUndoButton();
+      }
+
+      // Start drawing
+      function startDrawing(event) {
+        isDrawing = true;
+        const { x, y } = getCoordinates(event);
+        startX = x;
+        startY = y;
+        updateColor();
+        if (tool.value === "gutter") {
+          ctx.setLineDash([]);
+        } else if (tool.value === "existing-gutter") {
+          ctx.setLineDash([2, 2]);
+        } else if (tool.value === "downspout" || tool.value === "drop") {
+          ctx.setLineDash([]);
+        }
+      }
+
+      // Draw a rubber line
+      function drawRubberLine(event) {
+        if (
+          !isDrawing ||
+          tool.value === "downspout" ||
+          tool.value === "drop" ||
+          tool.value === "valley-shield" ||
+          tool.value === "free-text"
+        )
+          return;
+        const { x, y } = getCoordinates(event);
+        currentX = x;
+        currentY = y;
+
+        if (rubberLinePath) {
+          ctx.putImageData(rubberLinePath, 0, 0); // Clear temporary line
+        } else {
+          rubberLinePath = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(currentX, currentY);
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      // Finalize the line on pointer up
+      function stopDrawing() {
+        if (isDrawing) {
+          isDrawing = false;
+          rubberLinePath = null; // Clear rubber band
+
+          if (tool.value === "downspout") {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(
+              startX + gridSizeInput.value / 2.75,
+              startY + gridSizeInput.value / 2.75
+            );
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(
+              startX - gridSizeInput.value / 2.75,
+              startY + gridSizeInput.value / 2.75
+            );
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(
+              startX - gridSizeInput.value / 2.75,
+              startY - gridSizeInput.value / 2.75
+            );
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(
+              startX + gridSizeInput.value / 2.75,
+              startY - gridSizeInput.value / 2.75
+            );
+            ctx.stroke();
+            addToUndoStack();
+          } else if (tool.value === "drop") {
+            ctx.beginPath();
+            ctx.arc(startX, startY, gridSizeInput.value / 4, 0, 2 * Math.PI);
+            ctx.stroke();
+            addToUndoStack();
+          } else if (tool.value === "valley-shield") {
+            ctx.beginPath();
+            ctx.arc(startX, startY, gridSizeInput.value / 4, 0, 2 * Math.PI);
+            ctx.fill();
+            addToUndoStack();
+          } else if (tool.value === "free-text") {
+            let userInput = prompt(
+              'Type in the elbow sequence or the length of the piece. (ex: AABA, 57")'
+            );
+            ctx.font = "1000 12px Arial";
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+            if (!userInput) {
+              return;
+            } else {
+              ctx.fillText(`${userInput}`, startX, startY);
+              addToUndoStack();
+            }
+          } else {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(currentX, currentY);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Save the path state
+            addToUndoStack();
+          }
+        }
+      }
+
+      // Undo the last action
+      undoBtn.addEventListener("click", () => {
+        undo();
+      });
+
+      function undo() {
+        if (index <= 0) {
+          clearCanvas();
+        } else {
+          index--;
+          paths.pop();
+          ctx.putImageData(
+            paths[index] || ctx.getImageData(0, 0, canvas.width, canvas.height),
+            0,
+            0
+          );
+          updateUndoButton();
+        }
+      }
+
+      // Clear the canvas
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGrid();
+        paths = [];
+        index = -1;
+        updateUndoButton();
+      }
+
+      clearButton.addEventListener("click", clearCanvas);
+
+      // Update the undo button
+      function updateUndoButton() {
+        undoBtn.innerText = paths.length > 0 ? "Undo" : "Update Grid";
+        undoBtn.style.backgroundColor = paths.length > 0 ? "silver" : "#d9f170";
+      }
+
+      // Add event listeners
+      canvas.addEventListener("pointerdown", startDrawing);
+      canvas.addEventListener("pointermove", drawRubberLine);
+      canvas.addEventListener("pointerup", stopDrawing);
+      canvas.addEventListener("pointerout", stopDrawing);
+
+      // Add touch events for mobile and tablets
+      canvas.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        startDrawing(event);
+      });
+      canvas.addEventListener("touchmove", (event) => {
+        event.preventDefault();
+        drawRubberLine(event);
+      });
+      canvas.addEventListener("touchend", (event) => {
+        event.preventDefault();
+        stopDrawing();
+      });
+      canvas.addEventListener("touchcancel", stopDrawing);
+
+      // Initialize on DOMContentLoaded
+      document.addEventListener("DOMContentLoaded", startup);
+      document.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        if (e.key === "Escape") {
+          undo();
+        }
+      });
+
+      function finish() {
+        window.onbeforeprint = (event) => {
+          toolsBar = document.querySelector(".tools-bar");
+          toolsBar.style.display = "none";
+          legendPic = document.querySelector(".legend-pic");
+        };
+        window.print();
+      }
+
+      window.onafterprint = (event) => {
+        toolsBar = document.querySelector(".tools-bar");
+        toolsBar.style.display = "flex";
+      };
+    </script>
+  </body>
 </html>
