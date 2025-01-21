@@ -5,6 +5,10 @@ const clearButton = document.querySelector("#clear-button");
 const colorPicker = document.querySelector("#color");
 const gridSizeInput = document.querySelector("#grid-size");
 const tool = document.querySelector("#tool-select");
+const textInputEl = document.querySelector(".container__input");
+const cancelBtn = document.querySelector(".button_cancel");
+const confirmBtn = document.querySelector(".button_confirm");
+const modal = document.querySelector(".modal");
 
 let isDrawing = false;
 let startX, startY, currentX, currentY;
@@ -152,18 +156,10 @@ function stopDrawing() {
       ctx.fill();
       addToUndoStack();
     } else if (tool.value === "free-text") {
-      let userInput = prompt(
-        'Type in the elbow sequence or the length of the piece. (ex: AABA, 57")'
-      );
-      ctx.font = "1000 12px Arial";
-      ctx.fillStyle = "black";
-      ctx.textAlign = "center";
-      if (!userInput) {
-        return;
-      } else {
-        ctx.fillText(`${userInput}`, startX, startY);
-        addToUndoStack();
-      }
+      modal.classList.add("modal_visible");
+      // let userInput = prompt(
+      //   'Type in the elbow sequence or the length of the piece. (ex: AABA, 57")'
+      // );
     } else {
       ctx.beginPath();
       ctx.moveTo(startX, startY);
@@ -214,11 +210,35 @@ function updateUndoButton() {
   undoBtn.style.backgroundColor = paths.length > 0 ? "silver" : "#d9f170";
 }
 
+function placeText(x, y) {
+  const userInput = textInputEl.value;
+  ctx.font = "1000 12px Arial";
+  ctx.fillStyle = "black";
+  ctx.textAlign = "center";
+  if (!userInput) {
+    return;
+  } else {
+    ctx.fillText(`${userInput}`, x, y);
+    addToUndoStack();
+  }
+  textInputEl.value = "";
+  modal.classList.remove("modal_visible");
+}
+
 // Add event listeners
 canvas.addEventListener("pointerdown", startDrawing);
 canvas.addEventListener("pointermove", drawRubberLine);
 canvas.addEventListener("pointerup", stopDrawing);
 canvas.addEventListener("pointerout", stopDrawing);
+
+cancelBtn.addEventListener("click", (e) => {
+  modal.classList.remove("modal_visible");
+  textInputEl.value = "";
+});
+
+confirmBtn.addEventListener("click", (e) => {
+  placeText(startX, startY);
+});
 
 // Add touch events for mobile and tablets
 canvas.addEventListener("touchstart", (event) => {
@@ -238,7 +258,6 @@ canvas.addEventListener("touchcancel", stopDrawing);
 // Initialize on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", startup);
 document.addEventListener("keydown", (e) => {
-  e.preventDefault();
   if (e.key === "Escape") {
     undo();
   }
