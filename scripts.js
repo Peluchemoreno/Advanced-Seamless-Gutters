@@ -78,18 +78,18 @@ function startDrawing(event) {
   startY = y;
   ctx.lineWidth = 2;
   updateColor();
+  if (isEraserOn === true) {
+    eraseNearestLine();
+    return;
+  }
 
   if (tool.value === "gutter") {
+    ctx.moveTo(x, y);
     ctx.setLineDash([]);
   } else if (tool.value === "existing-gutter") {
     ctx.setLineDash([2, 2]);
   } else if (tool.value === "downspout" || tool.value === "drop") {
     ctx.setLineDash([]);
-  }
-
-  if (isEraserOn === true) {
-    // Additional eraser logic if needed
-    return;
   }
 }
 
@@ -127,6 +127,11 @@ function stopDrawing(event) {
   if (isDrawing) {
     isDrawing = false;
     rubberLinePath = null; // Clear rubber band
+
+    if (isEraserOn === true) {
+      eraseNearestLine();
+      return;
+    }
 
     if (tool.value === "downspout") {
       ctx.beginPath();
@@ -190,14 +195,22 @@ function stopDrawing(event) {
       });
       updateUndoButton();
     } else if (tool.value === "free-text") {
-      modal.classList.add("modal_visible");
-    } else if (isEraserOn === true) {
-      eraseNearestLine(); // Call the erase function to remove entire lines
+      if (isEraserOn === true) {
+        return;
+      } else {
+        modal.classList.add("modal_visible");
+      }
     } else {
       ctx.beginPath();
-      ctx.moveTo(startX, startY);
+      // ctx.moveTo(startX, startY);
       ctx.lineTo(currentX, currentY);
       ctx.lineWidth = 2;
+      if (!currentX || !currentY) {
+        return;
+      }
+      if (startX === currentX && startY === currentY) {
+        return;
+      }
       ctx.stroke();
       // Add line coordinates instead of ImageData
       lines.push({
@@ -209,6 +222,8 @@ function stopDrawing(event) {
         color: colorPicker.value,
       });
       updateUndoButton();
+      currentX = null;
+      currentY = null;
     }
     if (tool.value !== "free-text") {
       saveState();
@@ -270,7 +285,7 @@ function eraseNearestLine() {
       line.tool === "free-text"
     ) {
       if (
-        distanceBetweenPoints(line.startX, line.startY, startX, startY) < 10
+        distanceToPoint(line.startX, line.startY, startX, startY) < tolerance
       ) {
         lines.splice(i, 1); // Remove the line from lines
         redrawCanvas(); // Redraw canvas with updated lines
@@ -281,32 +296,75 @@ function eraseNearestLine() {
   updateUndoButton(); // Keep track of the undo stack after erasing a line
 }
 
-// Function to calculate the distance from a point to a line
-// Function to check if a line intersects with the eraser's area
 function isLineCloseToCursor(x1, y1, x2, y2, mouseX, mouseY, radius) {
   // Calculate the perpendicular distance from the mouse to the line
   const distance = pointToLineDistance(x1, y1, x2, y2, mouseX, mouseY);
 
-  // Check if the distance is within the given radius
-  return distance <= radius;
+  // Check if the mouse is within the radius of the line
+  if (distance <= radius) {
+    // Check if the perpendicular projection falls within the segment bounds
+    const projection = projectPointOntoLine(x1, y1, x2, y2, mouseX, mouseY);
+    const px = projection.x;
+    const py = projection.y;
+
+    // Check if the projected point is on the segment (within bounds of the endpoints)
+    const dot1 = (px - x1) * (x2 - x1) + (py - y1) * (y2 - y1); // Dot product to check if projection is within the segment
+    const dot2 = (px - x2) * (x1 - x2) + (py - y2) * (y1 - y2); // Dot product for the other side
+
+    if (dot1 >= 0 && dot2 >= 0) {
+      return true;
+    }
+  }
+
+  // If the perpendicular projection doesn't fall on the segment, check distance to the endpoints
+  const distToEnd1 = distanceToPoint(mouseX, mouseY, x1, y1);
+  const distToEnd2 = distanceToPoint(mouseX, mouseY, x2, y2);
+
+  return distToEnd1 <= radius || distToEnd2 <= radius;
 }
 
 // Function to calculate the perpendicular distance from a point to a line
 function pointToLineDistance(x1, y1, x2, y2, px, py) {
-  // Calculate the distance using the point-to-line distance formula
-  const numerator = Math.abs(
-    (y2 - y1) * px - (x2 - x1) * py + x2 * y1 - y2 * x1
-  );
-  const denominator = Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
-  return numerator / denominator;
+  const A = px - x1;
+  const B = py - y1;
+  const C = x2 - x1;
+  const D = y2 - y1;
+
+  const dot = A * C + B * D;
+  const lenSq = C * C + D * D;
+  const param = lenSq === 0 ? -1 : dot / lenSq;
+
+  let closestX, closestY;
+
+  if (param < 0) {
+    closestX = x1;
+    closestY = y1;
+  } else if (param > 1) {
+    closestX = x2;
+    closestY = y2;
+  } else {
+    closestX = x1 + param * C;
+    closestY = y1 + param * D;
+  }
+
+  const dx = px - closestX;
+  const dy = py - closestY;
+
+  return Math.sqrt(dx * dx + dy * dy);
 }
 
-function distanceBetweenPoints(x1, y1, x2, y2) {
-  const dx = x2 - x1; // Difference in x coordinates
-  const dy = y2 - y1; // Difference in y coordinates
+function distanceToPoint(x1, y1, x2, y2) {
+  return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+}
 
-  // Apply the distance formula
-  return Math.sqrt(dx * dx + dy * dy);
+function projectPointOntoLine(x1, y1, x2, y2, px, py) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const t = ((px - x1) * dx + (py - y1) * dy) / (dx * dx + dy * dy);
+  const closestX = x1 + t * dx;
+  const closestY = y1 + t * dy;
+
+  return { x: closestX, y: closestY };
 }
 
 // Redraw the entire canvas based on stored lines
@@ -431,8 +489,10 @@ function updateUndoButton() {
     //   lines.length > 0 && history.length > 0 ? "silver" : "#d9f170";
     if (lines.length > 0 && history.length > 0) {
       undoBtn.style.display = "none";
+      gridSizeInput.style.display = "none";
     } else if (lines.length === 0) {
       undoBtn.style.display = "inline-block";
+      gridSizeInput.style.display = "inline-block";
     }
   } else {
     return;
@@ -474,6 +534,7 @@ canvas.addEventListener("touchmove", (event) => {
 canvas.addEventListener("touchend", (event) => {
   event.preventDefault();
   stopDrawing();
+  updateUndoButton();
 });
 canvas.addEventListener("touchcancel", stopDrawing);
 

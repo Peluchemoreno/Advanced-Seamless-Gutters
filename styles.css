@@ -376,7 +376,6 @@ input {
 
 #grid-size {
   max-width: 70px;
-  background-color: silver;
 }
 
 @media print {
@@ -443,4 +442,8 @@ input {
 
 .eraser-btn_on {
   background-color: pink;
+}
+
+button {
+  cursor: pointer;
 }
