@@ -10,7 +10,11 @@ body {
   position: relative;
 }
 
-.modal {
+
+
+
+
+.modal, .modal-prices {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.6);
   top: 0;
@@ -37,6 +41,7 @@ body {
   visibility: visible;
   opacity: 1;
   transition: opacity .2s ease, visiblity .2s ease;
+  z-index: 4;
 }
 
 .modal__container {
@@ -45,6 +50,8 @@ body {
   background-color: #414141;
   color: white;
   max-width: 50%;
+  position: relative;
+  z-index: 5;
 }
 
 .container__input {
@@ -253,6 +260,7 @@ select {
 .canvas-side {
   border-left: 2px solid black;
   border-bottom: 2px solid black;
+  position: relative;
 }
 
 .material-side {
@@ -272,10 +280,12 @@ select {
 
 .job-notes {
   background-color: black;
-
   display: block;
+  color: white;
   letter-spacing: 3px;
   margin-top: 5px;
+  padding: 5px;
+  font-weight: bold;
 }
 
 #job-notes {
@@ -299,7 +309,7 @@ form {
   width: 100%;
 }
 
-label {
+.label {
   background-color: rgb(65, 65, 65);
   color: rgb(255, 255, 255);
 
@@ -318,13 +328,13 @@ label {
   padding: 3px;
 }
 
-.material-details-body label,
-.extra-and-pricing-body label {
+.material-details-body .label,
+.extra-and-pricing-body .label {
   font-size: 10px;
   font-weight: bolder;
 }
 
-label,
+.label,
 input {
   border: none;
   border-bottom: 1px solid black;
@@ -413,7 +423,7 @@ input {
 
 #additions-label,
 #additions2-label,
-#screen-label {
+#screen-label, #additions3-label {
   display: flex;
   align-items: center;
 }
@@ -423,6 +433,24 @@ input {
   padding: 0;
   height: 25px;
   background-color: silver;
+}
+
+.canvas__watermark{
+  height: 500px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.canvas__watermark-image{
+  width: 400px;
+  opacity: .2;
 }
 
 .undo-button {
@@ -446,4 +474,125 @@ input {
 
 button {
   cursor: pointer;
+}
+
+.modal-prices__container {
+ width: 80%;
+ padding: 15px;
+ background-color: rgb(185, 199, 211);
+ border: 2px solid black;
+ overflow-y: scroll;
+ height: 75svh;
+ position: relative;
+ z-index: 2;
+}
+
+.modal-prices__title {
+  font-size: 36px;
+  margin-top: -20px;
+  padding-left: 10px;
+}
+
+.modal-prices__body-items {
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-prices__body-item{
+  display: flex;
+  justify-content: space-between;
+  width: 49%;
+  align-items: flex-end;
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+}
+
+.item__price-container {
+ text-align: right;
+}
+
+.item__price-input {
+  width: 50%;
+  border: none;
+  text-align: right;
+}
+
+.item__title {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 16px;
+}
+
+.modal-prices__body-title {
+  font-size: 24px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.modal-prices__footer {
+  text-align: right;
+  margin-top: 30px;
+}
+
+.button_alt {
+  padding: 15px 45px;
+  cursor: pointer;
+}
+
+.modal-prices__close-button {
+  width: 30px;
+  position: sticky;
+  top: 0;
+  left: 100%;
+  cursor: pointer;
+  z-index: 4;
+  margin: 0;
+}
+
+.material-details-header {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.material-details-body__section {
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+.coil-size-select, .ds-size-select {
+  font-size: 12px;
+}
+
+.screen-input-container {
+  display: flex;
+}
+
+.screen-choice {
+  border: none;
+  font-size: 10px;
+  width: 50%;
+}
+
+.canvas__watermark{
+  height: 500px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.canvas__watermark-image{
+  width: 400px;
+  opacity: .2;
 }
