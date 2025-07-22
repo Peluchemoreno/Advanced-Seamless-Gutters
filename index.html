@@ -535,6 +535,20 @@
         </div>
       </div>
     </div>
+    <div class="modal modal-splash-block">
+      <div class="modal-splash-block__container">
+        <p class="modal__close-btn">x</p>
+        <h2 class="modal-splash-block__title">Pick an orientation</h2>
+        <div class="btn-container">
+          <button class="btn-splash-block" id="left" value="left">Left</button
+          ><button class="btn-splash-block" id="up" value="up">Up</button
+          ><button class="btn-splash-block" id="down" value="down">Down</button
+          ><button class="btn-splash-block" id="right" value="right">
+            Right
+          </button>
+        </div>
+      </div>
+    </div>
     <!-- The modals are above this line -->
     <div class="form-wrapper">
       <form id="main-form">
@@ -577,10 +591,56 @@
 
         <div class="section2">
           <div class="canvas-side">
+            <section class="legend legend__container">
+              <div class="legend__section">
+                <div class="legend__section-representation_downspout">X</div>
+                <div class="legend__section-description">Downspout</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_gutter-guard"></div>
+                <div class="legend__section-description">Gutter Guard</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_elbows">AAA</div>
+                <div class="legend__section-description">Elbows</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_new-gutter"></div>
+                <div class="legend__section-description">New Gutter</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_elbows">SB</div>
+                <div class="legend__section-description">Splash Block</div>
+              </div>
+              <div class="legend__section">
+                <div
+                  class="legend__section-representation_existing-gutter"
+                ></div>
+                <div class="legend__section-description">Existing Gutter</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_splash-guard"></div>
+                <div class="legend__section-description">Splash Guard</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_drainage"></div>
+                <div class="legend__section-description">Drainage</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_cleaning"></div>
+                <div class="legend__section-description">Cleaning</div>
+              </div>
+              <div class="legend__section">
+                <div
+                  class="legend__section-representation_optional-gutter"
+                ></div>
+                <div class="legend__section-description">Optional Gutter</div>
+              </div>
+            </section>
             <canvas id="canvas"></canvas>
             <div style="display: none" class="canvas__watermark">
               <img
-                src="./img/logo-blue-no-bg.png"
+                src="./img/estimate-transparent-blue.png"
                 alt="logo watermark"
                 class="canvas__watermark-image"
               />
@@ -593,6 +653,7 @@
                 <option value="downspout">Downspout</option>
                 <option value="drop">Drop to lower</option>
                 <option value="valley-shield">Valley Shield</option>
+                <option value="splash-block">Splash Block</option>
                 <option value="free-text">Elbow Seq/Piece Length</option>
                 <!-- <option value="eraser">Eraser</option> -->
                 <!-- <option value="flashing">Flashing</option>
@@ -666,7 +727,11 @@
             <div class="material-details">
               <div class="material-details-header">
                 <h3 class="material-side-header-text">MATERIAL</h3>
-                <select name="material-select" id="material-select">
+                <select
+                  name="material-select"
+                  id="material-select"
+                  style="display: none"
+                >
                   <option value="aluminum">Aluminum</option>
                   <option value="copper">Copper</option>
                   <option value="galvalume">Galvalume</option>
@@ -682,6 +747,7 @@
                     class="coil-size-select"
                     name="coil-size"
                     id="coil-size"
+                    style="display: none"
                   ></select>
                 </div>
 
@@ -704,6 +770,7 @@
                     class="ds-size-select"
                     name="ds-size"
                     id="ds-size"
+                    style="display: none"
                   ></select>
                 </div>
 
@@ -829,14 +896,14 @@
                   >Screen:</label
                 >
 
-                <div class="screen-input-container">
-                  <textarea name="screen" id="screen" rows="6"></textarea>
-                  <select
-                    name="screen-choice"
-                    id="screen-choice"
-                    class="screen-choice"
-                  ></select>
-                </div>
+                <textarea name="screen" id="screen" rows="8"></textarea>
+                <select
+                  name="screen-choice"
+                  id="screen-choice"
+                  class="screen-choice"
+                  style="display: none"
+                ></select>
+
                 <label class="label gutter-and-ds-label2" for="other"
                   >Gutter and Ds:</label
                 >
@@ -844,7 +911,7 @@
                   class="gutter-and-ds-input2"
                   type="text"
                   name="other"
-                  id="other"
+                  id="other1"
                   placeholder="$"
                 />
 

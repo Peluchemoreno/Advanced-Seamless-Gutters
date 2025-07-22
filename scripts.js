@@ -10,6 +10,12 @@ const cancelBtn = document.querySelector(".button_cancel");
 const confirmBtn = document.querySelector(".button_confirm");
 const modal = document.querySelector(".modal");
 const eraserBtn = document.querySelector(".eraser-btn");
+const splashBlockModal = document.querySelector(".modal-splash-block");
+const splashBlockModalCloseBtn = document.querySelector(".modal__close-btn");
+const leftButton = document.getElementById("left");
+const upButton = document.getElementById("up");
+const downButton = document.getElementById("down");
+const rightButton = document.getElementById("right");
 
 /* -------------------------------------------------------------------------- */
 /*                                     ..                                     */
@@ -140,6 +146,10 @@ function parseMaterialOptions() {
   });
 }
 
+function openSplashBlockModal() {
+  splashBlockModal.classList.add("modal_visible");
+}
+
 // Draw the grid on the canvas
 function drawGrid() {
   ctx.setLineDash([]);
@@ -203,6 +213,9 @@ function startDrawing(event) {
     ctx.setLineDash([2, 2]);
   } else if (tool.value === "downspout" || tool.value === "drop") {
     ctx.setLineDash([]);
+  } else if (tool.value === "splash-block") {
+    openSplashBlockModal();
+    return;
   }
 }
 
@@ -214,6 +227,7 @@ function drawRubberLine(event) {
     tool.value === "free-text" ||
     tool.value === "drop" ||
     tool.value === "valley-shield" ||
+    tool.value === "splash-block" ||
     isEraserOn === true
   )
     return;
@@ -368,8 +382,56 @@ function placeText(x, y) {
   modal.classList.remove("modal_visible");
 }
 
+function placeSplashBlock(x, y, direction) {
+  ctx.fillStyle = "grey";
+  if (direction === "left") {
+    ctx.moveTo(x - gridSizeInput.value / 2, y);
+    ctx.lineTo(x - gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+    ctx.lineTo(x - gridSizeInput.value * 2, y + gridSizeInput.value / 2);
+    ctx.lineTo(x - gridSizeInput.value * 2, y - gridSizeInput.value / 2);
+    ctx.lineTo(x - gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+    ctx.moveTo(x - gridSizeInput.value / 2, y);
+    ctx.fill();
+  } else if (direction === "up") {
+    ctx.moveTo(x, y - gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value / 2, y - gridSizeInput.value * 2);
+    ctx.lineTo(x - gridSizeInput.value / 2, y - gridSizeInput.value * 2);
+    ctx.lineTo(x - gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+    ctx.moveTo(x, y - gridSizeInput.value / 2);
+    ctx.fill();
+  } else if (direction === "right") {
+    ctx.moveTo(x + gridSizeInput.value / 2, y);
+    ctx.lineTo(x + gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value * 2, y + gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value * 2, y - gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+    ctx.moveTo(x - gridSizeInput.value / 2, y);
+    ctx.fill();
+  } else if (direction === "down") {
+    ctx.moveTo(x, y + gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+    ctx.lineTo(x + gridSizeInput.value / 2, y + gridSizeInput.value * 2);
+    ctx.lineTo(x - gridSizeInput.value / 2, y + gridSizeInput.value * 2);
+    ctx.lineTo(x - gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+    ctx.moveTo(x, y + gridSizeInput.value / 2);
+    ctx.fill();
+  }
+  lines.push({
+    startX,
+    startY,
+    endX: startX,
+    endY: startY,
+    tool: tool.value,
+    color: "grey",
+    direction,
+  });
+  saveState();
+  splashBlockModal.classList.remove("modal_visible");
+}
+
 function eraseNearestLine() {
-  const tolerance = 10; // Tolerance in pixels for erasing (you can adjust this)
+  const tolerance = 5; // Tolerance in pixels for erasing (you can adjust this)
 
   // Loop through the stored lines and check if they intersect with the eraser area
   for (let i = lines.length - 1; i >= 0; i--) {
@@ -395,7 +457,8 @@ function eraseNearestLine() {
       line.tool === "downspout" ||
       line.tool === "drop" ||
       line.tool === "valley-shield" ||
-      line.tool === "free-text"
+      line.tool === "free-text" ||
+      line.tool === "splash-block"
     ) {
       if (
         distanceToPoint(line.startX, line.startY, startX, startY) < tolerance
@@ -487,8 +550,94 @@ function redrawCanvas() {
   drawGrid();
   updateColor();
   lines.forEach((line) => {
+    console.log(line);
     ctx.strokeStyle = line.color;
     ctx.fillStyle = line.color;
+    if (line.tool === "splash-block") {
+      console.log("splash blick");
+      ctx.fillStyle = "grey";
+      if (line.direction === "left") {
+        ctx.moveTo(line.startX - gridSizeInput.value / 2, line.startY);
+        ctx.lineTo(
+          line.startX - gridSizeInput.value / 2,
+          line.startY + gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value * 2,
+          line.startY + gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value * 2,
+          line.startY - gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value / 2,
+          line.startY - gridSizeInput.value / 2
+        );
+        ctx.moveTo(line.startX - gridSizeInput.value / 2, line.startY);
+        ctx.fill();
+      } else if (line.direction === "up") {
+        ctx.moveTo(line.startX, line.startY - gridSizeInput.value / 2);
+        ctx.lineTo(
+          line.startX + gridSizeInput.value / 2,
+          line.startY - gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX + gridSizeInput.value / 2,
+          line.startY - gridSizeInput.value * 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value / 2,
+          line.startY - gridSizeInput.value * 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value / 2,
+          line.startY - gridSizeInput.value / 2
+        );
+        ctx.moveTo(line.startX, line.startY - gridSizeInput.value / 2);
+        ctx.fill();
+      } else if (line.direction === "right") {
+        ctx.moveTo(line.startX + gridSizeInput.value / 2, line.startY);
+        ctx.lineTo(
+          line.startX + gridSizeInput.value / 2,
+          line.startY + gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX + gridSizeInput.value * 2,
+          line.startY + gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX + gridSizeInput.value * 2,
+          line.startY - gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX + gridSizeInput.value / 2,
+          line.startY - gridSizeInput.value / 2
+        );
+        ctx.moveTo(line.startX - gridSizeInput.value / 2, line.startY);
+        ctx.fill();
+      } else if (line.direction === "down") {
+        ctx.moveTo(line.startX, line.startY + gridSizeInput.value / 2);
+        ctx.lineTo(
+          line.startX + gridSizeInput.value / 2,
+          line.startY + gridSizeInput.value / 2
+        );
+        ctx.lineTo(
+          line.startX + gridSizeInput.value / 2,
+          line.startY + gridSizeInput.value * 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value / 2,
+          line.startY + gridSizeInput.value * 2
+        );
+        ctx.lineTo(
+          line.startX - gridSizeInput.value / 2,
+          line.startY + gridSizeInput.value / 2
+        );
+        ctx.moveTo(line.startX, line.startY + gridSizeInput.value / 2);
+        ctx.fill();
+      }
+    }
     if (line.tool === "downspout") {
       ctx.beginPath();
       ctx.moveTo(line.startX, line.startY);
@@ -792,6 +941,26 @@ addScreenButton.addEventListener("click", (e) => {
   addScreenItem(screenName);
 });
 
+leftButton.addEventListener("click", (e) => {
+  placeSplashBlock(startX, startY, "left");
+});
+rightButton.addEventListener("click", (e) => {
+  console.log("right");
+  placeSplashBlock(startX, startY, "right");
+});
+upButton.addEventListener("click", (e) => {
+  console.log("up");
+  placeSplashBlock(startX, startY, "up");
+});
+downButton.addEventListener("click", (e) => {
+  console.log("down");
+  placeSplashBlock(startX, startY, "down");
+});
+
+splashBlockModalCloseBtn.addEventListener("click", () => {
+  splashBlockModal.classList.remove("modal_visible");
+});
+
 // Add touch events for mobile and tablets
 canvas.addEventListener("touchstart", (event) => {
   event.preventDefault();
@@ -837,6 +1006,7 @@ function parseDs(size, orientation) {
 }
 
 function calculate() {
+  return;
   let total = 0;
   const config = {
     material: materialSelect.value,
@@ -998,10 +1168,10 @@ function finish() {
     materialSelect.style.display = "none";
     screenSelectInput.style.display = "none";
 
-    coilColorInput.value += " " + keyGutter[gutterSelect.value];
-    dsColorInput.value += " " + keyDS[dsSizeSelect.value];
-    materialsHeaderText.textContent = `MATERIAL / ${materialSelect.value.toUpperCase()}`;
-    screenFootageInput.value += " " + screenSelectInput.value;
+    // coilColorInput.value += " " + keyGutter[gutterSelect.value];
+    // dsColorInput.value += " " + keyDS[dsSizeSelect.value];
+    // materialsHeaderText.textContent = `MATERIAL / ${materialSelect.value.toUpperCase()}`;
+    // screenFootageInput.value += " " + screenSelectInput.value;
   };
   window.print();
 }
@@ -1009,12 +1179,12 @@ function finish() {
 window.onafterprint = (event) => {
   toolsBar = document.querySelector(".tools-bar");
   toolsBar.style.display = "flex";
-  gutterSelect.style.display = "block";
+  /*   gutterSelect.style.display = "block";
   dsSizeSelect.style.display = "block";
   materialSelect.style.display = "block";
   screenSelectInput.style.display = "block";
   materialsHeaderText.textContent = "MATERIAL";
   coilColorInput.value = "";
   dsColorInput.value = "";
-  screenFootageInput.value = "";
+  screenFootageInput.value = ""; */
 };
