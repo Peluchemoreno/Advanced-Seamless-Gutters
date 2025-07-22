@@ -28,7 +28,8 @@
       }
 
       .modal,
-      .modal-prices {
+      .modal-prices,
+      .modal-splash-block {
         position: absolute;
         background-color: rgba(0, 0, 0, 0.6);
         top: 0;
@@ -58,7 +59,8 @@
         z-index: 4;
       }
 
-      .modal__container {
+      .modal__container,
+      .modal-splash-block__container {
         padding: 20px;
         border: 1px solid black;
         background-color: #414141;
@@ -66,6 +68,41 @@
         max-width: 50%;
         position: relative;
         z-index: 5;
+      }
+
+      .modal-splash-block__container {
+        position: absolute;
+        top: 30%;
+      }
+
+      .modal__close-btn {
+        margin: 0;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 17px;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .modal__close-btn:hover {
+        color: red;
+      }
+
+      .btn-container {
+        display: flex;
+        gap: 5px;
+        margin-top: 2rem;
+      }
+
+      .btn-splash-block {
+        padding: 15px 20px;
+        width: 6rem;
+        font-size: 1.15rem;
+      }
+
+      .modal-splash-block__title {
+        font-size: 26px;
       }
 
       .container__input {
@@ -263,6 +300,7 @@
       .canvas-side,
       .material-side {
         display: inline-block;
+        position: relative;
       }
 
       .material-side {
@@ -609,6 +647,98 @@
       .canvas__watermark-image {
         width: 400px;
         opacity: 0.2;
+      }
+
+      .legend {
+        position: absolute;
+        /* border: 1px solid black; */
+        right: 0;
+        display: none;
+        grid-template-rows: 20% 20% 20% 20% 20%;
+        grid-template-columns: 50% 50%;
+        background-color: white;
+        width: 150px;
+        height: 60px;
+        padding: 0;
+      }
+
+      .legend__section {
+        border: 1px solid black;
+        display: flex;
+        justify-content: space-between;
+        padding: 1px;
+      }
+
+      .legend__section-description {
+        font-size: 8px;
+        margin: 0;
+        /* border: 1px solid red;  */
+      }
+
+      .legend__section-representation_elbows {
+        font-size: 8px;
+      }
+
+      .legend__section-representation_existing-gutter {
+        background-color: rgb(3, 3, 196);
+        width: 8px;
+        height: 8px;
+        margin-top: 1px;
+      }
+
+      .legend__section-representation_new-gutter {
+        background-color: black;
+        width: 8px;
+        height: 8px;
+        margin-top: 1px;
+      }
+
+      .legend__section-representation_drainage {
+        background-color: magenta;
+        width: 8px;
+        height: 8px;
+        margin-top: 1px;
+      }
+
+      .legend__section-representation_cleaning {
+        background-color: rgb(16, 175, 16);
+        width: 8px;
+        height: 8px;
+        margin-top: 1px;
+      }
+
+      .legend__section-representation_optional-gutter {
+        background-color: rgb(0, 138, 218);
+        width: 8px;
+        height: 8px;
+        margin-bottom: 1px;
+      }
+
+      .legend__section-representation_gutter-guard {
+        background-color: rgb(245, 245, 13);
+        width: 8px;
+        height: 8px;
+        margin-bottom: 1px;
+      }
+
+      .legend__section-representation_splash-guard {
+        background-color: rgb(245, 25, 13);
+        width: 8px;
+        height: 8px;
+        margin-bottom: 1px;
+        border-radius: 50%;
+      }
+
+      .legend__section-representation_splash-guard {
+        background-color: rgb(245, 25, 13);
+        width: 8px;
+        height: 8px;
+        margin-bottom: 1px;
+        border-radius: 50%;
+      }
+
+      .legend__section-representation_downspout {
+        font-size: 9px;
       }
     </style>
   </head>
@@ -1132,6 +1262,20 @@
         </div>
       </div>
     </div>
+    <div class="modal modal-splash-block">
+      <div class="modal-splash-block__container">
+        <p class="modal__close-btn">x</p>
+        <h2 class="modal-splash-block__title">Pick an orientation</h2>
+        <div class="btn-container">
+          <button class="btn-splash-block" id="left" value="left">Left</button
+          ><button class="btn-splash-block" id="up" value="up">Up</button
+          ><button class="btn-splash-block" id="down" value="down">Down</button
+          ><button class="btn-splash-block" id="right" value="right">
+            Right
+          </button>
+        </div>
+      </div>
+    </div>
     <!-- The modals are above this line -->
     <div class="form-wrapper">
       <form id="main-form">
@@ -1174,6 +1318,52 @@
 
         <div class="section2">
           <div class="canvas-side">
+            <section class="legend legend__container">
+              <div class="legend__section">
+                <div class="legend__section-representation_downspout">X</div>
+                <div class="legend__section-description">Downspout</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_gutter-guard"></div>
+                <div class="legend__section-description">Gutter Guard</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_elbows">AAA</div>
+                <div class="legend__section-description">Elbows</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_new-gutter"></div>
+                <div class="legend__section-description">New Gutter</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_elbows">SB</div>
+                <div class="legend__section-description">Splash Block</div>
+              </div>
+              <div class="legend__section">
+                <div
+                  class="legend__section-representation_existing-gutter"
+                ></div>
+                <div class="legend__section-description">Existing Gutter</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_splash-guard"></div>
+                <div class="legend__section-description">Splash Guard</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_drainage"></div>
+                <div class="legend__section-description">Drainage</div>
+              </div>
+              <div class="legend__section">
+                <div class="legend__section-representation_cleaning"></div>
+                <div class="legend__section-description">Cleaning</div>
+              </div>
+              <div class="legend__section">
+                <div
+                  class="legend__section-representation_optional-gutter"
+                ></div>
+                <div class="legend__section-description">Optional Gutter</div>
+              </div>
+            </section>
             <canvas id="canvas"></canvas>
             <div style="display: none" class="canvas__watermark">
               <img
@@ -1190,6 +1380,7 @@
                 <option value="downspout">Downspout</option>
                 <option value="drop">Drop to lower</option>
                 <option value="valley-shield">Valley Shield</option>
+                <option value="splash-block">Splash Block</option>
                 <option value="free-text">Elbow Seq/Piece Length</option>
                 <!-- <option value="eraser">Eraser</option> -->
                 <!-- <option value="flashing">Flashing</option>
@@ -1441,7 +1632,7 @@
                   class="gutter-and-ds-input2"
                   type="text"
                   name="other"
-                  id="other"
+                  id="other1"
                   placeholder="$"
                 />
 
@@ -1507,6 +1698,13 @@
       const confirmBtn = document.querySelector(".button_confirm");
       const modal = document.querySelector(".modal");
       const eraserBtn = document.querySelector(".eraser-btn");
+      const splashBlockModal = document.querySelector(".modal-splash-block");
+      const splashBlockModalCloseBtn =
+        document.querySelector(".modal__close-btn");
+      const leftButton = document.getElementById("left");
+      const upButton = document.getElementById("up");
+      const downButton = document.getElementById("down");
+      const rightButton = document.getElementById("right");
 
       /* -------------------------------------------------------------------------- */
       /*                                     ..                                     */
@@ -1645,6 +1843,10 @@
         });
       }
 
+      function openSplashBlockModal() {
+        splashBlockModal.classList.add("modal_visible");
+      }
+
       // Draw the grid on the canvas
       function drawGrid() {
         ctx.setLineDash([]);
@@ -1708,6 +1910,9 @@
           ctx.setLineDash([2, 2]);
         } else if (tool.value === "downspout" || tool.value === "drop") {
           ctx.setLineDash([]);
+        } else if (tool.value === "splash-block") {
+          openSplashBlockModal();
+          return;
         }
       }
 
@@ -1719,6 +1924,7 @@
           tool.value === "free-text" ||
           tool.value === "drop" ||
           tool.value === "valley-shield" ||
+          tool.value === "splash-block" ||
           isEraserOn === true
         )
           return;
@@ -1873,8 +2079,56 @@
         modal.classList.remove("modal_visible");
       }
 
+      function placeSplashBlock(x, y, direction) {
+        ctx.fillStyle = "grey";
+        if (direction === "left") {
+          ctx.moveTo(x - gridSizeInput.value / 2, y);
+          ctx.lineTo(x - gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+          ctx.lineTo(x - gridSizeInput.value * 2, y + gridSizeInput.value / 2);
+          ctx.lineTo(x - gridSizeInput.value * 2, y - gridSizeInput.value / 2);
+          ctx.lineTo(x - gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+          ctx.moveTo(x - gridSizeInput.value / 2, y);
+          ctx.fill();
+        } else if (direction === "up") {
+          ctx.moveTo(x, y - gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value / 2, y - gridSizeInput.value * 2);
+          ctx.lineTo(x - gridSizeInput.value / 2, y - gridSizeInput.value * 2);
+          ctx.lineTo(x - gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+          ctx.moveTo(x, y - gridSizeInput.value / 2);
+          ctx.fill();
+        } else if (direction === "right") {
+          ctx.moveTo(x + gridSizeInput.value / 2, y);
+          ctx.lineTo(x + gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value * 2, y + gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value * 2, y - gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value / 2, y - gridSizeInput.value / 2);
+          ctx.moveTo(x - gridSizeInput.value / 2, y);
+          ctx.fill();
+        } else if (direction === "down") {
+          ctx.moveTo(x, y + gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+          ctx.lineTo(x + gridSizeInput.value / 2, y + gridSizeInput.value * 2);
+          ctx.lineTo(x - gridSizeInput.value / 2, y + gridSizeInput.value * 2);
+          ctx.lineTo(x - gridSizeInput.value / 2, y + gridSizeInput.value / 2);
+          ctx.moveTo(x, y + gridSizeInput.value / 2);
+          ctx.fill();
+        }
+        lines.push({
+          startX,
+          startY,
+          endX: startX,
+          endY: startY,
+          tool: tool.value,
+          color: "grey",
+          direction,
+        });
+        saveState();
+        splashBlockModal.classList.remove("modal_visible");
+      }
+
       function eraseNearestLine() {
-        const tolerance = 10; // Tolerance in pixels for erasing (you can adjust this)
+        const tolerance = 5; // Tolerance in pixels for erasing (you can adjust this)
 
         // Loop through the stored lines and check if they intersect with the eraser area
         for (let i = lines.length - 1; i >= 0; i--) {
@@ -1900,7 +2154,8 @@
             line.tool === "downspout" ||
             line.tool === "drop" ||
             line.tool === "valley-shield" ||
-            line.tool === "free-text"
+            line.tool === "free-text" ||
+            line.tool === "splash-block"
           ) {
             if (
               distanceToPoint(line.startX, line.startY, startX, startY) <
@@ -2000,8 +2255,94 @@
         drawGrid();
         updateColor();
         lines.forEach((line) => {
+          console.log(line);
           ctx.strokeStyle = line.color;
           ctx.fillStyle = line.color;
+          if (line.tool === "splash-block") {
+            console.log("splash blick");
+            ctx.fillStyle = "grey";
+            if (line.direction === "left") {
+              ctx.moveTo(line.startX - gridSizeInput.value / 2, line.startY);
+              ctx.lineTo(
+                line.startX - gridSizeInput.value / 2,
+                line.startY + gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value * 2,
+                line.startY + gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value * 2,
+                line.startY - gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value / 2,
+                line.startY - gridSizeInput.value / 2
+              );
+              ctx.moveTo(line.startX - gridSizeInput.value / 2, line.startY);
+              ctx.fill();
+            } else if (line.direction === "up") {
+              ctx.moveTo(line.startX, line.startY - gridSizeInput.value / 2);
+              ctx.lineTo(
+                line.startX + gridSizeInput.value / 2,
+                line.startY - gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX + gridSizeInput.value / 2,
+                line.startY - gridSizeInput.value * 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value / 2,
+                line.startY - gridSizeInput.value * 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value / 2,
+                line.startY - gridSizeInput.value / 2
+              );
+              ctx.moveTo(line.startX, line.startY - gridSizeInput.value / 2);
+              ctx.fill();
+            } else if (line.direction === "right") {
+              ctx.moveTo(line.startX + gridSizeInput.value / 2, line.startY);
+              ctx.lineTo(
+                line.startX + gridSizeInput.value / 2,
+                line.startY + gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX + gridSizeInput.value * 2,
+                line.startY + gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX + gridSizeInput.value * 2,
+                line.startY - gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX + gridSizeInput.value / 2,
+                line.startY - gridSizeInput.value / 2
+              );
+              ctx.moveTo(line.startX - gridSizeInput.value / 2, line.startY);
+              ctx.fill();
+            } else if (line.direction === "down") {
+              ctx.moveTo(line.startX, line.startY + gridSizeInput.value / 2);
+              ctx.lineTo(
+                line.startX + gridSizeInput.value / 2,
+                line.startY + gridSizeInput.value / 2
+              );
+              ctx.lineTo(
+                line.startX + gridSizeInput.value / 2,
+                line.startY + gridSizeInput.value * 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value / 2,
+                line.startY + gridSizeInput.value * 2
+              );
+              ctx.lineTo(
+                line.startX - gridSizeInput.value / 2,
+                line.startY + gridSizeInput.value / 2
+              );
+              ctx.moveTo(line.startX, line.startY + gridSizeInput.value / 2);
+              ctx.fill();
+            }
+          }
           if (line.tool === "downspout") {
             ctx.beginPath();
             ctx.moveTo(line.startX, line.startY);
@@ -2305,6 +2646,26 @@
           return;
         }
         addScreenItem(screenName);
+      });
+
+      leftButton.addEventListener("click", (e) => {
+        placeSplashBlock(startX, startY, "left");
+      });
+      rightButton.addEventListener("click", (e) => {
+        console.log("right");
+        placeSplashBlock(startX, startY, "right");
+      });
+      upButton.addEventListener("click", (e) => {
+        console.log("up");
+        placeSplashBlock(startX, startY, "up");
+      });
+      downButton.addEventListener("click", (e) => {
+        console.log("down");
+        placeSplashBlock(startX, startY, "down");
+      });
+
+      splashBlockModalCloseBtn.addEventListener("click", () => {
+        splashBlockModal.classList.remove("modal_visible");
       });
 
       // Add touch events for mobile and tablets
