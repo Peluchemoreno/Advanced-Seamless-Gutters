@@ -1367,7 +1367,7 @@
             <canvas id="canvas"></canvas>
             <div style="display: none" class="canvas__watermark">
               <img
-                src="./img/logo-blue-no-bg.png"
+                src="./img/estimate-transparent-blue.png"
                 alt="logo watermark"
                 class="canvas__watermark-image"
               />
@@ -1454,7 +1454,11 @@
             <div class="material-details">
               <div class="material-details-header">
                 <h3 class="material-side-header-text">MATERIAL</h3>
-                <select name="material-select" id="material-select">
+                <select
+                  name="material-select"
+                  id="material-select"
+                  style="display: none"
+                >
                   <option value="aluminum">Aluminum</option>
                   <option value="copper">Copper</option>
                   <option value="galvalume">Galvalume</option>
@@ -1470,6 +1474,7 @@
                     class="coil-size-select"
                     name="coil-size"
                     id="coil-size"
+                    style="display: none"
                   ></select>
                 </div>
 
@@ -1492,6 +1497,7 @@
                     class="ds-size-select"
                     name="ds-size"
                     id="ds-size"
+                    style="display: none"
                   ></select>
                 </div>
 
@@ -1617,14 +1623,14 @@
                   >Screen:</label
                 >
 
-                <div class="screen-input-container">
-                  <textarea name="screen" id="screen" rows="6"></textarea>
-                  <select
-                    name="screen-choice"
-                    id="screen-choice"
-                    class="screen-choice"
-                  ></select>
-                </div>
+                <textarea name="screen" id="screen" rows="8"></textarea>
+                <select
+                  name="screen-choice"
+                  id="screen-choice"
+                  class="screen-choice"
+                  style="display: none"
+                ></select>
+
                 <label class="label gutter-and-ds-label2" for="other"
                   >Gutter and Ds:</label
                 >
@@ -2713,6 +2719,7 @@
       }
 
       function calculate() {
+        return;
         let total = 0;
         const config = {
           material: materialSelect.value,
@@ -2888,10 +2895,10 @@
           materialSelect.style.display = "none";
           screenSelectInput.style.display = "none";
 
-          coilColorInput.value += " " + keyGutter[gutterSelect.value];
-          dsColorInput.value += " " + keyDS[dsSizeSelect.value];
-          materialsHeaderText.textContent = `MATERIAL / ${materialSelect.value.toUpperCase()}`;
-          screenFootageInput.value += " " + screenSelectInput.value;
+          // coilColorInput.value += " " + keyGutter[gutterSelect.value];
+          // dsColorInput.value += " " + keyDS[dsSizeSelect.value];
+          // materialsHeaderText.textContent = `MATERIAL / ${materialSelect.value.toUpperCase()}`;
+          // screenFootageInput.value += " " + screenSelectInput.value;
         };
         window.print();
       }
@@ -2899,14 +2906,14 @@
       window.onafterprint = (event) => {
         toolsBar = document.querySelector(".tools-bar");
         toolsBar.style.display = "flex";
-        gutterSelect.style.display = "block";
-        dsSizeSelect.style.display = "block";
-        materialSelect.style.display = "block";
-        screenSelectInput.style.display = "block";
-        materialsHeaderText.textContent = "MATERIAL";
-        coilColorInput.value = "";
-        dsColorInput.value = "";
-        screenFootageInput.value = "";
+        /*   gutterSelect.style.display = "block";
+  dsSizeSelect.style.display = "block";
+  materialSelect.style.display = "block";
+  screenSelectInput.style.display = "block";
+  materialsHeaderText.textContent = "MATERIAL";
+  coilColorInput.value = "";
+  dsColorInput.value = "";
+  screenFootageInput.value = ""; */
       };
     </script>
   </body>
